@@ -1,12 +1,351 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Админ-панель COCA-COLA</title>
-  <script src="https://unpkg.com/decap-cms@^2.0.0/dist/decap-cms.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель COCA-COLA</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; }
+        
+        /* LOGIN */
+        .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .login-card { background: #1a1a1a; border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; border: 1px solid #2a2a2a; }
+        .login-card h1 { font-size: 24px; margin-bottom: 8px; }
+        .login-card .subtitle { color: #888; margin-bottom: 24px; font-size: 14px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
+        .form-group input, .form-group textarea { 
+            width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; 
+            border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; 
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #F40009; }
+        .btn { 
+            width: 100%; padding: 14px; background: #F40009; color: #fff; border: none; 
+            border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; 
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #d40007; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-secondary { background: #2a2a2a; }
+        .btn-secondary:hover { background: #333; }
+        .help-link { color: #F40009; font-size: 13px; text-decoration: none; display: inline-block; margin-top: 12px; }
+        .help-link:hover { text-decoration: underline; }
+        .error-msg { color: #ff4444; font-size: 13px; margin-top: 8px; display: none; }
+        .error-msg.show { display: block; }
+        .success-msg { color: #00cc66; font-size: 13px; margin-top: 8px; display: none; }
+        .success-msg.show { display: block; }
+        
+        /* DASHBOARD */
+        .dashboard { display: none; min-height: 100vh; }
+        .dashboard.active { display: block; }
+        .top-bar { background: #1a1a1a; border-bottom: 1px solid #2a2a2a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .top-bar h1 { font-size: 18px; }
+        .top-bar .repo-info { color: #888; font-size: 13px; }
+        .top-bar button { background: transparent; border: 1px solid #333; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        .top-bar button:hover { border-color: #F40009; }
+        
+        .content { max-width: 800px; margin: 0 auto; padding: 32px 24px; }
+        .section { background: #1a1a1a; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 1px solid #2a2a2a; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .section-header h2 { font-size: 18px; }
+        .section-header .badge { background: #2a2a2a; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500; text-transform: uppercase; }
+        
+        .field { margin-bottom: 16px; }
+        .field label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
+        .field input, .field textarea { 
+            width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; 
+            border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; 
+        }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field input:focus, .field textarea:focus { outline: none; border-color: #F40009; }
+        .field .hint { font-size: 11px; color: #666; margin-top: 4px; }
+        
+        .action-bar { display: flex; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #2a2a2a; }
+        .action-bar .btn { flex: 1; }
+        
+        .status-bar { 
+            position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; 
+            padding: 14px 20px; border-radius: 8px; border: 1px solid #2a2a2a; 
+            font-size: 14px; display: none; z-index: 1000; max-width: 300px;
+        }
+        .status-bar.show { display: block; animation: slideIn 0.3s ease-out; }
+        .status-bar.success { border-color: #00cc66; color: #00cc66; }
+        .status-bar.error { border-color: #ff4444; color: #ff4444; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        .loading { display: flex; align-items: center; justify-content: center; gap: 8px; color: #888; padding: 20px; }
+        .loading i { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
 <body>
-  <div id="nc-root"></div>
+
+    <!-- ЭКРАН ВХОДА -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <h1>🔐 Вход в админ-панель</h1>
+            <p class="subtitle">Введите ваш GitHub Personal Access Token</p>
+            
+            <div class="form-group">
+                <label>Personal Access Token</label>
+                <input type="password" id="tokenInput" placeholder="ghp_..." autocomplete="off">
+            </div>
+            
+            <button class="btn" id="loginBtn">Войти</button>
+            
+            <div class="error-msg" id="loginError"></div>
+            
+            <a href="https://github.com/settings/tokens" target="_blank" class="help-link">
+                <i class="fas fa-external-link-alt"></i> Как получить токен (2 минуты)
+            </a>
+        </div>
+    </div>
+
+    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+    <div class="dashboard" id="dashboard">
+        <div class="top-bar">
+            <div>
+                <h1>Админ-панель</h1>
+                <div class="repo-info" id="repoInfo">Загрузка...</div>
+            </div>
+            <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+        </div>
+        
+        <div class="content">
+            <!-- HERO SECTION -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>Главный экран (Hero)</h2>
+                    <span class="badge">hero.json</span>
+                </div>
+                
+                <div id="heroEditor">
+                    <div class="loading"><i class="fas fa-spinner"></i> Загрузка данных...</div>
+                </div>
+                
+                <div class="action-bar">
+                    <button class="btn btn-secondary" id="reloadBtn"><i class="fas fa-sync"></i> Обновить</button>
+                    <button class="btn" id="saveBtn"><i class="fas fa-save"></i> Сохранить в GitHub</button>
+                </div>
+            </div>
+            
+            <!-- INFO -->
+            <div class="section">
+                <div class="section-header">
+                    <h2>Информация</h2>
+                    <span class="badge">Этап 1</span>
+                </div>
+                <p style="color: #aaa; font-size: 14px; line-height: 1.6;">
+                    Сейчас редактируется только Hero-секция. Данные сохраняются в файл 
+                    <code style="background:#0f0f0f;padding:2px 6px;border-radius:4px;">data/hero.json</code> 
+                    через GitHub API. Сайт автоматически подтягивает эти данные.
+                </p>
+                <p style="color: #888; font-size: 13px; margin-top: 12px;">
+                    <i class="fas fa-info-circle"></i> В следующих этапах добавим каталог, отзывы, контакты и конструктор блоков.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar" id="statusBar"></div>
+
+    <script>
+        // ============ КОНФИГУРАЦИЯ ============
+        const CONFIG = {
+            owner: 'piarbookru-hub',
+            repo: 'COCA-COLA',
+            branch: 'main',
+            filePath: 'data/hero.json'
+        };
+
+        // ============ УТИЛИТЫ ============
+        function showStatus(msg, type = 'success') {
+            const bar = document.getElementById('statusBar');
+            bar.textContent = msg;
+            bar.className = 'status-bar show ' + type;
+            setTimeout(() => bar.classList.remove('show'), 3000);
+        }
+
+        function showError(id, msg) {
+            const el = document.getElementById(id);
+            el.textContent = msg;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 5000);
+        }
+
+        // ============ АВТОРИЗАЦИЯ ============
+        const loginScreen = document.getElementById('loginScreen');
+        const dashboard = document.getElementById('dashboard');
+        const tokenInput = document.getElementById('tokenInput');
+        const loginBtn = document.getElementById('loginBtn');
+        
+        // Автоматический вход, если токен сохранён
+        const savedToken = localStorage.getItem('gh_token');
+        if (savedToken) {
+            verifyAndEnter(savedToken);
+        }
+
+        loginBtn.addEventListener('click', async () => {
+            const token = tokenInput.value.trim();
+            if (!token) {
+                showError('loginError', 'Введите токен');
+                return;
+            }
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
+            const ok = await verifyAndEnter(token);
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Войти';
+            if (!ok) showError('loginError', 'Неверный токен или нет доступа к репозиторию');
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('gh_token');
+            location.reload();
+        });
+
+        async function verifyAndEnter(token) {
+            try {
+                const res = await fetch('https://api.github.com/user', {
+                    headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                if (!res.ok) return false;
+                const user = await res.json();
+                localStorage.setItem('gh_token', token);
+                loginScreen.style.display = 'none';
+                dashboard.classList.add('active');
+                document.getElementById('repoInfo').textContent = 
+                    `${CONFIG.owner}/${CONFIG.repo} · ${user.login}`;
+                loadHeroData();
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // ============ РАБОТА С ДАННЫМИ ============
+        let currentHeroData = {};
+        let currentSha = null;
+
+        async function loadHeroData() {
+            const editor = document.getElementById('heroEditor');
+            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка данных...</div>';
+            
+            try {
+                const token = localStorage.getItem('gh_token');
+                const res = await fetch(
+                    `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.filePath}?ref=${CONFIG.branch}`,
+                    { headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' } }
+                );
+                
+                if (res.status === 404) {
+                    // Файл не существует — создаём пустой
+                    currentHeroData = { title: '', subtitle: '', button_text: '', button_link: '' };
+                    currentSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentSha = data.sha;
+                    const content = atob(data.content);
+                    currentHeroData = JSON.parse(content);
+                } else {
+                    throw new Error('Ошибка загрузки');
+                }
+                
+                renderEditor();
+            } catch (e) {
+                editor.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderEditor() {
+            const editor = document.getElementById('heroEditor');
+            editor.innerHTML = `
+                <div class="field">
+                    <label>Главный заголовок</label>
+                    <input type="text" id="f-title" value="${escapeHtml(currentHeroData.title || '')}">
+                    <div class="hint">Можно использовать HTML, например: Оригинальная &lt;span&gt;Coca-Cola&lt;/span&gt;</div>
+                </div>
+                <div class="field">
+                    <label>Подзаголовок</label>
+                    <textarea id="f-subtitle">${escapeHtml(currentHeroData.subtitle || '')}</textarea>
+                </div>
+                <div class="field">
+                    <label>Текст кнопки</label>
+                    <input type="text" id="f-button_text" value="${escapeHtml(currentHeroData.button_text || '')}">
+                </div>
+                <div class="field">
+                    <label>Ссылка кнопки</label>
+                    <input type="text" id="f-button_link" value="${escapeHtml(currentHeroData.button_link || '')}">
+                    <div class="hint">Например: #order или https://...</div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ============ СОХРАНЕНИЕ ============
+        document.getElementById('saveBtn').addEventListener('click', saveHeroData);
+        document.getElementById('reloadBtn').addEventListener('click', loadHeroData);
+
+        async function saveHeroData() {
+            const newData = {
+                title: document.getElementById('f-title').value,
+                subtitle: document.getElementById('f-subtitle').value,
+                button_text: document.getElementById('f-button_text').value,
+                button_link: document.getElementById('f-button_link').value
+            };
+            
+            const token = localStorage.getItem('gh_token');
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
+            
+            const body = {
+                message: `Обновление hero.json через админку`,
+                content: content,
+                branch: CONFIG.branch
+            };
+            if (currentSha) body.sha = currentSha;
+            
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохранение...';
+            
+            try {
+                const res = await fetch(
+                    `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.filePath}`,
+                    {
+                        method: 'PUT',
+                        headers: { 
+                            'Authorization': 'token ' + token,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    }
+                );
+                
+                if (res.ok) {
+                    const result = await res.json();
+                    currentSha = result.content.sha;
+                    currentHeroData = newData;
+                    showStatus('✓ Сохранено! Сайт обновится через 1-2 минуты', 'success');
+                } else {
+                    const err = await res.json();
+                    throw new Error(err.message || 'Ошибка сохранения');
+                }
+            } catch (e) {
+                showStatus('✗ Ошибка: ' + e.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Сохранить в GitHub';
+            }
+        }
+    </script>
 </body>
 </html>
