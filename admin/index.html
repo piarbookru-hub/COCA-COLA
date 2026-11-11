@@ -17,11 +17,11 @@
         .login-card .subtitle { color: #888; margin-bottom: 24px; font-size: 14px; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
-        .form-group input, .form-group textarea { 
+        .form-group input, .form-group textarea, .form-group select { 
             width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; 
             border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; 
         }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #F40009; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #F40009; }
         .btn { 
             width: 100%; padding: 14px; background: #F40009; color: #fff; border: none; 
             border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; 
@@ -31,20 +31,39 @@
         .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-secondary { background: #2a2a2a; }
         .btn-secondary:hover { background: #333; }
+        .btn-small { width: auto; padding: 8px 16px; font-size: 13px; }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #c82333; }
         .help-link { color: #F40009; font-size: 13px; text-decoration: none; display: inline-block; margin-top: 12px; }
         .help-link:hover { text-decoration: underline; }
         .error-msg { color: #ff4444; font-size: 13px; margin-top: 8px; display: none; }
         .error-msg.show { display: block; }
         
         .dashboard { display: none; min-height: 100vh; }
-        .dashboard.active { display: block; }
+        .dashboard.active { display: flex; }
+        
+        .sidebar { 
+            width: 260px; background: #1a1a1a; border-right: 1px solid #2a2a2a; 
+            padding: 24px 0; position: fixed; height: 100vh; overflow-y: auto;
+        }
+        .sidebar h1 { font-size: 18px; padding: 0 24px 24px; border-bottom: 1px solid #2a2a2a; }
+        .sidebar-nav { list-style: none; margin-top: 16px; }
+        .sidebar-nav li { padding: 0; }
+        .sidebar-nav a { 
+            display: flex; align-items: center; gap: 12px; padding: 12px 24px; 
+            color: #aaa; text-decoration: none; transition: all 0.2s; font-size: 14px;
+        }
+        .sidebar-nav a:hover { background: #2a2a2a; color: #fff; }
+        .sidebar-nav a.active { background: #F40009; color: #fff; }
+        .sidebar-nav i { width: 20px; }
+        
+        .main-content { flex: 1; margin-left: 260px; }
         .top-bar { background: #1a1a1a; border-bottom: 1px solid #2a2a2a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .top-bar h1 { font-size: 18px; }
-        .top-bar .repo-info { color: #888; font-size: 13px; }
+        .top-bar h2 { font-size: 18px; }
         .top-bar button { background: transparent; border: 1px solid #333; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
         .top-bar button:hover { border-color: #F40009; }
         
-        .content { max-width: 800px; margin: 0 auto; padding: 32px 24px; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
         .section { background: #1a1a1a; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 1px solid #2a2a2a; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .section-header h2 { font-size: 18px; }
@@ -52,16 +71,26 @@
         
         .field { margin-bottom: 16px; }
         .field label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
-        .field input, .field textarea { 
+        .field input, .field textarea, .field select { 
             width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; 
             border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; 
         }
         .field textarea { resize: vertical; min-height: 80px; }
-        .field input:focus, .field textarea:focus { outline: none; border-color: #F40009; }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #F40009; }
         .field .hint { font-size: 11px; color: #666; margin-top: 4px; }
         
         .action-bar { display: flex; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #2a2a2a; }
         .action-bar .btn { flex: 1; }
+        
+        .item-list { margin-bottom: 20px; }
+        .item-card { 
+            background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 8px; 
+            padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .item-info { flex: 1; }
+        .item-info h3 { font-size: 16px; margin-bottom: 4px; }
+        .item-info p { color: #888; font-size: 13px; }
+        .item-actions { display: flex; gap: 8px; }
         
         .status-bar { 
             position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; 
@@ -76,6 +105,18 @@
         .loading { display: flex; align-items: center; justify-content: center; gap: 8px; color: #888; padding: 20px; }
         .loading i { animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        .color-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .color-option { 
+            padding: 20px; border-radius: 8px; text-align: center; cursor: pointer; 
+            border: 2px solid transparent; transition: all 0.2s;
+        }
+        .color-option:hover { transform: translateY(-4px); }
+        .color-option.selected { border-color: #fff; }
+        .color-option .color-name { margin-top: 8px; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -95,47 +136,101 @@
             <div class="error-msg" id="loginError"></div>
             
             <a href="https://github.com/settings/tokens" target="_blank" class="help-link">
-                <i class="fas fa-external-link-alt"></i> Как получить токен (2 минуты)
+                <i class="fas fa-external-link-alt"></i> Как получить токен
             </a>
         </div>
     </div>
 
     <div class="dashboard" id="dashboard">
-        <div class="top-bar">
-            <div>
-                <h1>Админ-панель</h1>
-                <div class="repo-info" id="repoInfo">Загрузка...</div>
-            </div>
-            <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
-        </div>
+        <aside class="sidebar">
+            <h1>Админ-панель</h1>
+            <ul class="sidebar-nav">
+                <li><a href="#hero" class="nav-link active"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="#products" class="nav-link"><i class="fas fa-box"></i> Товары</a></li>
+                <li><a href="#reviews" class="nav-link"><i class="fas fa-star"></i> Отзывы</a></li>
+                <li><a href="#contacts" class="nav-link"><i class="fas fa-phone"></i> Контакты</a></li>
+                <li><a href="#colors" class="nav-link"><i class="fas fa-palette"></i> Цвета</a></li>
+            </ul>
+        </aside>
         
-        <div class="content">
-            <div class="section">
-                <div class="section-header">
-                    <h2>Главный экран (Hero)</h2>
-                    <span class="badge">hero.json</span>
-                </div>
-                
-                <div id="heroEditor">
-                    <div class="loading"><i class="fas fa-spinner"></i> Загрузка данных...</div>
-                </div>
-                
-                <div class="action-bar">
-                    <button class="btn btn-secondary" id="reloadBtn"><i class="fas fa-sync"></i> Обновить</button>
-                    <button class="btn" id="saveBtn"><i class="fas fa-save"></i> Сохранить в GitHub</button>
-                </div>
+        <div class="main-content">
+            <div class="top-bar">
+                <h2 id="pageTitle">Главная</h2>
+                <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
             </div>
             
-            <div class="section">
-                <div class="section-header">
-                    <h2>Информация</h2>
-                    <span class="badge">Этап 1</span>
+            <div class="content">
+                <!-- HERO -->
+                <div class="page active" id="page-hero">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Главный экран (Hero)</h2>
+                            <span class="badge">hero.json</span>
+                        </div>
+                        <div id="heroEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="loadHeroData()"><i class="fas fa-sync"></i> Обновить</button>
+                            <button class="btn" onclick="saveHeroData()"><i class="fas fa-save"></i> Сохранить</button>
+                        </div>
+                    </div>
                 </div>
-                <p style="color: #aaa; font-size: 14px; line-height: 1.6;">
-                    Сейчас редактируется только Hero-секция. Данные сохраняются в файл 
-                    <code style="background:#0f0f0f;padding:2px 6px;border-radius:4px;">data/hero.json</code> 
-                    через GitHub API. Сайт автоматически подтягивает эти данные.
-                </p>
+
+                <!-- PRODUCTS -->
+                <div class="page" id="page-products">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Каталог товаров</h2>
+                            <button class="btn btn-small" onclick="addProduct()"><i class="fas fa-plus"></i> Добавить товар</button>
+                        </div>
+                        <div id="productsList"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn" onclick="saveProducts()"><i class="fas fa-save"></i> Сохранить все изменения</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REVIEWS -->
+                <div class="page" id="page-reviews">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Отзывы клиентов</h2>
+                            <button class="btn btn-small" onclick="addReview()"><i class="fas fa-plus"></i> Добавить отзыв</button>
+                        </div>
+                        <div id="reviewsList"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn" onclick="saveReviews()"><i class="fas fa-save"></i> Сохранить все изменения</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACTS -->
+                <div class="page" id="page-contacts">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Контактная информация</h2>
+                            <span class="badge">contacts.json</span>
+                        </div>
+                        <div id="contactsEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="loadContactsData()"><i class="fas fa-sync"></i> Обновить</button>
+                            <button class="btn" onclick="saveContactsData()"><i class="fas fa-save"></i> Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLORS -->
+                <div class="page" id="page-colors">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Цветовая схема сайта</h2>
+                            <span class="badge">colors.json</span>
+                        </div>
+                        <div id="colorsEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn" onclick="saveColors()"><i class="fas fa-save"></i> Сохранить и применить</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -146,9 +241,20 @@
         const CONFIG = {
             owner: 'piarbookru-hub',
             repo: 'COCA-COLA',
-            branch: 'main',
-            filePath: 'data/hero.json'
+            branch: 'main'
         };
+
+        let currentToken = localStorage.getItem('gh_token');
+        let currentHeroData = {};
+        let currentHeroSha = null;
+        let currentProducts = [];
+        let currentProductsSha = null;
+        let currentReviews = [];
+        let currentReviewsSha = null;
+        let currentContacts = {};
+        let currentContactsSha = null;
+        let currentColors = {};
+        let currentColorsSha = null;
 
         function showStatus(msg, type = 'success') {
             const bar = document.getElementById('statusBar');
@@ -157,30 +263,26 @@
             setTimeout(() => bar.classList.remove('show'), 3000);
         }
 
-        function showError(id, msg) {
-            const el = document.getElementById(id);
-            el.textContent = msg;
-            el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 5000);
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
-        const loginScreen = document.getElementById('loginScreen');
-        const dashboard = document.getElementById('dashboard');
-        const tokenInput = document.getElementById('tokenInput');
-        const loginBtn = document.getElementById('loginBtn');
-        
-        const savedToken = localStorage.getItem('gh_token');
-        if (savedToken) verifyAndEnter(savedToken);
+        function decodeBase64(base64) {
+            return decodeURIComponent(escape(atob(base64)));
+        }
 
-        loginBtn.addEventListener('click', async () => {
-            const token = tokenInput.value.trim();
-            if (!token) { showError('loginError', 'Введите токен'); return; }
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
-            const ok = await verifyAndEnter(token);
-            loginBtn.disabled = false;
-            loginBtn.textContent = 'Войти';
-            if (!ok) showError('loginError', 'Неверный токен или нет доступа к репозиторию');
+        function encodeBase64(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+        }
+
+        // AUTH
+        if (currentToken) verifyAndEnter(currentToken);
+
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const token = document.getElementById('tokenInput').value.trim();
+            if (!token) return;
+            await verifyAndEnter(token);
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -191,136 +293,441 @@
         async function verifyAndEnter(token) {
             try {
                 const res = await fetch('https://api.github.com/user', {
-                    headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+                    headers: { 'Authorization': 'token ' + token }
                 });
-                if (!res.ok) return false;
-                const user = await res.json();
+                if (!res.ok) throw new Error();
                 localStorage.setItem('gh_token', token);
-                loginScreen.style.display = 'none';
-                dashboard.classList.add('active');
-                document.getElementById('repoInfo').textContent = 
-                    `${CONFIG.owner}/${CONFIG.repo} · ${user.login}`;
+                currentToken = token;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
                 loadHeroData();
                 return true;
-            } catch (e) { return false; }
+            } catch (e) {
+                document.getElementById('loginError').textContent = 'Неверный токен';
+                document.getElementById('loginError').classList.add('show');
+                return false;
+            }
         }
 
-        let currentHeroData = {};
-        let currentSha = null;
+        // NAVIGATION
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                const page = link.getAttribute('href').substring(1);
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + page).classList.add('active');
+                document.getElementById('pageTitle').textContent = link.textContent.trim();
+                
+                if (page === 'products') loadProductsData();
+                if (page === 'reviews') loadReviewsData();
+                if (page === 'contacts') loadContactsData();
+                if (page === 'colors') loadColorsData();
+            });
+        });
 
+        // HERO
         async function loadHeroData() {
             const editor = document.getElementById('heroEditor');
-            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка данных...</div>';
-            
+            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
             try {
-                const token = localStorage.getItem('gh_token');
-                const res = await fetch(
-                    `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.filePath}?ref=${CONFIG.branch}`,
-                    { headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' } }
-                );
-                
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/data/hero.json?ref=${CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
                 if (res.status === 404) {
                     currentHeroData = { title: '', subtitle: '', button_text: '', button_link: '' };
-                    currentSha = null;
+                    currentHeroSha = null;
                 } else if (res.ok) {
                     const data = await res.json();
-                    currentSha = data.sha;
-                    // ИСПРАВЛЕННАЯ СТРОКА - правильная работа с UTF-8
-                    const content = decodeURIComponent(escape(atob(data.content)));
-                    currentHeroData = JSON.parse(content);
-                } else {
-                    throw new Error('Ошибка загрузки');
+                    currentHeroSha = data.sha;
+                    currentHeroData = JSON.parse(decodeBase64(data.content));
                 }
-                
-                renderEditor();
+                renderHeroEditor();
             } catch (e) {
                 editor.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
             }
         }
 
-        function renderEditor() {
-            const editor = document.getElementById('heroEditor');
-            editor.innerHTML = `
+        function renderHeroEditor() {
+            document.getElementById('heroEditor').innerHTML = `
                 <div class="field">
                     <label>Главный заголовок</label>
-                    <input type="text" id="f-title" value="${escapeHtml(currentHeroData.title || '')}">
-                    <div class="hint">Можно использовать HTML, например: Оригинальная &lt;span&gt;Coca-Cola&lt;/span&gt;</div>
+                    <input type="text" id="hero-title" value="${escapeHtml(currentHeroData.title || '')}">
                 </div>
                 <div class="field">
                     <label>Подзаголовок</label>
-                    <textarea id="f-subtitle">${escapeHtml(currentHeroData.subtitle || '')}</textarea>
+                    <textarea id="hero-subtitle">${escapeHtml(currentHeroData.subtitle || '')}</textarea>
                 </div>
                 <div class="field">
                     <label>Текст кнопки</label>
-                    <input type="text" id="f-button_text" value="${escapeHtml(currentHeroData.button_text || '')}">
+                    <input type="text" id="hero-button_text" value="${escapeHtml(currentHeroData.button_text || '')}">
                 </div>
                 <div class="field">
                     <label>Ссылка кнопки</label>
-                    <input type="text" id="f-button_link" value="${escapeHtml(currentHeroData.button_link || '')}">
-                    <div class="hint">Например: #order или https://...</div>
+                    <input type="text" id="hero-button_link" value="${escapeHtml(currentHeroData.button_link || '')}">
                 </div>
             `;
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-        }
-
-        document.getElementById('saveBtn').addEventListener('click', saveHeroData);
-        document.getElementById('reloadBtn').addEventListener('click', loadHeroData);
-
         async function saveHeroData() {
             const newData = {
-                title: document.getElementById('f-title').value,
-                subtitle: document.getElementById('f-subtitle').value,
-                button_text: document.getElementById('f-button_text').value,
-                button_link: document.getElementById('f-button_link').value
+                title: document.getElementById('hero-title').value,
+                subtitle: document.getElementById('hero-subtitle').value,
+                button_text: document.getElementById('hero-button_text').value,
+                button_link: document.getElementById('hero-button_link').value
             };
-            
-            const token = localStorage.getItem('gh_token');
-            // Правильное кодирование UTF-8 для GitHub API
-            const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
-            
+            await saveFile('data/hero.json', newData, currentHeroSha, (sha) => currentHeroSha = sha);
+        }
+
+        // PRODUCTS
+        async function loadProductsData() {
+            const list = document.getElementById('productsList');
+            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/data/products.json?ref=${CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentProducts = [];
+                    currentProductsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentProductsSha = data.sha;
+                    currentProducts = JSON.parse(decodeBase64(data.content));
+                }
+                renderProductsList();
+            } catch (e) {
+                list.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderProductsList() {
+            const list = document.getElementById('productsList');
+            if (currentProducts.length === 0) {
+                list.innerHTML = '<p style="color:#888;">Товаров пока нет. Нажмите "Добавить товар".</p>';
+                return;
+            }
+            list.innerHTML = currentProducts.map((p, i) => `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${escapeHtml(p.name)}</h3>
+                        <p>${p.price} ₽ · ${p.volume}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-small btn-secondary" onclick="editProduct(${i})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-small btn-danger" onclick="deleteProduct(${i})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addProduct() {
+            currentProducts.push({
+                name: 'Новый товар',
+                price: 0,
+                old_price: 0,
+                volume: '330 мл',
+                description: '',
+                image: '',
+                color: 'classic',
+                active: true
+            });
+            renderProductsList();
+            showStatus('Товар добавлен. Не забудьте сохранить!');
+        }
+
+        function editProduct(index) {
+            const p = currentProducts[index];
+            const html = `
+                <div style="background:#0f0f0f;padding:20px;border-radius:8px;margin-top:12px;">
+                    <div class="field"><label>Название</label><input type="text" id="p-name-${index}" value="${escapeHtml(p.name)}"></div>
+                    <div class="field"><label>Цена (₽)</label><input type="number" id="p-price-${index}" value="${p.price}"></div>
+                    <div class="field"><label>Старая цена (₽)</label><input type="number" id="p-old_price-${index}" value="${p.old_price}"></div>
+                    <div class="field"><label>Объём</label><input type="text" id="p-volume-${index}" value="${escapeHtml(p.volume)}"></div>
+                    <div class="field"><label>Описание</label><textarea id="p-description-${index}">${escapeHtml(p.description)}</textarea></div>
+                    <div class="field"><label>Цвет банки</label>
+                        <select id="p-color-${index}">
+                            <option value="classic" ${p.color === 'classic' ? 'selected' : ''}>Classic (красный)</option>
+                            <option value="zero" ${p.color === 'zero' ? 'selected' : ''}>Zero (чёрный)</option>
+                            <option value="light" ${p.color === 'light' ? 'selected' : ''}>Light (серебристый)</option>
+                            <option value="vanilla" ${p.color === 'vanilla' ? 'selected' : ''}>Vanilla (бежевый)</option>
+                            <option value="cherry" ${p.color === 'cherry' ? 'selected' : ''}>Cherry (вишнёвый)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-small" onclick="saveProductEdit(${index})">Сохранить изменения</button>
+                </div>
+            `;
+            const list = document.getElementById('productsList');
+            const cards = list.querySelectorAll('.item-card');
+            if (cards[index]) cards[index].insertAdjacentHTML('afterend', html);
+        }
+
+        function saveProductEdit(index) {
+            currentProducts[index] = {
+                name: document.getElementById(`p-name-${index}`).value,
+                price: parseInt(document.getElementById(`p-price-${index}`).value) || 0,
+                old_price: parseInt(document.getElementById(`p-old_price-${index}`).value) || 0,
+                volume: document.getElementById(`p-volume-${index}`).value,
+                description: document.getElementById(`p-description-${index}`).value,
+                image: currentProducts[index].image || '',
+                color: document.getElementById(`p-color-${index}`).value,
+                active: true
+            };
+            renderProductsList();
+            showStatus('Изменения сохранены. Нажмите "Сохранить все изменения".');
+        }
+
+        function deleteProduct(index) {
+            if (confirm('Удалить этот товар?')) {
+                currentProducts.splice(index, 1);
+                renderProductsList();
+                showStatus('Товар удалён. Не забудьте сохранить!');
+            }
+        }
+
+        async function saveProducts() {
+            await saveFile('data/products.json', currentProducts, currentProductsSha, (sha) => currentProductsSha = sha);
+        }
+
+        // REVIEWS
+        async function loadReviewsData() {
+            const list = document.getElementById('reviewsList');
+            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/data/reviews.json?ref=${CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentReviews = [];
+                    currentReviewsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentReviewsSha = data.sha;
+                    currentReviews = JSON.parse(decodeBase64(data.content));
+                }
+                renderReviewsList();
+            } catch (e) {
+                list.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderReviewsList() {
+            const list = document.getElementById('reviewsList');
+            if (currentReviews.length === 0) {
+                list.innerHTML = '<p style="color:#888;">Отзывов пока нет. Нажмите "Добавить отзыв".</p>';
+                return;
+            }
+            list.innerHTML = currentReviews.map((r, i) => `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${escapeHtml(r.name)} ${'★'.repeat(r.rating)}</h3>
+                        <p>${escapeHtml(r.company)} · ${escapeHtml(r.text.substring(0, 60))}...</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-small btn-secondary" onclick="editReview(${i})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-small btn-danger" onclick="deleteReview(${i})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addReview() {
+            currentReviews.push({
+                name: 'Новый клиент',
+                company: 'Компания',
+                text: 'Текст отзыва',
+                rating: 5,
+                image: ''
+            });
+            renderReviewsList();
+            showStatus('Отзыв добавлен. Не забудьте сохранить!');
+        }
+
+        function editReview(index) {
+            const r = currentReviews[index];
+            const html = `
+                <div style="background:#0f0f0f;padding:20px;border-radius:8px;margin-top:12px;">
+                    <div class="field"><label>Имя</label><input type="text" id="r-name-${index}" value="${escapeHtml(r.name)}"></div>
+                    <div class="field"><label>Компания</label><input type="text" id="r-company-${index}" value="${escapeHtml(r.company)}"></div>
+                    <div class="field"><label>Текст отзыва</label><textarea id="r-text-${index}">${escapeHtml(r.text)}</textarea></div>
+                    <div class="field"><label>Рейтинг (1-5)</label>
+                        <select id="r-rating-${index}">
+                            ${[1,2,3,4,5].map(n => `<option value="${n}" ${r.rating === n ? 'selected' : ''}>${n} ${'★'.repeat(n)}</option>`).join('')}
+                        </select>
+                    </div>
+                    <button class="btn btn-small" onclick="saveReviewEdit(${index})">Сохранить изменения</button>
+                </div>
+            `;
+            const list = document.getElementById('reviewsList');
+            const cards = list.querySelectorAll('.item-card');
+            if (cards[index]) cards[index].insertAdjacentHTML('afterend', html);
+        }
+
+        function saveReviewEdit(index) {
+            currentReviews[index] = {
+                name: document.getElementById(`r-name-${index}`).value,
+                company: document.getElementById(`r-company-${index}`).value,
+                text: document.getElementById(`r-text-${index}`).value,
+                rating: parseInt(document.getElementById(`r-rating-${index}`).value),
+                image: currentReviews[index].image || ''
+            };
+            renderReviewsList();
+            showStatus('Изменения сохранены. Нажмите "Сохранить все изменения".');
+        }
+
+        function deleteReview(index) {
+            if (confirm('Удалить этот отзыв?')) {
+                currentReviews.splice(index, 1);
+                renderReviewsList();
+                showStatus('Отзыв удалён. Не забудьте сохранить!');
+            }
+        }
+
+        async function saveReviews() {
+            await saveFile('data/reviews.json', currentReviews, currentReviewsSha, (sha) => currentReviewsSha = sha);
+        }
+
+        // CONTACTS
+        async function loadContactsData() {
+            const editor = document.getElementById('contactsEditor');
+            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/data/contacts.json?ref=${CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentContacts = { phone: '', email: '', address: '', hours: '', vk: '', telegram: '', whatsapp: '' };
+                    currentContactsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentContactsSha = data.sha;
+                    currentContacts = JSON.parse(decodeBase64(data.content));
+                }
+                renderContactsEditor();
+            } catch (e) {
+                editor.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderContactsEditor() {
+            document.getElementById('contactsEditor').innerHTML = `
+                <div class="field"><label>Телефон</label><input type="text" id="c-phone" value="${escapeHtml(currentContacts.phone || '')}"></div>
+                <div class="field"><label>Email</label><input type="email" id="c-email" value="${escapeHtml(currentContacts.email || '')}"></div>
+                <div class="field"><label>Адрес</label><input type="text" id="c-address" value="${escapeHtml(currentContacts.address || '')}"></div>
+                <div class="field"><label>Режим работы</label><input type="text" id="c-hours" value="${escapeHtml(currentContacts.hours || '')}"></div>
+                <div class="field"><label>VK</label><input type="text" id="c-vk" value="${escapeHtml(currentContacts.vk || '')}"></div>
+                <div class="field"><label>Telegram</label><input type="text" id="c-telegram" value="${escapeHtml(currentContacts.telegram || '')}"></div>
+                <div class="field"><label>WhatsApp</label><input type="text" id="c-whatsapp" value="${escapeHtml(currentContacts.whatsapp || '')}"></div>
+            `;
+        }
+
+        async function saveContactsData() {
+            const newData = {
+                phone: document.getElementById('c-phone').value,
+                email: document.getElementById('c-email').value,
+                address: document.getElementById('c-address').value,
+                hours: document.getElementById('c-hours').value,
+                vk: document.getElementById('c-vk').value,
+                telegram: document.getElementById('c-telegram').value,
+                whatsapp: document.getElementById('c-whatsapp').value
+            };
+            await saveFile('data/contacts.json', newData, currentContactsSha, (sha) => currentContactsSha = sha);
+        }
+
+        // COLORS
+        async function loadColorsData() {
+            const editor = document.getElementById('colorsEditor');
+            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/data/colors.json?ref=${CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentColors = { primary: '#F40009' };
+                    currentColorsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentColorsSha = data.sha;
+                    currentColors = JSON.parse(decodeBase64(data.content));
+                }
+                renderColorsEditor();
+            } catch (e) {
+                editor.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderColorsEditor() {
+            const colors = [
+                { name: 'Красный (Coca-Cola)', value: '#F40009' },
+                { name: 'Синий', value: '#0066CC' },
+                { name: 'Зелёный', value: '#00AA44' },
+                { name: 'Чёрный', value: '#1a1a1a' },
+                { name: 'Оранжевый', value: '#FF6B00' },
+                { name: 'Фиолетовый', value: '#8B00FF' },
+                { name: 'Бирюзовый', value: '#00CED1' },
+                { name: 'Розовый', value: '#FF1493' }
+            ];
+            document.getElementById('colorsEditor').innerHTML = `
+                <div class="color-picker">
+                    ${colors.map(c => `
+                        <div class="color-option ${currentColors.primary === c.value ? 'selected' : ''}" 
+                             style="background:${c.value};" 
+                             onclick="selectColor('${c.value}', this)">
+                            <div class="color-name">${c.name}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="field" style="margin-top:20px;">
+                    <label>Или введите свой цвет (HEX)</label>
+                    <input type="text" id="custom-color" value="${escapeHtml(currentColors.primary || '#F40009')}" placeholder="#FF0000">
+                </div>
+            `;
+        }
+
+        function selectColor(color, el) {
+            document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('custom-color').value = color;
+            currentColors.primary = color;
+        }
+
+        async function saveColors() {
+            const customColor = document.getElementById('custom-color').value;
+            if (customColor && customColor !== currentColors.primary) {
+                currentColors.primary = customColor;
+            }
+            await saveFile('data/colors.json', currentColors, currentColorsSha, (sha) => currentColorsSha = sha);
+        }
+
+        // GENERIC SAVE
+        async function saveFile(path, data, sha, onShaUpdate) {
+            const content = encodeBase64(JSON.stringify(data, null, 2));
             const body = {
-                message: `Обновление hero.json через админку`,
+                message: `Обновление ${path} через админку`,
                 content: content,
                 branch: CONFIG.branch
             };
-            if (currentSha) body.sha = currentSha;
-            
-            const btn = document.getElementById('saveBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохранение...';
-            
+            if (sha) body.sha = sha;
+
             try {
-                const res = await fetch(
-                    `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.filePath}`,
-                    {
-                        method: 'PUT',
-                        headers: { 
-                            'Authorization': 'token ' + token,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(body)
-                    }
-                );
-                
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': 'token ' + currentToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
                 if (res.ok) {
                     const result = await res.json();
-                    currentSha = result.content.sha;
-                    currentHeroData = newData;
-                    showStatus('✓ Сохранено! Сайт обновится через 1-2 минуты', 'success');
+                    onShaUpdate(result.content.sha);
+                    showStatus('✓ Сохранено! Сайт обновится через 1-2 минуты');
                 } else {
-                    const err = await res.json();
-                    throw new Error(err.message || 'Ошибка сохранения');
+                    throw new Error((await res.json()).message || 'Ошибка сохранения');
                 }
             } catch (e) {
                 showStatus('✗ Ошибка: ' + e.message, 'error');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-save"></i> Сохранить в GitHub';
             }
         }
     </script>
