@@ -1,8 +1,7 @@
-
 backend:
   name: github
   repo: piarbookru-hub/COCA-COLA
-  branch: main # Если твоя основная ветка называется master, измени здесь на master
+  branch: main
 
 media_folder: "images"
 public_folder: "images"
@@ -12,10 +11,10 @@ collections:
     label: "Настройки сайта"
     files:
       - name: "hero_section"
-        label: "Главный экран (Hero)"
-        file: "data/hero.yml"
+        label: "Главный экран"
+        file: "data/hero.json"
         fields:
-          - { label: "Главный заголовок", name: "title", widget: "string" }
+          - { label: "Главный заголовок (можно использовать <span>)", name: "title", widget: "string" }
           - { label: "Подзаголовок", name: "subtitle", widget: "text" }
           - { label: "Текст на кнопке", name: "button_text", widget: "string" }
           - { label: "Ссылка кнопки", name: "button_link", widget: "string" }
