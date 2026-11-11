@@ -2,13 +2,41 @@
   "home": {
     "title": "Главная страница",
     "blocks": [
-      { "id": "hero", "label": "Главный экран (Hero)", "enabled": true },
-      { "id": "advantages", "label": "Преимущества алюминия", "enabled": true },
-      { "id": "products", "label": "Ассортимент", "enabled": true },
-      { "id": "why-us", "label": "Почему выбирают нас", "enabled": true },
-      { "id": "reviews", "label": "Отзывы клиентов", "enabled": true },
-      { "id": "order", "label": "Форма заказа", "enabled": true },
-      { "id": "contacts", "label": "Контакты", "enabled": true }
+      {
+        "id": "hero",
+        "label": "Главный экран (Hero)",
+        "enabled": true
+      },
+      {
+        "id": "advantages",
+        "label": "Преимущества алюминия",
+        "enabled": true
+      },
+      {
+        "id": "products",
+        "label": "Ассортимент",
+        "enabled": true
+      },
+      {
+        "id": "why-us",
+        "label": "Почему выбирают нас",
+        "enabled": true
+      },
+      {
+        "id": "contacts",
+        "label": "Контакты",
+        "enabled": true
+      },
+      {
+        "id": "reviews",
+        "label": "Отзывы клиентов",
+        "enabled": true
+      },
+      {
+        "id": "order",
+        "label": "Форма заказа",
+        "enabled": true
+      }
     ]
   }
 }
