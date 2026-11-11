@@ -10,7 +10,7 @@ const CMS_CONFIG = {
     owner: 'piarbookru-hub',
     
     // Название репозитория (как называется папка с сайтом)
-    repo: 'МОЙ-САЙТ',
+    repo: 'COCA-COLA',
     
     // Ветка репозитория (обычно main или master)
     branch: 'main',
