@@ -5,7 +5,7 @@
 const CMS_CONFIG = {
     // GitHub репозиторий
     owner: 'piarbookru-hub',
-    repo: 'AVTOSERVIS',
+    repo: 'COCA-COLA',
     branch: 'main',
     
     // Название проекта (отображается в шапке)
