@@ -27,7 +27,6 @@
         .btn-small { width: auto; padding: 8px 16px; font-size: 13px; }
         .btn-danger { background: #dc3545; }
         .btn-danger:hover { background: #c82333; }
-        .btn-icon { width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
         .help-link { color: #F40009; font-size: 13px; text-decoration: none; display: inline-block; margin-top: 12px; }
         .error-msg { color: #ff4444; font-size: 13px; margin-top: 8px; display: none; }
         .error-msg.show { display: block; }
@@ -62,7 +61,7 @@
         .item-info h3 { font-size: 16px; margin-bottom: 4px; }
         .item-info p { color: #888; font-size: 13px; }
         .item-actions { display: flex; gap: 8px; }
-        .status-bar { position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; padding: 14px 20px; border-radius: 8px; border: 1px solid #2a2a2a; font-size: 14px; display: none; z-index: 1000; max-width: 300px; }
+        .status-bar { position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; padding: 14px 20px; border-radius: 8px; border: 1px solid #2a2a2a; font-size: 14px; display: none; z-index: 1000; max-width: 350px; }
         .status-bar.show { display: block; animation: slideIn 0.3s ease-out; }
         .status-bar.success { border-color: #00cc66; color: #00cc66; }
         .status-bar.error { border-color: #ff4444; color: #ff4444; }
@@ -78,7 +77,6 @@
         .color-option.selected { border-color: #fff; }
         .color-option .color-name { margin-top: 8px; font-size: 13px; }
         
-        /* === ПАРСЕР САЙТА === */
         .parser-status {
             background: #0f0f0f;
             border: 2px dashed #333;
@@ -88,6 +86,10 @@
         }
         .parser-status.ready {
             border-color: #00cc66;
+            border-style: solid;
+        }
+        .parser-status.working {
+            border-color: #F40009;
             border-style: solid;
         }
         .parser-status h3 {
@@ -106,6 +108,35 @@
         }
         .parser-status.ready i {
             color: #00cc66;
+        }
+        .parser-status.working i {
+            color: #F40009;
+            animation: spin 1s linear infinite;
+        }
+        
+        .progress-log {
+            text-align: left;
+            background: #0f0f0f;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .progress-log .log-item {
+            padding: 4px 0;
+            color: #888;
+        }
+        .progress-log .log-item.done {
+            color: #00cc66;
+        }
+        .progress-log .log-item.error {
+            color: #ff4444;
+        }
+        .progress-log .log-item.working {
+            color: #F40009;
         }
         
         .preview-container {
@@ -219,7 +250,6 @@
             
             <div class="content">
 
-                <!-- PARSER (ПОДГОТОВКА САЙТА) -->
                 <div class="page active" id="page-parser">
                     <div class="section">
                         <div class="section-header">
@@ -322,10 +352,9 @@
         let currentReviews = [], currentReviewsSha = null;
         let currentContacts = {}, currentContactsSha = null;
         let currentColors = {}, currentColorsSha = null;
-        let currentPages = {}, currentPagesSha = null;
 
-        // === ПЕРЕМЕННЫЕ ПАРСЕРА ===
         let originalHtml = '';
+        let originalHtmlSha = null;
         let parsedElements = [];
         let editableMap = {};
 
@@ -383,19 +412,17 @@
             });
         });
 
-        // ============ ПАРСЕР САЙТА ============
+        // ============ ПАРСЕР ============
         async function checkSiteStatus() {
             const status = document.getElementById('parserStatus');
-            status.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Проверка статуса сайта...</div>';
+            status.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Проверка статуса...</div>';
             
             try {
-                // Проверяем, есть ли editable-map.json
                 const mapRes = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/admin/editable-map.json?ref=${CMS_CONFIG.branch}`, {
                     headers: { 'Authorization': 'token ' + currentToken }
                 });
                 
                 if (mapRes.ok) {
-                    // Сайт уже подготовлен
                     status.className = 'parser-status ready';
                     status.innerHTML = `
                         <i class="fas fa-check-circle"></i>
@@ -406,12 +433,14 @@
                         </button>
                     `;
                 } else {
-                    // Сайт не подготовлен
                     status.className = 'parser-status';
                     status.innerHTML = `
                         <i class="fas fa-magic"></i>
                         <h3>Сайт не подготовлен</h3>
-                        <p>Нужно один раз автоматически расставить метки для редактирования текста и картинок.</p>
+                        <p>Нажмите кнопку ниже — админка автоматически:<br>
+                        • Создаст все JSON-файлы в папке data/<br>
+                        • Расставит метки для редактирования текста и картинок<br>
+                        • Сохранит всё в репозиторий</p>
                         <button class="btn btn-small" onclick="startParser()" style="margin-top: 16px;">
                             <i class="fas fa-download"></i> Загрузить сайт
                         </button>
@@ -424,30 +453,124 @@
 
         async function startParser() {
             const status = document.getElementById('parserStatus');
-            status.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка index.html...</div>';
+            status.className = 'parser-status working';
+            status.innerHTML = `
+                <i class="fas fa-spinner"></i>
+                <h3>Подготовка сайта...</h3>
+                <p>Создаём структуру файлов</p>
+                <div class="progress-log" id="progressLog"></div>
+            `;
+            
+            const log = document.getElementById('progressLog');
+            const logItem = (msg, type = '') => {
+                const div = document.createElement('div');
+                div.className = 'log-item ' + type;
+                div.textContent = (type === 'done' ? '✓ ' : type === 'error' ? '✗ ' : '→ ') + msg;
+                log.appendChild(div);
+                log.scrollTop = log.scrollHeight;
+            };
             
             try {
-                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/index.html?ref=${CMS_CONFIG.branch}`, {
+                // 1. Загружаем index.html
+                logItem('Загрузка index.html...', 'working');
+                const htmlRes = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/index.html?ref=${CMS_CONFIG.branch}`, {
                     headers: { 'Authorization': 'token ' + currentToken }
                 });
-                if (!res.ok) throw new Error('Не удалось загрузить index.html');
+                if (!htmlRes.ok) throw new Error('Не удалось загрузить index.html');
+                const htmlData = await htmlRes.json();
+                originalHtml = decodeBase64(htmlData.content);
+                originalHtmlSha = htmlData.sha;
+                logItem('index.html загружен', 'done');
                 
-                const data = await res.json();
-                originalHtml = decodeBase64(data.content);
-                
-                status.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Анализ контента...</div>';
-                
-                // Парсим HTML
+                // 2. Парсим HTML
+                logItem('Анализ контента...', 'working');
                 parseHtml();
+                logItem(`Найдено ${parsedElements.filter(e => e.type === 'text').length} текстов и ${parsedElements.filter(e => e.type === 'image').length} картинок`, 'done');
                 
-                // Показываем превью
+                // 3. Создаём JSON-файлы автоматически
+                logItem('Создание JSON-файлов...', 'working');
+                await createDefaultJsonFiles(logItem);
+                logItem('Все JSON-файлы созданы', 'done');
+                
+                // 4. Показываем превью
                 document.getElementById('previewContainer').classList.add('active');
                 status.style.display = 'none';
                 
-                showStatus('Сайт загружен. Проверьте список редактируемых элементов.');
+                showStatus('Подготовка завершена. Проверьте список и нажмите "Готово".');
             } catch (e) {
-                status.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+                logItem('Ошибка: ' + e.message, 'error');
+                status.className = 'parser-status';
+                status.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>
+                    <button class="btn btn-small" onclick="startParser()" style="margin-top: 16px;">
+                        <i class="fas fa-redo"></i> Попробовать снова
+                    </button>`;
             }
+        }
+
+        async function createDefaultJsonFiles(logItem) {
+            const files = {
+                'data/hero.json': {
+                    title: 'Заголовок сайта',
+                    subtitle: 'Подзаголовок сайта',
+                    button_text: 'Узнать больше',
+                    button_link: '#contact'
+                },
+                'data/products.json': [],
+                'data/reviews.json': [],
+                'data/contacts.json': {
+                    phone: '',
+                    email: '',
+                    address: '',
+                    hours: '',
+                    vk: '',
+                    telegram: '',
+                    whatsapp: ''
+                },
+                'data/colors.json': {
+                    primary: '#F40009'
+                },
+                'data/pages.json': {
+                    home: {
+                        title: 'Главная страница',
+                        blocks: []
+                    }
+                }
+            };
+            
+            for (const [path, data] of Object.entries(files)) {
+                try {
+                    const checkRes = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${path}?ref=${CMS_CONFIG.branch}`, {
+                        headers: { 'Authorization': 'token ' + currentToken }
+                    });
+                    
+                    if (checkRes.status === 404) {
+                        // Файл не существует — создаём
+                        await createFile(path, data);
+                        logItem(`Создан: ${path}`, 'done');
+                    } else {
+                        logItem(`Существует: ${path}`, 'done');
+                    }
+                } catch (e) {
+                    logItem(`Ошибка ${path}: ${e.message}`, 'error');
+                }
+            }
+        }
+
+        async function createFile(path, data) {
+            const body = {
+                message: `Создание ${path} при подготовке сайта`,
+                content: encodeBase64(JSON.stringify(data, null, 2)),
+                branch: CMS_CONFIG.branch
+            };
+            const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: { 
+                    'Authorization': 'token ' + currentToken,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+            if (!res.ok) throw new Error((await res.json()).message || 'Ошибка');
         }
 
         function parseHtml() {
@@ -457,23 +580,19 @@
             parsedElements = [];
             let counter = 1;
             
-            // Находим все текстовые узлы
             const walker = doc.createTreeWalker(
                 doc.body,
                 NodeFilter.SHOW_TEXT,
                 {
                     acceptNode: function(node) {
-                        // Пропускаем script, style, title, meta
                         const parent = node.parentElement;
                         if (!parent) return NodeFilter.FILTER_REJECT;
                         const tag = parent.tagName.toLowerCase();
                         if (['script', 'style', 'title', 'meta', 'input', 'textarea', 'button'].includes(tag)) {
                             return NodeFilter.FILTER_REJECT;
                         }
-                        // Пропускаем пустые узлы
                         const text = node.textContent.trim();
                         if (!text) return NodeFilter.FILTER_REJECT;
-                        // Проверяем наличие кириллицы
                         if (/[а-яА-ЯёЁ]/.test(text)) {
                             return NodeFilter.FILTER_ACCEPT;
                         }
@@ -488,7 +607,6 @@
                 const text = node.textContent.trim();
                 const key = `auto_${counter++}`;
                 
-                // Оборачиваем текстовый узел в span с data-edit
                 const span = doc.createElement('span');
                 span.setAttribute('data-edit', key);
                 span.textContent = text;
@@ -503,7 +621,6 @@
                 });
             }
             
-            // Находим все img
             const images = doc.querySelectorAll('img');
             images.forEach((img, i) => {
                 const src = img.getAttribute('src') || '';
@@ -520,20 +637,21 @@
                 });
             });
             
-            // Обновляем статистику
             const textCount = parsedElements.filter(e => e.type === 'text').length;
             const imgCount = parsedElements.filter(e => e.type === 'image').length;
             document.getElementById('editableCount').textContent = textCount;
             document.getElementById('imageCount').textContent = imgCount;
             
-            // Загружаем превью в iframe
+            // Сохраняем модифицированный HTML
+            originalHtml = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+            
+            // Загружаем превью
             const iframe = document.getElementById('previewIframe');
             const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             iframeDoc.open();
-            iframeDoc.write(doc.documentElement.outerHTML);
+            iframeDoc.write(originalHtml);
             iframeDoc.close();
             
-            // Добавляем стили подсветки в iframe
             const style = iframeDoc.createElement('style');
             style.textContent = `
                 [data-edit]:hover, [data-img]:hover {
@@ -545,7 +663,6 @@
             `;
             iframeDoc.head.appendChild(style);
             
-            // Генерируем список
             renderEditableList();
         }
 
@@ -579,7 +696,7 @@
         }
 
         async function savePreparedSite() {
-            showStatus('Сохранение изменений...', 'success');
+            showStatus('Сохранение изменений в репозиторий...', 'success');
             
             try {
                 // Генерируем карту
@@ -598,17 +715,13 @@
                 await saveFile('admin/editable-map.json', map, null, () => {});
                 
                 // Сохраняем модифицированный HTML
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(originalHtml, 'text/html');
-                
-                // Применяем изменения (повторно парсим, т.к. originalHtml не менялся)
-                // В реальности нужно сохранить изменённый HTML из parseHtml
-                // Упрощение: просто сохраняем originalHtml + метки через JS на стороне сайта
-                
-                await saveFile('index.html', originalHtml, null, () => {});
+                await saveFile('index.html', originalHtml, originalHtmlSha, () => {});
                 
                 showStatus('✓ Сайт подготовлен! Можно редактировать.');
-                setTimeout(() => checkSiteStatus(), 1500);
+                setTimeout(() => {
+                    document.getElementById('previewContainer').classList.remove('active');
+                    checkSiteStatus();
+                }, 1500);
             } catch (e) {
                 showStatus('✗ Ошибка: ' + e.message, 'error');
             }
@@ -806,7 +919,7 @@
             await saveFile('data/colors.json', currentColors, currentColorsSha, (sha) => currentColorsSha = sha);
         }
 
-        // ============ GENERIC SAVE ============
+        // ============ SAVE FILE ============
         async function saveFile(path, data, sha, onShaUpdate) {
             const body = { message: `Обновление ${path}`, content: encodeBase64(JSON.stringify(data, null, 2)), branch: CMS_CONFIG.branch };
             if (sha) body.sha = sha;
