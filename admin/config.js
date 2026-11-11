@@ -1,17 +1,9 @@
-
-// ============ КОНФИГУРАЦИЯ АДМИНКИ ============
-// Измени эти настройки под свой проект
-
 const CMS_CONFIG = {
-    // GitHub репозиторий
     owner: 'piarbookru-hub',
     repo: 'COCA-COLA',
     branch: 'main',
-    
-    // Название проекта (отображается в шапке)
     projectName: 'COCA-COLA',
     
-    // Поля для редактирования товаров
     productFields: [
         { name: 'name', label: 'Название', type: 'text' },
         { name: 'price', label: 'Цена (₽)', type: 'number' },
@@ -27,7 +19,6 @@ const CMS_CONFIG = {
         ]}
     ],
     
-    // Поля для отзывов
     reviewFields: [
         { name: 'name', label: 'Имя', type: 'text' },
         { name: 'company', label: 'Компания', type: 'text' },
@@ -41,7 +32,6 @@ const CMS_CONFIG = {
         ]}
     ],
     
-    // Поля для контактов
     contactFields: [
         { name: 'phone', label: 'Телефон', type: 'text' },
         { name: 'email', label: 'Email', type: 'email' },
@@ -52,7 +42,6 @@ const CMS_CONFIG = {
         { name: 'whatsapp', label: 'WhatsApp', type: 'text' }
     ],
     
-    // Цвета для выбора
     colorPresets: [
         { name: 'Красный', value: '#F40009' },
         { name: 'Синий', value: '#0066CC' },
@@ -62,5 +51,16 @@ const CMS_CONFIG = {
         { name: 'Фиолетовый', value: '#8B00FF' },
         { name: 'Бирюзовый', value: '#00CED1' },
         { name: 'Розовый', value: '#FF1493' }
+    ],
+    
+    // НОВЫЕ ПОЛЯ ДЛЯ КОНСТРУКТОРА БЛОКОВ
+    availableBlocks: [
+        { id: 'hero', label: 'Главный экран (Hero)', icon: 'fa-home' },
+        { id: 'advantages', label: 'Преимущества', icon: 'fa-check-circle' },
+        { id: 'products', label: 'Каталог товаров', icon: 'fa-box' },
+        { id: 'why-us', label: 'Почему мы', icon: 'fa-thumbs-up' },
+        { id: 'reviews', label: 'Отзывы', icon: 'fa-star' },
+        { id: 'order', label: 'Форма заказа', icon: 'fa-shopping-cart' },
+        { id: 'contacts', label: 'Контакты', icon: 'fa-phone' }
     ]
 };
