@@ -11,7 +11,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; }
         
-        /* LOGIN */
         .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .login-card { background: #1a1a1a; border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; border: 1px solid #2a2a2a; }
         .login-card h1 { font-size: 24px; margin-bottom: 8px; }
@@ -36,10 +35,7 @@
         .help-link:hover { text-decoration: underline; }
         .error-msg { color: #ff4444; font-size: 13px; margin-top: 8px; display: none; }
         .error-msg.show { display: block; }
-        .success-msg { color: #00cc66; font-size: 13px; margin-top: 8px; display: none; }
-        .success-msg.show { display: block; }
         
-        /* DASHBOARD */
         .dashboard { display: none; min-height: 100vh; }
         .dashboard.active { display: block; }
         .top-bar { background: #1a1a1a; border-bottom: 1px solid #2a2a2a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
@@ -84,7 +80,6 @@
 </head>
 <body>
 
-    <!-- ЭКРАН ВХОДА -->
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
             <h1>🔐 Вход в админ-панель</h1>
@@ -105,7 +100,6 @@
         </div>
     </div>
 
-    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
     <div class="dashboard" id="dashboard">
         <div class="top-bar">
             <div>
@@ -116,7 +110,6 @@
         </div>
         
         <div class="content">
-            <!-- HERO SECTION -->
             <div class="section">
                 <div class="section-header">
                     <h2>Главный экран (Hero)</h2>
@@ -133,7 +126,6 @@
                 </div>
             </div>
             
-            <!-- INFO -->
             <div class="section">
                 <div class="section-header">
                     <h2>Информация</h2>
@@ -144,9 +136,6 @@
                     <code style="background:#0f0f0f;padding:2px 6px;border-radius:4px;">data/hero.json</code> 
                     через GitHub API. Сайт автоматически подтягивает эти данные.
                 </p>
-                <p style="color: #888; font-size: 13px; margin-top: 12px;">
-                    <i class="fas fa-info-circle"></i> В следующих этапах добавим каталог, отзывы, контакты и конструктор блоков.
-                </p>
             </div>
         </div>
     </div>
@@ -154,7 +143,6 @@
     <div class="status-bar" id="statusBar"></div>
 
     <script>
-        // ============ КОНФИГУРАЦИЯ ============
         const CONFIG = {
             owner: 'piarbookru-hub',
             repo: 'COCA-COLA',
@@ -162,7 +150,6 @@
             filePath: 'data/hero.json'
         };
 
-        // ============ УТИЛИТЫ ============
         function showStatus(msg, type = 'success') {
             const bar = document.getElementById('statusBar');
             bar.textContent = msg;
@@ -177,24 +164,17 @@
             setTimeout(() => el.classList.remove('show'), 5000);
         }
 
-        // ============ АВТОРИЗАЦИЯ ============
         const loginScreen = document.getElementById('loginScreen');
         const dashboard = document.getElementById('dashboard');
         const tokenInput = document.getElementById('tokenInput');
         const loginBtn = document.getElementById('loginBtn');
         
-        // Автоматический вход, если токен сохранён
         const savedToken = localStorage.getItem('gh_token');
-        if (savedToken) {
-            verifyAndEnter(savedToken);
-        }
+        if (savedToken) verifyAndEnter(savedToken);
 
         loginBtn.addEventListener('click', async () => {
             const token = tokenInput.value.trim();
-            if (!token) {
-                showError('loginError', 'Введите токен');
-                return;
-            }
+            if (!token) { showError('loginError', 'Введите токен'); return; }
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
             const ok = await verifyAndEnter(token);
@@ -222,12 +202,9 @@
                     `${CONFIG.owner}/${CONFIG.repo} · ${user.login}`;
                 loadHeroData();
                 return true;
-            } catch (e) {
-                return false;
-            }
+            } catch (e) { return false; }
         }
 
-        // ============ РАБОТА С ДАННЫМИ ============
         let currentHeroData = {};
         let currentSha = null;
 
@@ -243,13 +220,13 @@
                 );
                 
                 if (res.status === 404) {
-                    // Файл не существует — создаём пустой
                     currentHeroData = { title: '', subtitle: '', button_text: '', button_link: '' };
                     currentSha = null;
                 } else if (res.ok) {
                     const data = await res.json();
                     currentSha = data.sha;
-                    const content = atob(data.content);
+                    // ИСПРАВЛЕННАЯ СТРОКА - правильная работа с UTF-8
+                    const content = decodeURIComponent(escape(atob(data.content)));
                     currentHeroData = JSON.parse(content);
                 } else {
                     throw new Error('Ошибка загрузки');
@@ -290,7 +267,6 @@
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
-        // ============ СОХРАНЕНИЕ ============
         document.getElementById('saveBtn').addEventListener('click', saveHeroData);
         document.getElementById('reloadBtn').addEventListener('click', loadHeroData);
 
@@ -303,6 +279,7 @@
             };
             
             const token = localStorage.getItem('gh_token');
+            // Правильное кодирование UTF-8 для GitHub API
             const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
             
             const body = {
