@@ -3,116 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-панель</title>
+    <title>Админ-панель — визуальный редактор</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="config.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; overflow: hidden; }
+        
         .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .login-card { background: #1a1a1a; border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; border: 1px solid #2a2a2a; }
         .login-card h1 { font-size: 24px; margin-bottom: 8px; }
         .login-card .subtitle { color: #888; margin-bottom: 24px; font-size: 14px; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #F40009; }
+        .form-group input { width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; }
+        .form-group input:focus { outline: none; border-color: #F40009; }
         .btn { width: 100%; padding: 14px; background: #F40009; color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; transition: background 0.2s; }
         .btn:hover { background: #d40007; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-secondary { background: #2a2a2a; }
         .btn-secondary:hover { background: #333; }
         .btn-small { width: auto; padding: 8px 16px; font-size: 13px; }
-        .btn-danger { background: #dc3545; }
-        .btn-danger:hover { background: #c82333; }
         .help-link { color: #F40009; font-size: 13px; text-decoration: none; display: inline-block; margin-top: 12px; }
         .error-msg { color: #ff4444; font-size: 13px; margin-top: 8px; display: none; }
         .error-msg.show { display: block; }
-        .dashboard { display: none; min-height: 100vh; }
-        .dashboard.active { display: flex; }
-        .sidebar { width: 260px; background: #1a1a1a; border-right: 1px solid #2a2a2a; padding: 24px 0; position: fixed; height: 100vh; overflow-y: auto; }
-        .sidebar h1 { font-size: 18px; padding: 0 24px 24px; border-bottom: 1px solid #2a2a2a; }
-        .sidebar-nav { list-style: none; margin-top: 16px; }
-        .sidebar-nav a { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #aaa; text-decoration: none; transition: all 0.2s; font-size: 14px; }
-        .sidebar-nav a:hover { background: #2a2a2a; color: #fff; }
-        .sidebar-nav a.active { background: #F40009; color: #fff; }
-        .sidebar-nav i { width: 20px; }
-        .main-content { flex: 1; margin-left: 260px; }
-        .top-bar { background: #1a1a1a; border-bottom: 1px solid #2a2a2a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .top-bar h2 { font-size: 18px; }
-        .top-bar button { background: transparent; border: 1px solid #333; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
-        .top-bar button:hover { border-color: #F40009; }
-        .content { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
-        .section { background: #1a1a1a; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 1px solid #2a2a2a; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .section-header h2 { font-size: 18px; }
-        .section-header .badge { background: #2a2a2a; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500; text-transform: uppercase; }
-        .field { margin-bottom: 16px; }
-        .field label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
-        .field input, .field textarea, .field select { width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; }
-        .field textarea { resize: vertical; min-height: 80px; }
-        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #F40009; }
-        .action-bar { display: flex; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #2a2a2a; }
-        .action-bar .btn { flex: 1; }
-        .item-card { background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 8px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .item-info { flex: 1; }
-        .item-info h3 { font-size: 16px; margin-bottom: 4px; }
-        .item-info p { color: #888; font-size: 13px; }
-        .item-actions { display: flex; gap: 8px; }
-        .status-bar { position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; padding: 14px 20px; border-radius: 8px; border: 1px solid #2a2a2a; font-size: 14px; display: none; z-index: 1000; max-width: 350px; }
-        .status-bar.show { display: block; animation: slideIn 0.3s ease-out; }
-        .status-bar.success { border-color: #00cc66; color: #00cc66; }
-        .status-bar.error { border-color: #ff4444; color: #ff4444; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .loading { display: flex; align-items: center; justify-content: center; gap: 8px; color: #888; padding: 20px; }
-        .loading i { animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .page { display: none; }
-        .page.active { display: block; }
-        .color-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .color-option { padding: 20px; border-radius: 8px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
-        .color-option:hover { transform: translateY(-4px); }
-        .color-option.selected { border-color: #fff; }
-        .color-option .color-name { margin-top: 8px; font-size: 13px; }
         
-        .parser-status {
+        /* === ГЛАВНЫЙ ИНТЕРФЕЙС РЕДАКТОРА === */
+        .editor-app { display: none; flex-direction: column; height: 100vh; }
+        .editor-app.active { display: flex; }
+        
+        .editor-toolbar {
+            background: #1a1a1a;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            z-index: 100;
+        }
+        .editor-toolbar h1 { font-size: 16px; font-weight: 600; }
+        .editor-toolbar h1 span { color: #888; font-weight: 400; margin-left: 8px; font-size: 13px; }
+        .toolbar-actions { display: flex; gap: 10px; align-items: center; }
+        .toolbar-btn {
+            background: #2a2a2a;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .toolbar-btn:hover { border-color: #F40009; }
+        .toolbar-btn.primary { background: #F40009; border-color: #F40009; }
+        .toolbar-btn.primary:hover { background: #d40007; }
+        .toolbar-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .unsaved-badge {
+            background: #F40009;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-left: 6px;
+            display: none;
+        }
+        .unsaved-badge.show { display: inline-block; }
+        
+        /* === IFRAME === */
+        .iframe-wrapper {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+        }
+        .site-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        
+        /* === ПАНЕЛЬ ПОДГОТОВКИ (первое открытие) === */
+        .setup-screen {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
             background: #0f0f0f;
-            border: 2px dashed #333;
-            border-radius: 12px;
+        }
+        .setup-screen.active { display: flex; }
+        .setup-card {
+            background: #1a1a1a;
+            border-radius: 16px;
             padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #2a2a2a;
             text-align: center;
         }
-        .parser-status.ready {
-            border-color: #00cc66;
-            border-style: solid;
-        }
-        .parser-status.working {
-            border-color: #F40009;
-            border-style: solid;
-        }
-        .parser-status h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-        .parser-status p {
-            color: #888;
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-        .parser-status i {
-            font-size: 48px;
-            color: #333;
-            margin-bottom: 16px;
-        }
-        .parser-status.ready i {
-            color: #00cc66;
-        }
-        .parser-status.working i {
-            color: #F40009;
-            animation: spin 1s linear infinite;
-        }
+        .setup-card i { font-size: 48px; color: #F40009; margin-bottom: 16px; }
+        .setup-card h2 { font-size: 20px; margin-bottom: 12px; }
+        .setup-card p { color: #888; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
         
         .progress-log {
             text-align: left;
@@ -120,245 +118,224 @@
             border-radius: 8px;
             padding: 16px;
             margin-top: 20px;
-            max-height: 300px;
+            max-height: 200px;
             overflow-y: auto;
             font-family: 'Courier New', monospace;
             font-size: 13px;
         }
-        .progress-log .log-item {
-            padding: 4px 0;
-            color: #888;
-        }
-        .progress-log .log-item.done {
-            color: #00cc66;
-        }
-        .progress-log .log-item.error {
-            color: #ff4444;
-        }
-        .progress-log .log-item.working {
-            color: #F40009;
-        }
+        .progress-log .log-item { padding: 4px 0; color: #888; }
+        .progress-log .log-item.done { color: #00cc66; }
+        .progress-log .log-item.error { color: #ff4444; }
+        .progress-log .log-item.working { color: #F40009; }
         
-        .preview-container {
-            display: none;
-            margin-top: 24px;
+        /* === ПАНЕЛЬ РЕДАКТИРОВАНИЯ (внизу) === */
+        .edit-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border-top: 2px solid #F40009;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            z-index: 1000;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
         }
-        .preview-container.active {
-            display: block;
-        }
-        .preview-header {
+        .edit-panel.active { transform: translateY(0); }
+        .edit-panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            padding: 16px;
-            background: #0f0f0f;
-            border-radius: 8px;
+            margin-bottom: 12px;
         }
-        .preview-stats {
-            display: flex;
-            gap: 20px;
-            font-size: 13px;
+        .edit-panel-header h3 { font-size: 14px; font-weight: 600; }
+        .edit-panel-header h3 .key-badge {
+            background: #2a2a2a;
             color: #888;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            margin-left: 8px;
         }
-        .preview-stats strong {
-            color: #F40009;
-        }
-        .preview-iframe-wrapper {
-            position: relative;
-            border: 2px solid #2a2a2a;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #fff;
-        }
-        .preview-iframe {
-            width: 100%;
-            height: 600px;
+        .edit-panel-close {
+            background: transparent;
             border: none;
-            display: block;
+            color: #888;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        .edit-panel-close:hover { color: #fff; }
+        .edit-panel textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            background: #0f0f0f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+        .edit-panel textarea:focus { outline: none; border-color: #F40009; }
+        .edit-panel-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            justify-content: flex-end;
         }
         
-        .editable-list {
-            margin-top: 24px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .editable-item {
+        /* Для картинок */
+        .edit-panel .file-upload {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px;
+            padding: 16px;
             background: #0f0f0f;
-            border: 1px solid #2a2a2a;
+            border: 2px dashed #333;
             border-radius: 8px;
-            margin-bottom: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s;
         }
-        .editable-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #F40009;
+        .edit-panel .file-upload:hover { border-color: #F40009; }
+        .edit-panel .file-upload i { font-size: 24px; color: #F40009; }
+        .edit-panel .file-upload .upload-text { flex: 1; font-size: 14px; color: #aaa; }
+        .edit-panel .file-upload input[type="file"] { display: none; }
+        
+        /* Статус бар */
+        .status-bar {
+            position: fixed;
+            top: 60px;
+            right: 24px;
+            background: #1a1a1a;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            font-size: 14px;
+            display: none;
+            z-index: 2000;
+            max-width: 350px;
         }
-        .editable-item .text-preview {
-            flex: 1;
+        .status-bar.show { display: block; animation: slideIn 0.3s ease-out; }
+        .status-bar.success { border-color: #00cc66; color: #00cc66; }
+        .status-bar.error { border-color: #ff4444; color: #ff4444; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        /* Подсказка сверху */
+        .hint-banner {
+            background: rgba(244, 0, 9, 0.1);
+            border-bottom: 1px solid rgba(244, 0, 9, 0.3);
+            padding: 8px 20px;
             font-size: 13px;
             color: #aaa;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            text-align: center;
         }
-        .editable-item .type-badge {
-            background: #2a2a2a;
-            color: #888;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            text-transform: uppercase;
-        }
+        .hint-banner strong { color: #F40009; }
     </style>
 </head>
 <body>
 
+    <!-- ЭКРАН ВХОДА -->
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
             <h1>🔐 Вход в админ-панель</h1>
             <p class="subtitle">Введите ваш GitHub Personal Access Token</p>
-            <div class="form-group"><label>Personal Access Token</label><input type="password" id="tokenInput" placeholder="ghp_..." autocomplete="off"></div>
+            <div class="form-group">
+                <label>Personal Access Token</label>
+                <input type="password" id="tokenInput" placeholder="ghp_..." autocomplete="off">
+            </div>
             <button class="btn" id="loginBtn">Войти</button>
             <div class="error-msg" id="loginError"></div>
-            <a href="https://github.com/settings/tokens" target="_blank" class="help-link"><i class="fas fa-external-link-alt"></i> Как получить токен</a>
+            <a href="https://github.com/settings/tokens" target="_blank" class="help-link">
+                <i class="fas fa-external-link-alt"></i> Как получить токен
+            </a>
         </div>
     </div>
 
-    <div class="dashboard" id="dashboard">
-        <aside class="sidebar">
-            <h1 id="projectName">Админ-панель</h1>
-            <ul class="sidebar-nav">
-                <li><a href="#parser" class="nav-link active"><i class="fas fa-magic"></i> Подготовка сайта</a></li>
-                <li><a href="#hero" class="nav-link"><i class="fas fa-home"></i> Главная</a></li>
-                <li><a href="#products" class="nav-link"><i class="fas fa-box"></i> Товары</a></li>
-                <li><a href="#reviews" class="nav-link"><i class="fas fa-star"></i> Отзывы</a></li>
-                <li><a href="#contacts" class="nav-link"><i class="fas fa-phone"></i> Контакты</a></li>
-                <li><a href="#colors" class="nav-link"><i class="fas fa-palette"></i> Цвета</a></li>
-            </ul>
-        </aside>
+    <!-- ГЛАВНЫЙ ИНТЕРФЕЙС РЕДАКТОРА -->
+    <div class="editor-app" id="editorApp">
+        <div class="editor-toolbar">
+            <h1>
+                <i class="fas fa-magic" style="color: #F40009;"></i>
+                <span id="projectNameHeader" style="color: #fff; font-weight: 600; margin-left: 8px;">Редактор</span>
+                <span id="repoNameHeader"></span>
+                <span class="unsaved-badge" id="unsavedBadge">● есть несохранённые</span>
+            </h1>
+            <div class="toolbar-actions">
+                <button class="toolbar-btn" onclick="reloadIframe()" title="Обновить превью">
+                    <i class="fas fa-sync"></i> Обновить
+                </button>
+                <button class="toolbar-btn" onclick="resetSite()" title="Подготовить заново">
+                    <i class="fas fa-redo"></i> Переподготовить
+                </button>
+                <button class="toolbar-btn primary" id="saveBtn" onclick="saveAllChanges()">
+                    <i class="fas fa-cloud-upload-alt"></i> Сохранить в GitHub
+                </button>
+                <button class="toolbar-btn" onclick="logout()" title="Выйти">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
         
-        <div class="main-content">
-            <div class="top-bar">
-                <h2 id="pageTitle">Подготовка сайта</h2>
-                <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+        <div class="hint-banner" id="hintBanner">
+            💡 Наведите на любой <strong>текст с кириллицей</strong> или <strong>фото</strong> и кликните — откроется редактор. Изменения появятся сразу в превью.
+        </div>
+        
+        <!-- ЭКРАН ПЕРВОЙ ПОДГОТОВКИ -->
+        <div class="setup-screen" id="setupScreen">
+            <div class="setup-card">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <h2 id="setupTitle">Сайт не подготовлен</h2>
+                <p id="setupDesc">
+                    Админка автоматически:<br>
+                    • Загрузит ваш <strong>index.html</strong><br>
+                    • Найдёт все тексты с кириллицей<br>
+                    • Расставит метки для редактирования<br>
+                    • Сохранит обратно в репозиторий
+                </p>
+                <button class="btn" id="prepareBtn" onclick="prepareSite()">
+                    <i class="fas fa-download"></i> Подготовить сайт
+                </button>
+                <div class="progress-log" id="progressLog" style="display: none;"></div>
             </div>
-            
-            <div class="content">
+        </div>
+        
+        <!-- IFRAME С САЙТОМ -->
+        <div class="iframe-wrapper" id="iframeWrapper" style="display: none;">
+            <iframe id="siteIframe" class="site-iframe" sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe>
+        </div>
+    </div>
 
-                <div class="page active" id="page-parser">
-                    <div class="section">
-                        <div class="section-header">
-                            <h2>Подготовка сайта к редактированию</h2>
-                            <span class="badge">Шаг 1</span>
-                        </div>
-                        
-                        <div id="parserStatus" class="parser-status">
-                            <i class="fas fa-question-circle"></i>
-                            <h3>Проверка статуса...</h3>
-                            <p>Загрузка информации о сайте</p>
-                        </div>
-
-                        <div id="previewContainer" class="preview-container">
-                            <div class="preview-header">
-                                <div class="preview-stats">
-                                    <span>Найдено: <strong id="editableCount">0</strong> текстов</span>
-                                    <span>Изображений: <strong id="imageCount">0</strong></span>
-                                </div>
-                                <div>
-                                    <button class="btn btn-small btn-secondary" onclick="toggleEditableList()">
-                                        <i class="fas fa-list"></i> Показать список
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="preview-iframe-wrapper">
-                                <iframe id="previewIframe" class="preview-iframe" sandbox="allow-same-origin allow-scripts"></iframe>
-                            </div>
-
-                            <div id="editableList" class="editable-list" style="display: none;"></div>
-
-                            <div class="action-bar">
-                                <button class="btn btn-secondary" onclick="resetParser()">
-                                    <i class="fas fa-redo"></i> Начать заново
-                                </button>
-                                <button class="btn" onclick="savePreparedSite()">
-                                    <i class="fas fa-check"></i> Готово — сохранить изменения
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="page" id="page-hero">
-                    <div class="section">
-                        <div class="section-header"><h2>Главный экран (Hero)</h2><span class="badge">hero.json</span></div>
-                        <div id="heroEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
-                        <div class="action-bar">
-                            <button class="btn btn-secondary" onclick="loadHeroData()"><i class="fas fa-sync"></i> Обновить</button>
-                            <button class="btn" onclick="saveHeroData()"><i class="fas fa-save"></i> Сохранить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="page" id="page-products">
-                    <div class="section">
-                        <div class="section-header"><h2>Каталог товаров</h2><button class="btn btn-small" onclick="addProduct()"><i class="fas fa-plus"></i> Добавить товар</button></div>
-                        <div id="productsList"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
-                        <div class="action-bar"><button class="btn" onclick="saveProducts()"><i class="fas fa-save"></i> Сохранить все изменения</button></div>
-                    </div>
-                </div>
-
-                <div class="page" id="page-reviews">
-                    <div class="section">
-                        <div class="section-header"><h2>Отзывы клиентов</h2><button class="btn btn-small" onclick="addReview()"><i class="fas fa-plus"></i> Добавить отзыв</button></div>
-                        <div id="reviewsList"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
-                        <div class="action-bar"><button class="btn" onclick="saveReviews()"><i class="fas fa-save"></i> Сохранить все изменения</button></div>
-                    </div>
-                </div>
-
-                <div class="page" id="page-contacts">
-                    <div class="section">
-                        <div class="section-header"><h2>Контактная информация</h2><span class="badge">contacts.json</span></div>
-                        <div id="contactsEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
-                        <div class="action-bar">
-                            <button class="btn btn-secondary" onclick="loadContactsData()"><i class="fas fa-sync"></i> Обновить</button>
-                            <button class="btn" onclick="saveContactsData()"><i class="fas fa-save"></i> Сохранить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="page" id="page-colors">
-                    <div class="section">
-                        <div class="section-header"><h2>Цветовая схема сайта</h2><span class="badge">colors.json</span></div>
-                        <div id="colorsEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
-                        <div class="action-bar"><button class="btn" onclick="saveColors()"><i class="fas fa-save"></i> Сохранить и применить</button></div>
-                    </div>
-                </div>
-            </div>
+    <!-- ПАНЕЛЬ РЕДАКТИРОВАНИЯ -->
+    <div class="edit-panel" id="editPanel">
+        <div class="edit-panel-header">
+            <h3 id="editPanelTitle">Редактирование <span class="key-badge" id="editKey"></span></h3>
+            <button class="edit-panel-close" onclick="closeEditPanel()">✕</button>
+        </div>
+        <div id="editPanelContent"></div>
+        <div class="edit-panel-actions">
+            <button class="toolbar-btn btn-secondary" onclick="closeEditPanel()">Отмена</button>
+            <button class="toolbar-btn primary" onclick="applyEdit()">Применить</button>
         </div>
     </div>
 
     <div class="status-bar" id="statusBar"></div>
 
     <script>
+        // ============ ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ============
         let currentToken = localStorage.getItem('gh_token');
-        let currentHeroData = {}, currentHeroSha = null;
-        let currentProducts = [], currentProductsSha = null;
-        let currentReviews = [], currentReviewsSha = null;
-        let currentContacts = {}, currentContactsSha = null;
-        let currentColors = {}, currentColorsSha = null;
-
-        let originalHtml = '';
-        let originalHtmlSha = null;
-        let parsedElements = [];
+        let currentHtml = '';
+        let currentHtmlSha = null;
         let editableMap = {};
+        let pendingChanges = {}; // { key: newValue }
+        let currentEditKey = null;
+        let currentEditType = null;
 
-        document.getElementById('projectName').textContent = CMS_CONFIG.projectName;
+        document.getElementById('projectNameHeader').textContent = CMS_CONFIG.projectName;
+        document.getElementById('repoNameHeader').textContent = `· ${CMS_CONFIG.owner}/${CMS_CONFIG.repo}`;
 
         function showStatus(msg, type = 'success') {
             const bar = document.getElementById('statusBar');
@@ -366,102 +343,143 @@
             bar.className = 'status-bar show ' + type;
             setTimeout(() => bar.classList.remove('show'), 3000);
         }
-        function escapeHtml(str) { return str ? String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
-        function decodeBase64(b) { return decodeURIComponent(escape(atob(b))); }
-        function encodeBase64(s) { return btoa(unescape(encodeURIComponent(s))); }
 
-        if (currentToken) verifyAndEnter(currentToken);
+        function decodeBase64(b) {
+            return decodeURIComponent(escape(atob(b)));
+        }
+
+        function encodeBase64(s) {
+            return btoa(unescape(encodeURIComponent(s)));
+        }
+
+        function markUnsaved() {
+            if (Object.keys(pendingChanges).length > 0) {
+                document.getElementById('unsavedBadge').classList.add('show');
+            } else {
+                document.getElementById('unsavedBadge').classList.remove('show');
+            }
+        }
+
+        // ============ АВТОРИЗАЦИЯ ============
+        if (currentToken) {
+            enterApp(currentToken);
+        }
+
         document.getElementById('loginBtn').addEventListener('click', async () => {
             const t = document.getElementById('tokenInput').value.trim();
-            if (t) await verifyAndEnter(t);
-        });
-        document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('gh_token'); location.reload(); });
-
-        async function verifyAndEnter(token) {
+            if (!t) return;
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.textContent = 'Проверка...';
             try {
-                const res = await fetch('https://api.github.com/user', { headers: { 'Authorization': 'token ' + token } });
+                const res = await fetch('https://api.github.com/user', {
+                    headers: { 'Authorization': 'token ' + t }
+                });
                 if (!res.ok) throw new Error();
-                localStorage.setItem('gh_token', token);
-                currentToken = token;
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboard').classList.add('active');
-                checkSiteStatus();
-                return true;
+                localStorage.setItem('gh_token', t);
+                currentToken = t;
+                enterApp(t);
             } catch (e) {
-                document.getElementById('loginError').textContent = 'Неверный токен';
-                document.getElementById('loginError').classList.add('show');
-                return false;
+                const err = document.getElementById('loginError');
+                err.textContent = 'Неверный токен';
+                err.classList.add('show');
+                btn.disabled = false;
+                btn.textContent = 'Войти';
             }
+        });
+
+        async function enterApp(token) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('editorApp').classList.add('active');
+            await checkSiteStatus();
         }
 
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                const page = link.getAttribute('href').substring(1);
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById('page-' + page).classList.add('active');
-                document.getElementById('pageTitle').textContent = link.textContent.trim();
-                if (page === 'hero') loadHeroData();
-                if (page === 'products') loadProductsData();
-                if (page === 'reviews') loadReviewsData();
-                if (page === 'contacts') loadContactsData();
-                if (page === 'colors') loadColorsData();
-                if (page === 'parser') checkSiteStatus();
-            });
-        });
+        function logout() {
+            if (Object.keys(pendingChanges).length > 0) {
+                if (!confirm('Есть несохранённые изменения. Выйти?')) return;
+            }
+            localStorage.removeItem('gh_token');
+            location.reload();
+        }
 
-        // ============ ПАРСЕР ============
+        // ============ ПРОВЕРКА СТАТУСА ============
         async function checkSiteStatus() {
-            const status = document.getElementById('parserStatus');
-            status.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Проверка статуса...</div>';
-            
             try {
-                const mapRes = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/admin/editable-map.json?ref=${CMS_CONFIG.branch}`, {
-                    headers: { 'Authorization': 'token ' + currentToken }
-                });
+                const mapRes = await fetch(
+                    `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/admin/editable-map.json?ref=${CMS_CONFIG.branch}`,
+                    { headers: { 'Authorization': 'token ' + currentToken } }
+                );
                 
                 if (mapRes.ok) {
-                    status.className = 'parser-status ready';
-                    status.innerHTML = `
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Сайт готов к редактированию</h3>
-                        <p>Метки уже расставлены. Можно редактировать контент через разделы меню слева.</p>
-                        <button class="btn btn-small btn-secondary" onclick="resetParser()" style="margin-top: 16px;">
-                            <i class="fas fa-redo"></i> Подготовить заново
-                        </button>
-                    `;
+                    // Сайт подготовлен — сразу показываем iframe
+                    const mapData = await mapRes.json();
+                    editableMap = JSON.parse(decodeBase64(mapData.content));
+                    
+                    // Загружаем текущий index.html
+                    await loadCurrentHtml();
+                    
+                    // Показываем iframe с сайтом
+                    showEditor();
                 } else {
-                    status.className = 'parser-status';
-                    status.innerHTML = `
-                        <i class="fas fa-magic"></i>
-                        <h3>Сайт не подготовлен</h3>
-                        <p>Нажмите кнопку ниже — админка автоматически:<br>
-                        • Создаст все JSON-файлы в папке data/<br>
-                        • Расставит метки для редактирования текста и картинок<br>
-                        • Сохранит всё в репозиторий</p>
-                        <button class="btn btn-small" onclick="startParser()" style="margin-top: 16px;">
-                            <i class="fas fa-download"></i> Загрузить сайт
-                        </button>
-                    `;
+                    // Сайт не подготовлен — показываем экран подготовки
+                    showSetup();
                 }
             } catch (e) {
-                status.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+                showStatus('Ошибка: ' + e.message, 'error');
+                showSetup();
             }
         }
 
-        async function startParser() {
-            const status = document.getElementById('parserStatus');
-            status.className = 'parser-status working';
-            status.innerHTML = `
-                <i class="fas fa-spinner"></i>
-                <h3>Подготовка сайта...</h3>
-                <p>Создаём структуру файлов</p>
-                <div class="progress-log" id="progressLog"></div>
-            `;
+        async function loadCurrentHtml() {
+            const res = await fetch(
+                `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/index.html?ref=${CMS_CONFIG.branch}`,
+                { headers: { 'Authorization': 'token ' + currentToken } }
+            );
+            if (res.ok) {
+                const data = await res.json();
+                currentHtml = decodeBase64(data.content);
+                currentHtmlSha = data.sha;
+            }
+        }
+
+        function showSetup() {
+            document.getElementById('setupScreen').classList.add('active');
+            document.getElementById('iframeWrapper').style.display = 'none';
+            document.getElementById('hintBanner').style.display = 'none';
+        }
+
+        function showEditor() {
+            document.getElementById('setupScreen').classList.remove('active');
+            document.getElementById('iframeWrapper').style.display = 'block';
+            document.getElementById('hintBanner').style.display = 'block';
+            loadSiteInIframe();
+        }
+
+        function loadSiteInIframe() {
+            const iframe = document.getElementById('siteIframe');
+            // Добавляем ?edit=1 чтобы активировать режим редактирования в сайте
+            const siteUrl = `../index.html?edit=1&t=${Date.now()}`;
+            iframe.src = siteUrl;
             
+            // Слушаем сообщения от iframe
+            iframe.onload = () => {
+                setupIframeCommunication();
+            };
+        }
+
+        function reloadIframe() {
+            loadSiteInIframe();
+            showStatus('Превью обновлено');
+        }
+
+        // ============ ПОДГОТОВКА САЙТА ============
+        async function prepareSite() {
+            const btn = document.getElementById('prepareBtn');
             const log = document.getElementById('progressLog');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Подготовка...';
+            log.style.display = 'block';
+            
             const logItem = (msg, type = '') => {
                 const div = document.createElement('div');
                 div.className = 'log-item ' + type;
@@ -472,114 +490,61 @@
             
             try {
                 // 1. Загружаем index.html
-                logItem('Загрузка index.html...', 'working');
-                const htmlRes = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/index.html?ref=${CMS_CONFIG.branch}`, {
-                    headers: { 'Authorization': 'token ' + currentToken }
-                });
+                logItem('Загрузка index.html из репозитория...', 'working');
+                const htmlRes = await fetch(
+                    `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/index.html?ref=${CMS_CONFIG.branch}`,
+                    { headers: { 'Authorization': 'token ' + currentToken } }
+                );
                 if (!htmlRes.ok) throw new Error('Не удалось загрузить index.html');
                 const htmlData = await htmlRes.json();
-                originalHtml = decodeBase64(htmlData.content);
-                originalHtmlSha = htmlData.sha;
+                let html = decodeBase64(htmlData.content);
+                currentHtmlSha = htmlData.sha;
                 logItem('index.html загружен', 'done');
                 
-                // 2. Парсим HTML
-                logItem('Анализ контента...', 'working');
-                parseHtml();
-                logItem(`Найдено ${parsedElements.filter(e => e.type === 'text').length} текстов и ${parsedElements.filter(e => e.type === 'image').length} картинок`, 'done');
+                // 2. Парсим и ставим метки
+                logItem('Анализ контента и расстановка меток...', 'working');
+                const result = processHtml(html);
+                html = result.html;
+                editableMap = result.map;
+                const textCount = Object.values(editableMap).filter(m => m.type === 'text').length;
+                const imgCount = Object.values(editableMap).filter(m => m.type === 'image').length;
+                logItem(`Найдено ${textCount} текстов и ${imgCount} картинок`, 'done');
                 
-                // 3. Создаём JSON-файлы автоматически
-                logItem('Создание JSON-файлов...', 'working');
-                await createDefaultJsonFiles(logItem);
-                logItem('Все JSON-файлы созданы', 'done');
+                // 3. Сохраняем карту
+                logItem('Сохранение карты редактирования...', 'working');
+                await saveFile('admin/editable-map.json', editableMap);
+                logItem('Карта сохранена', 'done');
                 
-                // 4. Показываем превью
-                document.getElementById('previewContainer').classList.add('active');
-                status.style.display = 'none';
+                // 4. Сохраняем модифицированный HTML
+                logItem('Сохранение подготовленного index.html...', 'working');
+                await saveFile('index.html', html, currentHtmlSha);
+                currentHtml = html;
+                logItem('index.html обновлён в репозитории', 'done');
                 
-                showStatus('Подготовка завершена. Проверьте список и нажмите "Готово".');
+                logItem('Подготовка завершена!', 'done');
+                
+                setTimeout(() => {
+                    showStatus('✓ Сайт подготовлен! Открываем редактор...');
+                    setTimeout(() => {
+                        showEditor();
+                    }, 1000);
+                }, 500);
+                
             } catch (e) {
                 logItem('Ошибка: ' + e.message, 'error');
-                status.className = 'parser-status';
-                status.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>
-                    <button class="btn btn-small" onclick="startParser()" style="margin-top: 16px;">
-                        <i class="fas fa-redo"></i> Попробовать снова
-                    </button>`;
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-download"></i> Попробовать снова';
             }
         }
 
-        async function createDefaultJsonFiles(logItem) {
-            const files = {
-                'data/hero.json': {
-                    title: 'Заголовок сайта',
-                    subtitle: 'Подзаголовок сайта',
-                    button_text: 'Узнать больше',
-                    button_link: '#contact'
-                },
-                'data/products.json': [],
-                'data/reviews.json': [],
-                'data/contacts.json': {
-                    phone: '',
-                    email: '',
-                    address: '',
-                    hours: '',
-                    vk: '',
-                    telegram: '',
-                    whatsapp: ''
-                },
-                'data/colors.json': {
-                    primary: '#F40009'
-                },
-                'data/pages.json': {
-                    home: {
-                        title: 'Главная страница',
-                        blocks: []
-                    }
-                }
-            };
-            
-            for (const [path, data] of Object.entries(files)) {
-                try {
-                    const checkRes = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${path}?ref=${CMS_CONFIG.branch}`, {
-                        headers: { 'Authorization': 'token ' + currentToken }
-                    });
-                    
-                    if (checkRes.status === 404) {
-                        // Файл не существует — создаём
-                        await createFile(path, data);
-                        logItem(`Создан: ${path}`, 'done');
-                    } else {
-                        logItem(`Существует: ${path}`, 'done');
-                    }
-                } catch (e) {
-                    logItem(`Ошибка ${path}: ${e.message}`, 'error');
-                }
-            }
-        }
-
-        async function createFile(path, data) {
-            const body = {
-                message: `Создание ${path} при подготовке сайта`,
-                content: encodeBase64(JSON.stringify(data, null, 2)),
-                branch: CMS_CONFIG.branch
-            };
-            const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${path}`, {
-                method: 'PUT',
-                headers: { 
-                    'Authorization': 'token ' + currentToken,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            });
-            if (!res.ok) throw new Error((await res.json()).message || 'Ошибка');
-        }
-
-        function parseHtml() {
+        function processHtml(html) {
             const parser = new DOMParser();
-            const doc = parser.parseFromString(originalHtml, 'text/html');
+            const doc = parser.parseFromString(html, 'text/html');
+            const map = {};
+            let textCounter = 1;
+            let imgCounter = 0;
             
-            parsedElements = [];
-            let counter = 1;
-            
+            // Находим текстовые узлы с кириллицей
             const walker = doc.createTreeWalker(
                 doc.body,
                 NodeFilter.SHOW_TEXT,
@@ -588,9 +553,11 @@
                         const parent = node.parentElement;
                         if (!parent) return NodeFilter.FILTER_REJECT;
                         const tag = parent.tagName.toLowerCase();
-                        if (['script', 'style', 'title', 'meta', 'input', 'textarea', 'button'].includes(tag)) {
+                        if (['script', 'style', 'title', 'meta', 'input', 'textarea', 'button', 'noscript'].includes(tag)) {
                             return NodeFilter.FILTER_REJECT;
                         }
+                        // Пропускаем элементы внутри form
+                        if (parent.closest('form')) return NodeFilter.FILTER_REJECT;
                         const text = node.textContent.trim();
                         if (!text) return NodeFilter.FILTER_REJECT;
                         if (/[а-яА-ЯёЁ]/.test(text)) {
@@ -602,337 +569,411 @@
             );
             
             let node;
+            const nodesToProcess = [];
             while (node = walker.nextNode()) {
+                nodesToProcess.push(node);
+            }
+            
+            nodesToProcess.forEach(node => {
                 const parent = node.parentElement;
                 const text = node.textContent.trim();
-                const key = `auto_${counter++}`;
+                const key = `auto_${textCounter++}`;
+                
+                // Если элемент уже имеет data-edit — пропускаем
+                if (parent.hasAttribute && parent.hasAttribute('data-edit')) return;
                 
                 const span = doc.createElement('span');
                 span.setAttribute('data-edit', key);
-                span.textContent = text;
+                // Копируем содержимое как есть (с HTML внутри если было)
+                span.innerHTML = node.textContent;
                 parent.replaceChild(span, node);
                 
-                parsedElements.push({
-                    key: key,
+                map[key] = {
                     type: 'text',
-                    text: text.substring(0, 80),
-                    selector: getSelector(parent),
-                    enabled: true
-                });
-            }
-            
-            const images = doc.querySelectorAll('img');
-            images.forEach((img, i) => {
-                const src = img.getAttribute('src') || '';
-                const fileName = src.split('/').pop() || `image-${i}.jpg`;
-                const key = `img_${i}`;
-                img.setAttribute('data-img', fileName);
-                
-                parsedElements.push({
-                    key: key,
-                    type: 'image',
-                    text: fileName,
-                    selector: getSelector(img),
-                    enabled: true
-                });
+                    originalText: text.substring(0, 200),
+                    selector: getSelector(parent)
+                };
             });
             
-            const textCount = parsedElements.filter(e => e.type === 'text').length;
-            const imgCount = parsedElements.filter(e => e.type === 'image').length;
-            document.getElementById('editableCount').textContent = textCount;
-            document.getElementById('imageCount').textContent = imgCount;
+            // Находим все img
+            const images = doc.querySelectorAll('img');
+            images.forEach(img => {
+                // Если уже есть data-img — пропускаем
+                if (img.hasAttribute('data-img')) return;
+                const src = img.getAttribute('src') || '';
+                const fileName = src.split('/').pop() || `image-${imgCounter}.jpg`;
+                const key = `img_${imgCounter++}`;
+                img.setAttribute('data-img', fileName);
+                
+                // Оборачиваем img в контейнер с data-img
+                // Не делаем, чтобы не ломать вёрстку — достаточно атрибута на img
+                map[key] = {
+                    type: 'image',
+                    fileName: fileName,
+                    selector: getSelector(img)
+                };
+            });
             
-            // Сохраняем модифицированный HTML
-            originalHtml = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
-            
-            // Загружаем превью
-            const iframe = document.getElementById('previewIframe');
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            iframeDoc.open();
-            iframeDoc.write(originalHtml);
-            iframeDoc.close();
-            
-            const style = iframeDoc.createElement('style');
-            style.textContent = `
-                [data-edit]:hover, [data-img]:hover {
-                    outline: 2px dashed #F40009 !important;
-                    outline-offset: 4px;
-                    background: rgba(244, 0, 9, 0.05) !important;
-                    cursor: pointer;
-                }
-            `;
-            iframeDoc.head.appendChild(style);
-            
-            renderEditableList();
+            return {
+                html: '<!DOCTYPE html>\n' + doc.documentElement.outerHTML,
+                map: map
+            };
         }
 
         function getSelector(el) {
             if (el.id) return `#${el.id}`;
             if (el.className && typeof el.className === 'string') {
                 const classes = el.className.trim().split(/\s+/).slice(0, 2).join('.');
-                if (classes) return `.${classes}`;
+                if (classes) return el.tagName.toLowerCase() + '.' + classes;
             }
             return el.tagName.toLowerCase();
         }
 
-        function renderEditableList() {
-            const list = document.getElementById('editableList');
-            list.innerHTML = parsedElements.map((el, i) => `
-                <div class="editable-item">
-                    <input type="checkbox" ${el.enabled ? 'checked' : ''} onchange="toggleElement(${i}, this.checked)">
-                    <div class="text-preview">${escapeHtml(el.text)}</div>
-                    <div class="type-badge">${el.type === 'text' ? 'Текст' : 'Фото'}</div>
-                </div>
-            `).join('');
-        }
-
-        function toggleElement(index, enabled) {
-            parsedElements[index].enabled = enabled;
-        }
-
-        function toggleEditableList() {
-            const list = document.getElementById('editableList');
-            list.style.display = list.style.display === 'none' ? 'block' : 'none';
-        }
-
-        async function savePreparedSite() {
-            showStatus('Сохранение изменений в репозиторий...', 'success');
+        async function saveFile(path, data, sha = null) {
+            const body = {
+                message: `Обновление ${path}`,
+                content: typeof data === 'string' ? encodeBase64(data) : encodeBase64(JSON.stringify(data, null, 2)),
+                branch: CMS_CONFIG.branch
+            };
+            if (sha) body.sha = sha;
             
+            const res = await fetch(
+                `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${path}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'token ' + currentToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                }
+            );
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Ошибка сохранения');
+            }
+            return await res.json();
+        }
+
+        // ============ СВЯЗЬ С IFRAME ============
+        function setupIframeCommunication() {
+            const iframe = document.getElementById('siteIframe');
             try {
-                // Генерируем карту
-                const map = {};
-                parsedElements.forEach(el => {
-                    if (el.enabled) {
-                        map[el.key] = {
-                            type: el.type,
-                            selector: el.selector,
-                            originalText: el.text
-                        };
-                    }
-                });
+                // Инжектим слушатель кликов в iframe
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDoc) return;
                 
-                // Сохраняем карту
-                await saveFile('admin/editable-map.json', map, null, () => {});
-                
-                // Сохраняем модифицированный HTML
-                await saveFile('index.html', originalHtml, originalHtmlSha, () => {});
-                
-                showStatus('✓ Сайт подготовлен! Можно редактировать.');
-                setTimeout(() => {
-                    document.getElementById('previewContainer').classList.remove('active');
-                    checkSiteStatus();
-                }, 1500);
+                // Добавляем свой обработчик кликов
+                const handlerCode = `
+                    (function() {
+                        document.addEventListener('click', function(e) {
+                            // Клик на текст
+                            const editEl = e.target.closest('[data-edit]');
+                            if (editEl) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.parent.postMessage({
+                                    type: 'EDIT_TEXT',
+                                    key: editEl.getAttribute('data-edit'),
+                                    value: editEl.textContent
+                                }, '*');
+                                return;
+                            }
+                            // Клик на картинку
+                            const imgEl = e.target.closest('[data-img]') || e.target.closest('img[data-img]');
+                            if (imgEl) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const targetImg = imgEl.tagName === 'IMG' ? imgEl : imgEl.querySelector('img');
+                                const key = (targetImg || imgEl).getAttribute('data-img');
+                                window.parent.postMessage({
+                                    type: 'EDIT_IMAGE',
+                                    key: key,
+                                    imgSrc: targetImg ? targetImg.src : ''
+                                }, '*');
+                            }
+                        }, true);
+                    })();
+                `;
+                const script = iframeDoc.createElement('script');
+                script.textContent = handlerCode;
+                iframeDoc.head.appendChild(script);
             } catch (e) {
-                showStatus('✗ Ошибка: ' + e.message, 'error');
+                console.error('Не удалось установить связь с iframe:', e);
             }
         }
 
-        function resetParser() {
-            document.getElementById('previewContainer').classList.remove('active');
-            document.getElementById('parserStatus').style.display = 'block';
-            parsedElements = [];
-            checkSiteStatus();
-        }
+        // Слушаем сообщения от iframe
+        window.addEventListener('message', function(e) {
+            if (!e.data) return;
+            
+            if (e.data.type === 'EDIT_TEXT') {
+                openTextEditor(e.data.key, e.data.value);
+            }
+            if (e.data.type === 'EDIT_IMAGE') {
+                openImageEditor(e.data.key, e.data.imgSrc);
+            }
+        });
 
-        // ============ HERO ============
-        async function loadHeroData() {
-            const editor = document.getElementById('heroEditor');
-            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
-            try {
-                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/hero.json?ref=${CMS_CONFIG.branch}`, { headers: { 'Authorization': 'token ' + currentToken } });
-                if (res.status === 404) { currentHeroData = {}; currentHeroSha = null; }
-                else if (res.ok) { const d = await res.json(); currentHeroSha = d.sha; currentHeroData = JSON.parse(decodeBase64(d.content)); }
-                renderHeroEditor();
-            } catch (e) { editor.innerHTML = `<p style="color:#ff4444;">${e.message}</p>`; }
-        }
-        function renderHeroEditor() {
-            document.getElementById('heroEditor').innerHTML = `
-                <div class="field"><label>Главный заголовок</label><input type="text" id="hero-title" value="${escapeHtml(currentHeroData.title || '')}"></div>
-                <div class="field"><label>Подзаголовок</label><textarea id="hero-subtitle">${escapeHtml(currentHeroData.subtitle || '')}</textarea></div>
-                <div class="field"><label>Текст кнопки</label><input type="text" id="hero-button_text" value="${escapeHtml(currentHeroData.button_text || '')}"></div>
-                <div class="field"><label>Ссылка кнопки</label><input type="text" id="hero-button_link" value="${escapeHtml(currentHeroData.button_link || '')}"></div>
+        // ============ РЕДАКТОРЫ ============
+        function openTextEditor(key, value) {
+            currentEditKey = key;
+            currentEditType = 'text';
+            
+            document.getElementById('editPanelTitle').innerHTML = 
+                `Редактирование текста <span class="key-badge">${key}</span>`;
+            document.getElementById('editPanelContent').innerHTML = `
+                <textarea id="editTextArea">${escapeHtml(value)}</textarea>
             `;
-        }
-        async function saveHeroData() {
-            await saveFile('data/hero.json', {
-                title: document.getElementById('hero-title').value,
-                subtitle: document.getElementById('hero-subtitle').value,
-                button_text: document.getElementById('hero-button_text').value,
-                button_link: document.getElementById('hero-button_link').value
-            }, currentHeroSha, (sha) => currentHeroSha = sha);
+            document.getElementById('editPanel').classList.add('active');
+            setTimeout(() => document.getElementById('editTextArea').focus(), 100);
         }
 
-        // ============ PRODUCTS ============
-        async function loadProductsData() {
-            const list = document.getElementById('productsList');
-            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
-            try {
-                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/products.json?ref=${CMS_CONFIG.branch}`, { headers: { 'Authorization': 'token ' + currentToken } });
-                if (res.status === 404) { currentProducts = []; currentProductsSha = null; }
-                else if (res.ok) { const d = await res.json(); currentProductsSha = d.sha; currentProducts = JSON.parse(decodeBase64(d.content)); }
-                renderProductsList();
-            } catch (e) { list.innerHTML = `<p style="color:#ff4444;">${e.message}</p>`; }
-        }
-        function renderProductsList() {
-            const list = document.getElementById('productsList');
-            if (!currentProducts.length) { list.innerHTML = '<p style="color:#888;">Товаров пока нет.</p>'; return; }
-            list.innerHTML = currentProducts.map((p, i) => `
-                <div class="item-card">
-                    <div class="item-info"><h3>${escapeHtml(p.name)}</h3><p>${p.price} ₽ · ${p.volume || ''}</p></div>
-                    <div class="item-actions">
-                        <button class="btn btn-small btn-secondary" onclick="editProduct(${i})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-small btn-danger" onclick="deleteProduct(${i})"><i class="fas fa-trash"></i></button>
-                    </div>
+        function openImageEditor(key, currentSrc) {
+            currentEditKey = key;
+            currentEditType = 'image';
+            
+            document.getElementById('editPanelTitle').innerHTML = 
+                `Замена изображения <span class="key-badge">${key}</span>`;
+            document.getElementById('editPanelContent').innerHTML = `
+                <div style="margin-bottom: 16px;">
+                    <div style="color: #888; font-size: 13px; margin-bottom: 8px;">Текущее фото:</div>
+                    <img src="${currentSrc}" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
                 </div>
-            `).join('');
-        }
-        function addProduct() {
-            const np = {}; CMS_CONFIG.productFields.forEach(f => np[f.name] = f.type === 'number' ? 0 : '');
-            np.name = 'Новый товар'; currentProducts.push(np); renderProductsList();
-            showStatus('Товар добавлен');
-        }
-        function editProduct(i) {
-            const p = currentProducts[i]; let html = '';
-            CMS_CONFIG.productFields.forEach(f => {
-                const v = p[f.name] || '';
-                if (f.type === 'textarea') html += `<div class="field"><label>${f.label}</label><textarea id="p-${f.name}-${i}">${escapeHtml(v)}</textarea></div>`;
-                else if (f.type === 'select') {
-                    const opts = f.options.map(o => `<option value="${o.value}" ${v === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
-                    html += `<div class="field"><label>${f.label}</label><select id="p-${f.name}-${i}">${opts}</select></div>`;
-                } else html += `<div class="field"><label>${f.label}</label><input type="${f.type}" id="p-${f.name}-${i}" value="${escapeHtml(v)}"></div>`;
-            });
-            const fullHtml = `<div style="background:#0f0f0f;padding:20px;border-radius:8px;margin-top:12px;">${html}<button class="btn btn-small" onclick="saveProductEdit(${i})">Сохранить</button></div>`;
-            const cards = document.querySelectorAll('#productsList .item-card');
-            if (cards[i]) cards[i].insertAdjacentHTML('afterend', fullHtml);
-        }
-        function saveProductEdit(i) {
-            const u = {};
-            CMS_CONFIG.productFields.forEach(f => {
-                const v = document.getElementById(`p-${f.name}-${i}`).value;
-                u[f.name] = f.type === 'number' ? (parseInt(v) || 0) : v;
-            });
-            currentProducts[i] = u; renderProductsList();
-        }
-        function deleteProduct(i) { if (confirm('Удалить товар?')) { currentProducts.splice(i, 1); renderProductsList(); } }
-        async function saveProducts() { await saveFile('data/products.json', currentProducts, currentProductsSha, (sha) => currentProductsSha = sha); }
-
-        // ============ REVIEWS ============
-        async function loadReviewsData() {
-            const list = document.getElementById('reviewsList');
-            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
-            try {
-                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/reviews.json?ref=${CMS_CONFIG.branch}`, { headers: { 'Authorization': 'token ' + currentToken } });
-                if (res.status === 404) { currentReviews = []; currentReviewsSha = null; }
-                else if (res.ok) { const d = await res.json(); currentReviewsSha = d.sha; currentReviews = JSON.parse(decodeBase64(d.content)); }
-                renderReviewsList();
-            } catch (e) { list.innerHTML = `<p style="color:#ff4444;">${e.message}</p>`; }
-        }
-        function renderReviewsList() {
-            const list = document.getElementById('reviewsList');
-            if (!currentReviews.length) { list.innerHTML = '<p style="color:#888;">Отзывов пока нет.</p>'; return; }
-            list.innerHTML = currentReviews.map((r, i) => `
-                <div class="item-card">
-                    <div class="item-info"><h3>${escapeHtml(r.name)} ${'★'.repeat(r.rating || 5)}</h3><p>${escapeHtml(r.company || '')}</p></div>
-                    <div class="item-actions">
-                        <button class="btn btn-small btn-secondary" onclick="editReview(${i})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-small btn-danger" onclick="deleteReview(${i})"><i class="fas fa-trash"></i></button>
+                <label class="file-upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="upload-text">
+                        <strong>Выберите новое изображение</strong><br>
+                        <small>Рекомендуемый формат: JPG, PNG. Максимум 2 МБ.</small>
                     </div>
-                </div>
-            `).join('');
-        }
-        function addReview() {
-            const nr = {}; CMS_CONFIG.reviewFields.forEach(f => nr[f.name] = f.type === 'select' ? 5 : '');
-            nr.name = 'Новый клиент'; nr.rating = 5; currentReviews.push(nr); renderReviewsList();
-        }
-        function editReview(i) {
-            const r = currentReviews[i]; let html = '';
-            CMS_CONFIG.reviewFields.forEach(f => {
-                const v = r[f.name] || '';
-                if (f.type === 'textarea') html += `<div class="field"><label>${f.label}</label><textarea id="r-${f.name}-${i}">${escapeHtml(v)}</textarea></div>`;
-                else if (f.type === 'select') {
-                    const opts = f.options.map(o => `<option value="${o.value}" ${v == o.value ? 'selected' : ''}>${o.label}</option>`).join('');
-                    html += `<div class="field"><label>${f.label}</label><select id="r-${f.name}-${i}">${opts}</select></div>`;
-                } else html += `<div class="field"><label>${f.label}</label><input type="${f.type}" id="r-${f.name}-${i}" value="${escapeHtml(v)}"></div>`;
-            });
-            const fullHtml = `<div style="background:#0f0f0f;padding:20px;border-radius:8px;margin-top:12px;">${html}<button class="btn btn-small" onclick="saveReviewEdit(${i})">Сохранить</button></div>`;
-            const cards = document.querySelectorAll('#reviewsList .item-card');
-            if (cards[i]) cards[i].insertAdjacentHTML('afterend', fullHtml);
-        }
-        function saveReviewEdit(i) {
-            const u = {};
-            CMS_CONFIG.reviewFields.forEach(f => {
-                const v = document.getElementById(`r-${f.name}-${i}`).value;
-                u[f.name] = f.type === 'select' ? parseInt(v) : v;
-            });
-            currentReviews[i] = u; renderReviewsList();
-        }
-        function deleteReview(i) { if (confirm('Удалить отзыв?')) { currentReviews.splice(i, 1); renderReviewsList(); } }
-        async function saveReviews() { await saveFile('data/reviews.json', currentReviews, currentReviewsSha, (sha) => currentReviewsSha = sha); }
-
-        // ============ CONTACTS ============
-        async function loadContactsData() {
-            const editor = document.getElementById('contactsEditor');
-            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
-            try {
-                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/contacts.json?ref=${CMS_CONFIG.branch}`, { headers: { 'Authorization': 'token ' + currentToken } });
-                if (res.status === 404) { currentContacts = {}; CMS_CONFIG.contactFields.forEach(f => currentContacts[f.name] = ''); currentContactsSha = null; }
-                else if (res.ok) { const d = await res.json(); currentContactsSha = d.sha; currentContacts = JSON.parse(decodeBase64(d.content)); }
-                renderContactsEditor();
-            } catch (e) { editor.innerHTML = `<p style="color:#ff4444;">${e.message}</p>`; }
-        }
-        function renderContactsEditor() {
-            document.getElementById('contactsEditor').innerHTML = CMS_CONFIG.contactFields.map(f => 
-                `<div class="field"><label>${f.label}</label><input type="${f.type}" id="c-${f.name}" value="${escapeHtml(currentContacts[f.name] || '')}"></div>`
-            ).join('');
-        }
-        async function saveContactsData() {
-            const d = {}; CMS_CONFIG.contactFields.forEach(f => d[f.name] = document.getElementById(`c-${f.name}`).value);
-            await saveFile('data/contacts.json', d, currentContactsSha, (sha) => currentContactsSha = sha);
-        }
-
-        // ============ COLORS ============
-        async function loadColorsData() {
-            const editor = document.getElementById('colorsEditor');
-            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
-            try {
-                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/colors.json?ref=${CMS_CONFIG.branch}`, { headers: { 'Authorization': 'token ' + currentToken } });
-                if (res.status === 404) { currentColors = { primary: '#F40009' }; currentColorsSha = null; }
-                else if (res.ok) { const d = await res.json(); currentColorsSha = d.sha; currentColors = JSON.parse(decodeBase64(d.content)); }
-                renderColorsEditor();
-            } catch (e) { editor.innerHTML = `<p style="color:#ff4444;">${e.message}</p>`; }
-        }
-        function renderColorsEditor() {
-            document.getElementById('colorsEditor').innerHTML = `
-                <div class="color-picker">${CMS_CONFIG.colorPresets.map(c => 
-                    `<div class="color-option ${currentColors.primary === c.value ? 'selected' : ''}" style="background:${c.value};" onclick="selectColor('${c.value}', this)"><div class="color-name">${c.name}</div></div>`
-                ).join('')}</div>
-                <div class="field" style="margin-top:20px;"><label>Или свой цвет (HEX)</label><input type="text" id="custom-color" value="${escapeHtml(currentColors.primary || '#F40009')}"></div>
+                    <input type="file" id="imageFileInput" accept="image/*">
+                </label>
+                <div id="imagePreview" style="margin-top: 12px;"></div>
             `;
-        }
-        function selectColor(c, el) {
-            document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
-            el.classList.add('selected'); document.getElementById('custom-color').value = c; currentColors.primary = c;
-        }
-        async function saveColors() {
-            const c = document.getElementById('custom-color').value;
-            if (c) currentColors.primary = c;
-            await saveFile('data/colors.json', currentColors, currentColorsSha, (sha) => currentColorsSha = sha);
+            
+            document.getElementById('imageFileInput').addEventListener('change', handleImageSelect);
+            document.getElementById('editPanel').classList.add('active');
         }
 
-        // ============ SAVE FILE ============
-        async function saveFile(path, data, sha, onShaUpdate) {
-            const body = { message: `Обновление ${path}`, content: encodeBase64(JSON.stringify(data, null, 2)), branch: CMS_CONFIG.branch };
-            if (sha) body.sha = sha;
-            try {
-                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${path}`, {
-                    method: 'PUT',
-                    headers: { 'Authorization': 'token ' + currentToken, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
-                });
-                if (res.ok) { const r = await res.json(); onShaUpdate(r.content.sha); showStatus('✓ Сохранено!'); }
-                else throw new Error((await res.json()).message || 'Ошибка');
-            } catch (e) { showStatus('✗ ' + e.message, 'error'); }
+        let pendingImageData = null;
+        let pendingImageName = null;
+
+        function handleImageSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 2 * 1024 * 1024) {
+                showStatus('Файл слишком большой (максимум 2 МБ)', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                pendingImageData = ev.target.result; // base64
+                pendingImageName = file.name;
+                document.getElementById('imagePreview').innerHTML = `
+                    <div style="color: #00cc66; font-size: 13px;">
+                        ✓ Файл выбран: <strong>${file.name}</strong> (${(file.size/1024).toFixed(0)} КБ)
+                    </div>
+                `;
+            };
+            reader.readAsDataURL(file);
         }
+
+        function applyEdit() {
+            if (currentEditType === 'text') {
+                const newValue = document.getElementById('editTextArea').value;
+                pendingChanges[currentEditKey] = { type: 'text', value: newValue };
+                
+                // Немедленно обновляем в iframe
+                const iframe = document.getElementById('siteIframe');
+                try {
+                    const iframeDoc = iframe.contentDocument;
+                    const el = iframeDoc.querySelector(`[data-edit="${currentEditKey}"]`);
+                    if (el) el.textContent = newValue;
+                } catch (e) {}
+                
+                showStatus('✓ Изменения применены. Не забудьте сохранить в GitHub.');
+            } else if (currentEditType === 'image') {
+                if (!pendingImageData) {
+                    showStatus('Выберите файл', 'error');
+                    return;
+                }
+                pendingChanges[currentEditKey] = { 
+                    type: 'image', 
+                    data: pendingImageData,
+                    fileName: pendingImageName
+                };
+                
+                // Обновляем в iframe
+                const iframe = document.getElementById('siteIframe');
+                try {
+                    const iframeDoc = iframe.contentDocument;
+                    const img = iframeDoc.querySelector(`img[data-img="${currentEditKey}"], [data-img="${currentEditKey}"] img`);
+                    if (img) img.src = pendingImageData;
+                } catch (e) {}
+                
+                pendingImageData = null;
+                pendingImageName = null;
+                showStatus('✓ Фото изменено. Не забудьте сохранить в GitHub.');
+            }
+            
+            markUnsaved();
+            closeEditPanel();
+        }
+
+        function closeEditPanel() {
+            document.getElementById('editPanel').classList.remove('active');
+            currentEditKey = null;
+            currentEditType = null;
+            pendingImageData = null;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ============ СОХРАНЕНИЕ В GITHUB ============
+        async function saveAllChanges() {
+            const changes = Object.keys(pendingChanges);
+            if (changes.length === 0) {
+                showStatus('Нет изменений для сохранения');
+                return;
+            }
+            
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Сохранение...';
+            
+            try {
+                // Перезагружаем актуальный HTML
+                await loadCurrentHtml();
+                let html = currentHtml;
+                
+                // Применяем изменения текстов
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                for (const [key, change] of Object.entries(pendingChanges)) {
+                    if (change.type === 'text') {
+                        const el = doc.querySelector(`[data-edit="${key}"]`);
+                        if (el) el.textContent = change.value;
+                    }
+                }
+                
+                // Сохраняем изменённый HTML
+                const newHtml = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+                const result = await saveFile('index.html', newHtml, currentHtmlSha);
+                currentHtmlSha = result.content.sha;
+                currentHtml = newHtml;
+                
+                // Сохраняем картинки (отдельно каждую)
+                const imageChanges = Object.entries(pendingChanges).filter(([k, v]) => v.type === 'image');
+                for (const [key, change] of imageChanges) {
+                    // Конвертируем base64 в бинарные данные для GitHub API
+                    const base64Data = change.data.split(',')[1];
+                    const fileName = `images/${change.fileName}`;
+                    
+                    // Проверяем существует ли файл
+                    let fileSha = null;
+                    try {
+                        const checkRes = await fetch(
+                            `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${fileName}?ref=${CMS_CONFIG.branch}`,
+                            { headers: { 'Authorization': 'token ' + currentToken } }
+                        );
+                        if (checkRes.ok) {
+                            const checkData = await checkRes.json();
+                            fileSha = checkData.sha;
+                        }
+                    } catch (e) {}
+                    
+                    const body = {
+                        message: `Обновление изображения ${fileName}`,
+                        content: base64Data,
+                        branch: CMS_CONFIG.branch
+                    };
+                    if (fileSha) body.sha = fileSha;
+                    
+                    const res = await fetch(
+                        `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${fileName}`,
+                        {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': 'token ' + currentToken,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(body)
+                        }
+                    );
+                    if (!res.ok) {
+                        const err = await res.json();
+                        console.error('Ошибка сохранения фото:', err.message);
+                    }
+                }
+                
+                pendingChanges = {};
+                markUnsaved();
+                
+                showStatus(`✓ Сохранено в GitHub! Сайт обновится через 1-2 минуты.`);
+                
+                setTimeout(() => {
+                    reloadIframe();
+                }, 2000);
+                
+            } catch (e) {
+                showStatus('✗ Ошибка: ' + e.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Сохранить в GitHub';
+            }
+        }
+
+        // ============ СБРОС ============
+        async function resetSite() {
+            if (!confirm('Удалить карту редактирования и подготовить сайт заново? Текущий index.html не будет изменён.')) return;
+            
+            try {
+                // Удаляем карту
+                const mapRes = await fetch(
+                    `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/admin/editable-map.json?ref=${CMS_CONFIG.branch}`,
+                    { headers: { 'Authorization': 'token ' + currentToken } }
+                );
+                if (mapRes.ok) {
+                    const data = await mapRes.json();
+                    await fetch(
+                        `https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/admin/editable-map.json`,
+                        {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': 'token ' + currentToken,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                message: 'Удаление карты для переподготовки',
+                                sha: data.sha,
+                                branch: CMS_CONFIG.branch
+                            })
+                        }
+                    );
+                }
+                showStatus('Карта удалена. Готовим сайт заново...');
+                setTimeout(() => {
+                    showSetup();
+                    document.getElementById('setupTitle').textContent = 'Готовим заново';
+                }, 1000);
+            } catch (e) {
+                showStatus('Ошибка: ' + e.message, 'error');
+            }
+        }
+
+        // ============ ПРЕДУПРЕЖДЕНИЕ О ВЫХОДЕ ============
+        window.addEventListener('beforeunload', (e) => {
+            if (Object.keys(pendingChanges).length > 0) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
     </script>
 </body>
 </html>
