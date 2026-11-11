@@ -5,7 +5,7 @@
       {
         "id": "hero",
         "label": "Главный экран (Hero)",
-        "enabled": true
+        "enabled": false
       },
       {
         "id": "advantages",
