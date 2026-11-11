@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="config.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; }
+        
+        .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .login-card { background: #1a1a1a; border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; border: 1px solid #2a2a2a; }
+        .login-card h1 { font-size: 24px; margin-bottom: 8px; }
+        .login-card .subtitle { color: #888; margin-bottom: 24px; font-size: 14px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
+        .form-group input, .form-group textarea, .form-group select { 
+            width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; 
+            border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; 
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #F40009; }
+        .btn { 
+            width: 100%; padding: 14px; background: #F40009; color: #fff; border: none; 
+            border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; 
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #d40007; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-secondary { background: #2a2a2a; }
+        .btn-secondary:hover { background: #333; }
+        .btn-small { width: auto; padding: 8px 16px; font-size: 13px; }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #c82333; }
+        .help-link { color: #F40009; font-size: 13px; text-decoration: none; display: inline-block; margin-top: 12px; }
+        .help-link:hover { text-decoration: underline; }
+        .error-msg { color: #ff4444; font-size: 13px; margin-top: 8px; display: none; }
+        .error-msg.show { display: block; }
+        
+        .dashboard { display: none; min-height: 100vh; }
+        .dashboard.active { display: flex; }
+        
+        .sidebar { 
+            width: 260px; background: #1a1a1a; border-right: 1px solid #2a2a2a; 
+            padding: 24px 0; position: fixed; height: 100vh; overflow-y: auto;
+        }
+        .sidebar h1 { font-size: 18px; padding: 0 24px 24px; border-bottom: 1px solid #2a2a2a; }
+        .sidebar-nav { list-style: none; margin-top: 16px; }
+        .sidebar-nav li { padding: 0; }
+        .sidebar-nav a { 
+            display: flex; align-items: center; gap: 12px; padding: 12px 24px; 
+            color: #aaa; text-decoration: none; transition: all 0.2s; font-size: 14px;
+        }
+        .sidebar-nav a:hover { background: #2a2a2a; color: #fff; }
+        .sidebar-nav a.active { background: #F40009; color: #fff; }
+        .sidebar-nav i { width: 20px; }
+        
+        .main-content { flex: 1; margin-left: 260px; }
+        .top-bar { background: #1a1a1a; border-bottom: 1px solid #2a2a2a; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .top-bar h2 { font-size: 18px; }
+        .top-bar button { background: transparent; border: 1px solid #333; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        .top-bar button:hover { border-color: #F40009; }
+        
+        .content { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
+        .section { background: #1a1a1a; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 1px solid #2a2a2a; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .section-header h2 { font-size: 18px; }
+        .section-header .badge { background: #2a2a2a; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500; text-transform: uppercase; }
+        
+        .field { margin-bottom: 16px; }
+        .field label { display: block; margin-bottom: 6px; font-size: 13px; color: #aaa; font-weight: 500; }
+        .field input, .field textarea, .field select { 
+            width: 100%; padding: 12px 14px; background: #0f0f0f; border: 1px solid #333; 
+            border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; 
+        }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #F40009; }
+        .field .hint { font-size: 11px; color: #666; margin-top: 4px; }
+        
+        .action-bar { display: flex; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #2a2a2a; }
+        .action-bar .btn { flex: 1; }
+        
+        .item-list { margin-bottom: 20px; }
+        .item-card { 
+            background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 8px; 
+            padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .item-info { flex: 1; }
+        .item-info h3 { font-size: 16px; margin-bottom: 4px; }
+        .item-info p { color: #888; font-size: 13px; }
+        .item-actions { display: flex; gap: 8px; }
+        
+        .status-bar { 
+            position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; 
+            padding: 14px 20px; border-radius: 8px; border: 1px solid #2a2a2a; 
+            font-size: 14px; display: none; z-index: 1000; max-width: 300px;
+        }
+        .status-bar.show { display: block; animation: slideIn 0.3s ease-out; }
+        .status-bar.success { border-color: #00cc66; color: #00cc66; }
+        .status-bar.error { border-color: #ff4444; color: #ff4444; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        .loading { display: flex; align-items: center; justify-content: center; gap: 8px; color: #888; padding: 20px; }
+        .loading i { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        .color-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .color-option { 
+            padding: 20px; border-radius: 8px; text-align: center; cursor: pointer; 
+            border: 2px solid transparent; transition: all 0.2s;
+        }
+        .color-option:hover { transform: translateY(-4px); }
+        .color-option.selected { border-color: #fff; }
+        .color-option .color-name { margin-top: 8px; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <h1>🔐 Вход в админ-панель</h1>
+            <p class="subtitle">Введите ваш GitHub Personal Access Token</p>
+            
+            <div class="form-group">
+                <label>Personal Access Token</label>
+                <input type="password" id="tokenInput" placeholder="ghp_..." autocomplete="off">
+            </div>
+            
+            <button class="btn" id="loginBtn">Войти</button>
+            
+            <div class="error-msg" id="loginError"></div>
+            
+            <a href="https://github.com/settings/tokens" target="_blank" class="help-link">
+                <i class="fas fa-external-link-alt"></i> Как получить токен
+            </a>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard">
+        <aside class="sidebar">
+            <h1 id="projectName">Админ-панель</h1>
+            <ul class="sidebar-nav">
+                <li><a href="#hero" class="nav-link active"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="#products" class="nav-link"><i class="fas fa-box"></i> Товары</a></li>
+                <li><a href="#reviews" class="nav-link"><i class="fas fa-star"></i> Отзывы</a></li>
+                <li><a href="#contacts" class="nav-link"><i class="fas fa-phone"></i> Контакты</a></li>
+                <li><a href="#colors" class="nav-link"><i class="fas fa-palette"></i> Цвета</a></li>
+            </ul>
+        </aside>
+        
+        <div class="main-content">
+            <div class="top-bar">
+                <h2 id="pageTitle">Главная</h2>
+                <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+            </div>
+            
+            <div class="content">
+                <div class="page active" id="page-hero">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Главный экран (Hero)</h2>
+                            <span class="badge">hero.json</span>
+                        </div>
+                        <div id="heroEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="loadHeroData()"><i class="fas fa-sync"></i> Обновить</button>
+                            <button class="btn" onclick="saveHeroData()"><i class="fas fa-save"></i> Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page" id="page-products">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Каталог товаров</h2>
+                            <button class="btn btn-small" onclick="addProduct()"><i class="fas fa-plus"></i> Добавить товар</button>
+                        </div>
+                        <div id="productsList"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn" onclick="saveProducts()"><i class="fas fa-save"></i> Сохранить все изменения</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page" id="page-reviews">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Отзывы клиентов</h2>
+                            <button class="btn btn-small" onclick="addReview()"><i class="fas fa-plus"></i> Добавить отзыв</button>
+                        </div>
+                        <div id="reviewsList"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn" onclick="saveReviews()"><i class="fas fa-save"></i> Сохранить все изменения</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page" id="page-contacts">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Контактная информация</h2>
+                            <span class="badge">contacts.json</span>
+                        </div>
+                        <div id="contactsEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="loadContactsData()"><i class="fas fa-sync"></i> Обновить</button>
+                            <button class="btn" onclick="saveContactsData()"><i class="fas fa-save"></i> Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page" id="page-colors">
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Цветовая схема сайта</h2>
+                            <span class="badge">colors.json</span>
+                        </div>
+                        <div id="colorsEditor"><div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div></div>
+                        <div class="action-bar">
+                            <button class="btn" onclick="saveColors()"><i class="fas fa-save"></i> Сохранить и применить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar" id="statusBar"></div>
+
+    <script>
+        let currentToken = localStorage.getItem('gh_token');
+        let currentHeroData = {}, currentHeroSha = null;
+        let currentProducts = [], currentProductsSha = null;
+        let currentReviews = [], currentReviewsSha = null;
+        let currentContacts = {}, currentContactsSha = null;
+        let currentColors = {}, currentColorsSha = null;
+
+        document.getElementById('projectName').textContent = CMS_CONFIG.projectName;
+
+        function showStatus(msg, type = 'success') {
+            const bar = document.getElementById('statusBar');
+            bar.textContent = msg;
+            bar.className = 'status-bar show ' + type;
+            setTimeout(() => bar.classList.remove('show'), 3000);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function decodeBase64(base64) {
+            return decodeURIComponent(escape(atob(base64)));
+        }
+
+        function encodeBase64(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+        }
+
+        if (currentToken) verifyAndEnter(currentToken);
+
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const token = document.getElementById('tokenInput').value.trim();
+            if (!token) return;
+            await verifyAndEnter(token);
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('gh_token');
+            location.reload();
+        });
+
+        async function verifyAndEnter(token) {
+            try {
+                const res = await fetch('https://api.github.com/user', {
+                    headers: { 'Authorization': 'token ' + token }
+                });
+                if (!res.ok) throw new Error();
+                localStorage.setItem('gh_token', token);
+                currentToken = token;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+                loadHeroData();
+                return true;
+            } catch (e) {
+                document.getElementById('loginError').textContent = 'Неверный токен';
+                document.getElementById('loginError').classList.add('show');
+                return false;
+            }
+        }
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                const page = link.getAttribute('href').substring(1);
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + page).classList.add('active');
+                document.getElementById('pageTitle').textContent = link.textContent.trim();
+                
+                if (page === 'products') loadProductsData();
+                if (page === 'reviews') loadReviewsData();
+                if (page === 'contacts') loadContactsData();
+                if (page === 'colors') loadColorsData();
+            });
+        });
+
+        async function loadHeroData() {
+            const editor = document.getElementById('heroEditor');
+            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/hero.json?ref=${CMS_CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentHeroData = { title: '', subtitle: '', button_text: '', button_link: '' };
+                    currentHeroSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentHeroSha = data.sha;
+                    currentHeroData = JSON.parse(decodeBase64(data.content));
+                }
+                renderHeroEditor();
+            } catch (e) {
+                editor.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderHeroEditor() {
+            document.getElementById('heroEditor').innerHTML = `
+                <div class="field"><label>Главный заголовок</label><input type="text" id="hero-title" value="${escapeHtml(currentHeroData.title || '')}"></div>
+                <div class="field"><label>Подзаголовок</label><textarea id="hero-subtitle">${escapeHtml(currentHeroData.subtitle || '')}</textarea></div>
+                <div class="field"><label>Текст кнопки</label><input type="text" id="hero-button_text" value="${escapeHtml(currentHeroData.button_text || '')}"></div>
+                <div class="field"><label>Ссылка кнопки</label><input type="text" id="hero-button_link" value="${escapeHtml(currentHeroData.button_link || '')}"></div>
+            `;
+        }
+
+        async function saveHeroData() {
+            const newData = {
+                title: document.getElementById('hero-title').value,
+                subtitle: document.getElementById('hero-subtitle').value,
+                button_text: document.getElementById('hero-button_text').value,
+                button_link: document.getElementById('hero-button_link').value
+            };
+            await saveFile('data/hero.json', newData, currentHeroSha, (sha) => currentHeroSha = sha);
+        }
+
+        async function loadProductsData() {
+            const list = document.getElementById('productsList');
+            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/products.json?ref=${CMS_CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentProducts = [];
+                    currentProductsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentProductsSha = data.sha;
+                    currentProducts = JSON.parse(decodeBase64(data.content));
+                }
+                renderProductsList();
+            } catch (e) {
+                list.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderProductsList() {
+            const list = document.getElementById('productsList');
+            if (currentProducts.length === 0) {
+                list.innerHTML = '<p style="color:#888;">Товаров пока нет. Нажмите "Добавить товар".</p>';
+                return;
+            }
+            list.innerHTML = currentProducts.map((p, i) => `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${escapeHtml(p.name)}</h3>
+                        <p>${p.price} ₽ · ${p.volume || ''}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-small btn-secondary" onclick="editProduct(${i})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-small btn-danger" onclick="deleteProduct(${i})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addProduct() {
+            const newProduct = {};
+            CMS_CONFIG.productFields.forEach(f => {
+                newProduct[f.name] = f.type === 'number' ? 0 : '';
+            });
+            newProduct.name = 'Новый товар';
+            currentProducts.push(newProduct);
+            renderProductsList();
+            showStatus('Товар добавлен. Не забудьте сохранить!');
+        }
+
+        function editProduct(index) {
+            const p = currentProducts[index];
+            let fieldsHtml = '';
+            CMS_CONFIG.productFields.forEach(f => {
+                const value = p[f.name] || '';
+                if (f.type === 'textarea') {
+                    fieldsHtml += `<div class="field"><label>${f.label}</label><textarea id="p-${f.name}-${index}">${escapeHtml(value)}</textarea></div>`;
+                } else if (f.type === 'select') {
+                    const options = f.options.map(o => `<option value="${o.value}" ${value === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
+                    fieldsHtml += `<div class="field"><label>${f.label}</label><select id="p-${f.name}-${index}">${options}</select></div>`;
+                } else {
+                    fieldsHtml += `<div class="field"><label>${f.label}</label><input type="${f.type}" id="p-${f.name}-${index}" value="${escapeHtml(value)}"></div>`;
+                }
+            });
+            const html = `<div style="background:#0f0f0f;padding:20px;border-radius:8px;margin-top:12px;">${fieldsHtml}<button class="btn btn-small" onclick="saveProductEdit(${index})">Сохранить изменения</button></div>`;
+            const list = document.getElementById('productsList');
+            const cards = list.querySelectorAll('.item-card');
+            if (cards[index]) cards[index].insertAdjacentHTML('afterend', html);
+        }
+
+        function saveProductEdit(index) {
+            const updated = {};
+            CMS_CONFIG.productFields.forEach(f => {
+                const input = document.getElementById(`p-${f.name}-${index}`);
+                updated[f.name] = f.type === 'number' ? (parseInt(input.value) || 0) : input.value;
+            });
+            currentProducts[index] = updated;
+            renderProductsList();
+            showStatus('Изменения сохранены. Нажмите "Сохранить все изменения".');
+        }
+
+        function deleteProduct(index) {
+            if (confirm('Удалить этот товар?')) {
+                currentProducts.splice(index, 1);
+                renderProductsList();
+                showStatus('Товар удалён. Не забудьте сохранить!');
+            }
+        }
+
+        async function saveProducts() {
+            await saveFile('data/products.json', currentProducts, currentProductsSha, (sha) => currentProductsSha = sha);
+        }
+
+        async function loadReviewsData() {
+            const list = document.getElementById('reviewsList');
+            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/reviews.json?ref=${CMS_CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentReviews = [];
+                    currentReviewsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentReviewsSha = data.sha;
+                    currentReviews = JSON.parse(decodeBase64(data.content));
+                }
+                renderReviewsList();
+            } catch (e) {
+                list.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderReviewsList() {
+            const list = document.getElementById('reviewsList');
+            if (currentReviews.length === 0) {
+                list.innerHTML = '<p style="color:#888;">Отзывов пока нет. Нажмите "Добавить отзыв".</p>';
+                return;
+            }
+            list.innerHTML = currentReviews.map((r, i) => `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${escapeHtml(r.name)} ${'★'.repeat(r.rating || 5)}</h3>
+                        <p>${escapeHtml(r.company || '')} · ${escapeHtml((r.text || '').substring(0, 60))}...</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-small btn-secondary" onclick="editReview(${i})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-small btn-danger" onclick="deleteReview(${i})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addReview() {
+            const newReview = {};
+            CMS_CONFIG.reviewFields.forEach(f => {
+                newReview[f.name] = f.type === 'select' ? 5 : '';
+            });
+            newReview.name = 'Новый клиент';
+            newReview.rating = 5;
+            currentReviews.push(newReview);
+            renderReviewsList();
+            showStatus('Отзыв добавлен. Не забудьте сохранить!');
+        }
+
+        function editReview(index) {
+            const r = currentReviews[index];
+            let fieldsHtml = '';
+            CMS_CONFIG.reviewFields.forEach(f => {
+                const value = r[f.name] || '';
+                if (f.type === 'textarea') {
+                    fieldsHtml += `<div class="field"><label>${f.label}</label><textarea id="r-${f.name}-${index}">${escapeHtml(value)}</textarea></div>`;
+                } else if (f.type === 'select') {
+                    const options = f.options.map(o => `<option value="${o.value}" ${value === o.value || value == o.value ? 'selected' : ''}>${o.label}</option>`).join('');
+                    fieldsHtml += `<div class="field"><label>${f.label}</label><select id="r-${f.name}-${index}">${options}</select></div>`;
+                } else {
+                    fieldsHtml += `<div class="field"><label>${f.label}</label><input type="${f.type}" id="r-${f.name}-${index}" value="${escapeHtml(value)}"></div>`;
+                }
+            });
+            const html = `<div style="background:#0f0f0f;padding:20px;border-radius:8px;margin-top:12px;">${fieldsHtml}<button class="btn btn-small" onclick="saveReviewEdit(${index})">Сохранить изменения</button></div>`;
+            const list = document.getElementById('reviewsList');
+            const cards = list.querySelectorAll('.item-card');
+            if (cards[index]) cards[index].insertAdjacentHTML('afterend', html);
+        }
+
+        function saveReviewEdit(index) {
+            const updated = {};
+            CMS_CONFIG.reviewFields.forEach(f => {
+                const input = document.getElementById(`r-${f.name}-${index}`);
+                updated[f.name] = f.type === 'select' ? parseInt(input.value) : input.value;
+            });
+            currentReviews[index] = updated;
+            renderReviewsList();
+            showStatus('Изменения сохранены. Нажмите "Сохранить все изменения".');
+        }
+
+        function deleteReview(index) {
+            if (confirm('Удалить этот отзыв?')) {
+                currentReviews.splice(index, 1);
+                renderReviewsList();
+                showStatus('Отзыв удалён. Не забудьте сохранить!');
+            }
+        }
+
+        async function saveReviews() {
+            await saveFile('data/reviews.json', currentReviews, currentReviewsSha, (sha) => currentReviewsSha = sha);
+        }
+
+        async function loadContactsData() {
+            const editor = document.getElementById('contactsEditor');
+            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/contacts.json?ref=${CMS_CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentContacts = {};
+                    CMS_CONFIG.contactFields.forEach(f => currentContacts[f.name] = '');
+                    currentContactsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentContactsSha = data.sha;
+                    currentContacts = JSON.parse(decodeBase64(data.content));
+                }
+                renderContactsEditor();
+            } catch (e) {
+                editor.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderContactsEditor() {
+            let html = '';
+            CMS_CONFIG.contactFields.forEach(f => {
+                const value = currentContacts[f.name] || '';
+                html += `<div class="field"><label>${f.label}</label><input type="${f.type}" id="c-${f.name}" value="${escapeHtml(value)}"></div>`;
+            });
+            document.getElementById('contactsEditor').innerHTML = html;
+        }
+
+        async function saveContactsData() {
+            const newData = {};
+            CMS_CONFIG.contactFields.forEach(f => {
+                newData[f.name] = document.getElementById(`c-${f.name}`).value;
+            });
+            await saveFile('data/contacts.json', newData, currentContactsSha, (sha) => currentContactsSha = sha);
+        }
+
+        async function loadColorsData() {
+            const editor = document.getElementById('colorsEditor');
+            editor.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> Загрузка...</div>';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/data/colors.json?ref=${CMS_CONFIG.branch}`, {
+                    headers: { 'Authorization': 'token ' + currentToken }
+                });
+                if (res.status === 404) {
+                    currentColors = { primary: '#F40009' };
+                    currentColorsSha = null;
+                } else if (res.ok) {
+                    const data = await res.json();
+                    currentColorsSha = data.sha;
+                    currentColors = JSON.parse(decodeBase64(data.content));
+                }
+                renderColorsEditor();
+            } catch (e) {
+                editor.innerHTML = `<p style="color:#ff4444;">Ошибка: ${e.message}</p>`;
+            }
+        }
+
+        function renderColorsEditor() {
+            document.getElementById('colorsEditor').innerHTML = `
+                <div class="color-picker">
+                    ${CMS_CONFIG.colorPresets.map(c => `
+                        <div class="color-option ${currentColors.primary === c.value ? 'selected' : ''}" 
+                             style="background:${c.value};" 
+                             onclick="selectColor('${c.value}', this)">
+                            <div class="color-name">${c.name}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="field" style="margin-top:20px;">
+                    <label>Или введите свой цвет (HEX)</label>
+                    <input type="text" id="custom-color" value="${escapeHtml(currentColors.primary || '#F40009')}" placeholder="#FF0000">
+                </div>
+            `;
+        }
+
+        function selectColor(color, el) {
+            document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('custom-color').value = color;
+            currentColors.primary = color;
+        }
+
+        async function saveColors() {
+            const customColor = document.getElementById('custom-color').value;
+            if (customColor && customColor !== currentColors.primary) {
+                currentColors.primary = customColor;
+            }
+            await saveFile('data/colors.json', currentColors, currentColorsSha, (sha) => currentColorsSha = sha);
+        }
+
+        async function saveFile(path, data, sha, onShaUpdate) {
+            const content = encodeBase64(JSON.stringify(data, null, 2));
+            const body = {
+                message: `Обновление ${path} через админку`,
+                content: content,
+                branch: CMS_CONFIG.branch
+            };
+            if (sha) body.sha = sha;
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CMS_CONFIG.owner}/${CMS_CONFIG.repo}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': 'token ' + currentToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+                if (res.ok) {
+                    const result = await res.json();
+                    onShaUpdate(result.content.sha);
+                    showStatus('✓ Сохранено! Сайт обновится через 1-2 минуты');
+                } else {
+                    throw new Error((await res.json()).message || 'Ошибка сохранения');
+                }
+            } catch (e) {
+                showStatus('✗ Ошибка: ' + e.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
