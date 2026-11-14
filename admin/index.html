@@ -317,6 +317,12 @@ function validLinkUrl(u) {
     return !!safeAbs(u);
 }
 
+function isAdminSelf(file) {
+    try {
+        return new URL(encPath(file), siteBaseUrl).pathname === window.location.pathname;
+    } catch { return false; }
+}
+
 function resolveRepoPath(src) {
     try {
         const dirUrl = new URL(encPath(currentFile), 'https://repo.local/');
@@ -550,6 +556,11 @@ async function enterApp() {
                 f = await getFile(currentFile);
             } else throw e;
         }
+        if (isAdminSelf(currentFile)) {
+            showSetup();
+            showErrorDetails('Админка лежит в корне сайта', 'CONFIG', 'Текущий файл совпадает с файлом самой админ-панели.', 'Переместите этот файл в папку admin/ (admin/index.html), а сайт оставьте в корневом index.html. Иначе редактор будет править сам себя.');
+            return;
+        }
         if (f.text.includes('data-edit="')) {
             repoDeployId = readDeployId(f.text);
             showEditor();
@@ -643,13 +654,14 @@ function reloadPreview() {
 
 function isInternalPage(href) {
     if (href === undefined || href === null) return false;
+    if (href.trim().startsWith('#')) return false;
     if (href === '' || href === '/' || href === './') return true;
     const clean = href.split(/[?#]/)[0];
-    if (clean.startsWith('#')) return false;
     if (/^(tel:|mailto:|javascript:|data:)/i.test(clean)) return false;
     if (!/^(https?:|\/\/)/i.test(clean)) {
         if (clean === '' || clean === '.') return true;
         if (clean.endsWith('/')) return true;
+        if (clean.startsWith('/') && clean.replace(/\/+$/, '') === siteBasePathNoSlash()) return true;
         return /\.html?$/i.test(clean);
     }
     try {
@@ -705,6 +717,7 @@ function normalizePagePath(href) {
 async function prepareCurrentFile(logContainer = null) {
     const btn = $('prepareBtn');
     if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Подготовка...'; }
+    const fileBeingPrepared = currentFile;
     const li = (msg, type = '') => {
         if (logContainer) {
             const div = document.createElement('div');
@@ -715,10 +728,15 @@ async function prepareCurrentFile(logContainer = null) {
         }
     };
     try {
-        li('Загрузка ' + currentFile + ' из репозитория...', 'working');
-        const f = await getFile(currentFile);
-        if (!f.text.trim()) throw new Error(currentFile + ' пуст или не прочитан');
-        li(`${currentFile} загружен (${(f.text.length / 1024).toFixed(1)} КБ)`, 'done');
+        if (isAdminSelf(fileBeingPrepared)) {
+            li('⚠ Операция отменена: это файл самой админ-панели', 'error');
+            showStatus('Админку нельзя редактировать через саму себя. Переместите её в папку admin/.', 'error');
+            return false;
+        }
+        li('Загрузка ' + fileBeingPrepared + ' из репозитория...', 'working');
+        const f = await getFile(fileBeingPrepared);
+        if (!f.text.trim()) throw new Error(fileBeingPrepared + ' пуст или не прочитан');
+        li(`${fileBeingPrepared} загружен (${(f.text.length / 1024).toFixed(1)} КБ)`, 'done');
         if (f.text.includes('data-edit="') || f.text.includes('data-img=')) {
             li('Обнаружены старые метки — очищаем...', 'working');
             const cleaned = cleanHtmlMarks(f.text);
@@ -728,12 +746,12 @@ async function prepareCurrentFile(logContainer = null) {
         li('Анализ контента и расстановка меток...', 'working');
         const r = processHtml(f.text);
         li(`Найдено ${r.textCount} текстов и ${r.imgCount} картинок`, 'done');
-        li('Сохранение подготовленного ' + currentFile + '...', 'working');
+        li('Сохранение подготовленного ' + fileBeingPrepared + '...', 'working');
         const deployId = newDeployId();
         const stamped = stampDeployId(r.html, deployId);
-        await putFile(currentFile, b64e(stamped), f.sha, `Подготовка ${currentFile} к редактированию`);
+        await putFile(fileBeingPrepared, b64e(stamped), f.sha, `Подготовка ${fileBeingPrepared} к редактированию`);
         repoDeployId = deployId;
-        li(currentFile + ' обновлён в репозитории', 'done');
+        li(fileBeingPrepared + ' обновлён в репозитории', 'done');
         li('Подготовка завершена!', 'done');
         return true;
     } catch (e) {
@@ -758,6 +776,10 @@ async function prepareSite() {
 async function navigateTo(href) {
     const cleanPath = normalizePagePath(href);
     if (!cleanPath) { showStatus('Не удалось определить страницу по ссылке: ' + href, 'error'); return; }
+    if (isAdminSelf(cleanPath)) {
+        showStatus('⚠ Это файл самой админ-панели — редактировать его нельзя.', 'error');
+        return;
+    }
     if (cleanPath === currentFile && !viewModeUrl) { reloadPreview(); return; }
     if (Object.keys(pending).length) {
         if (!confirm('Есть несохранённые правки. При переходе они будут потеряны. Продолжить?')) return;
@@ -823,7 +845,7 @@ function openLiveSite() { window.open(viewModeUrl ? viewModeUrl : pageUrl().href
 
 function hookIframe() {
     let d;
-    try { d = $('siteIframe').contentDocument; } catch { return; }
+    try { d = $('siteIframe').contentDocument; } catch { d = null; }
     if (!d || !d.head) {
         showStatus('Нет доступа к превью (sandbox)', 'error');
         return;
@@ -1218,6 +1240,12 @@ function openText(key, value) {
     setTimeout(() => ta.focus(), 100);
 }
 
+// ═══════════════════════════════════════════════════════
+// ИСПРАВЛЕНО: принимаем ЛЮБОЙ графический формат
+// (браузеры читают картинки по magic bytes, не по расширению)
+// Убрана строгая проверка EXT_OK[file.type].includes(ext)
+// Оставлена только проверка MIME-типа (чтобы файл точно был картинкой)
+// ═══════════════════════════════════════════════════════
 function openImage(path, src, imgId) {
     editKind = 'image';
     editKey = imgId || path;
@@ -1226,15 +1254,20 @@ function openImage(path, src, imgId) {
     openPanel('Замена изображения', path);
     const imgLinkData = readImageLink(editKey, path);
     editOrigImg = imgLinkData;
+
+    // Показываем клиенту текущее расширение (для понимания)
+    const currentExt = (path.split('.').pop() || '').toLowerCase();
+    const extDisplay = currentExt ? `<code style="background:#2a2a2a;padding:2px 6px;border-radius:3px;font-size:11px;">.${currentExt}</code>` : '';
+
     $('editPanelContent').innerHTML = `
         <div style="margin-bottom: 16px;">
-            <div style="color: #888; font-size: 13px; margin-bottom: 8px;">Текущее фото:</div>
+            <div style="color: #888; font-size: 13px; margin-bottom: 8px;">Текущее фото ${extDisplay}:</div>
             <img id="curImg" alt="" style="max-width: 100%; max-height: 180px; border-radius: 8px;">
         </div>
         <label class="file-upload">
             <i class="fas fa-cloud-upload-alt"></i>
-            <div class="upload-text"><strong>Выберите новое изображение</strong><br><small>JPG, PNG, WebP, GIF. Максимум 2 МБ. Файл заменит ${esc(path)} (расширение должно совпадать).</small></div>
-            <input type="file" id="imageFileInput" accept="image/jpeg,image/png,image/webp,image/gif">
+            <div class="upload-text"><strong>Выберите новое изображение</strong><br><small>Поддерживаются: JPG, PNG, WebP, GIF, SVG. Максимум 2 МБ. Файл заменит <code style="background:#2a2a2a;padding:1px 5px;border-radius:3px;">${esc(path)}</code>.</small></div>
+            <input type="file" id="imageFileInput" accept="image/*">
         </label>
         <div id="imagePreview" style="margin-top: 12px;"></div>
         <div class="link-section">
@@ -1255,21 +1288,37 @@ function openImage(path, src, imgId) {
     const r = document.querySelector(`input[name="imgLinkTarget"][value="${imgLinkData.linkTarget}"]`) || document.querySelector('input[name="imgLinkTarget"][value="_blank"]');
     if (r) r.checked = true;
 
-    const EXT_OK = { 'image/jpeg': ['jpg', 'jpeg'], 'image/png': ['png'], 'image/webp': ['webp'], 'image/gif': ['gif'] };
+    // Разрешённые MIME-типы (любая картинка)
+    const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml', 'image/bmp', 'image/x-icon'];
+
     $('imageFileInput').addEventListener('change', e => {
         const file = e.target.files[0];
         if (!file) return;
-        if (!EXT_OK[file.type]) return showStatus('Допустимы JPG, PNG, WebP, GIF', 'error');
-        if (file.size > 2 * 1024 * 1024) return showStatus('Файл слишком большой (максимум 2 МБ)', 'error');
-        const ext = (path.split('.').pop() || '').toLowerCase();
-        if (!EXT_OK[file.type].includes(ext)) {
+
+        // Проверка 1: MIME-тип должен быть картинкой
+        if (!IMAGE_TYPES.includes(file.type) && !file.type.startsWith('image/')) {
             e.target.value = '';
-            return showStatus(`Формат файла не совпадает с расширением .${ext} — выберите файл того же формата`, 'error');
+            return showStatus('Файл должен быть изображением (JPG, PNG, WebP, GIF, SVG)', 'error');
         }
+
+        // Проверка 2: размер не более 2 МБ
+        if (file.size > 2 * 1024 * 1024) {
+            e.target.value = '';
+            return showStatus('Файл слишком большой (максимум 2 МБ)', 'error');
+        }
+
+        // Проверка 3: расширение файла должно быть графическим (защита от .exe под видом .jpg)
+        const fileExt = (file.name.split('.').pop() || '').toLowerCase();
+        const ALLOWED_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'bmp', 'ico'];
+        if (!ALLOWED_EXTS.includes(fileExt)) {
+            e.target.value = '';
+            return showStatus('Неподдерживаемое расширение файла: .' + fileExt, 'error');
+        }
+
         const rd = new FileReader();
         rd.onload = ev => {
             pendingImg = ev.target.result;
-            $('imagePreview').innerHTML = `<div style="color: #00cc66; font-size: 13px;"><i class="fas fa-check-circle"></i> Файл: <strong>${esc(file.name)}</strong> (${(file.size / 1024).toFixed(0)} КБ)</div>`;
+            $('imagePreview').innerHTML = `<div style="color: #00cc66; font-size: 13px;"><i class="fas fa-check-circle"></i> Файл: <strong>${esc(file.name)}</strong> (${(file.size / 1024).toFixed(0)} КБ) — готов к загрузке</div>`;
         };
         rd.readAsDataURL(file);
     });
