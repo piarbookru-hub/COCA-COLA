@@ -31,194 +31,240 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* ====== ШАПКА ====== */
-header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.96); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid rgba(139, 69, 19, 0.1); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.98); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid rgba(139, 69, 19, 0.1); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; gap: 20px; }
 .logo { font-weight: 800; font-size: 22px; color: var(--brown-dark); letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
 .logo i { color: var(--accent); }
-.nav-list { display: flex; gap: 26px; list-style: none; }
-.nav-list a { font-size: 14px; font-weight: 500; color: var(--text); transition: color 0.2s; }
+.nav-list { display: flex; gap: 24px; list-style: none; }
+.nav-list a { font-size: 13px; font-weight: 600; color: var(--text); transition: color 0.2s; }
 .nav-list a:hover { color: var(--accent); }
-.header-phone { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 15px; color: var(--brown-dark); }
+.header-phone { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; color: var(--brown-dark); white-space: nowrap; }
 .header-phone i { color: var(--accent); }
+.header-cta { padding: 10px 20px; font-size: 12px; }
 .burger { display: none; font-size: 24px; color: var(--brown-dark); }
 
 /* ====== HERO ====== */
-.hero { position: relative; min-height: 88vh; display: flex; align-items: center; color: #fff; overflow: hidden; padding: 80px 0 60px; }
+.hero { position: relative; min-height: 80vh; display: flex; align-items: center; color: #fff; overflow: hidden; padding: 60px 0 50px; }
 .hero-bg { position: absolute; inset: 0; background: linear-gradient(rgba(58, 42, 26, 0.72), rgba(58, 42, 26, 0.55)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80') center/cover; z-index: -1; }
 .hero-content { max-width: 780px; }
-.hero-tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(201, 101, 43, 0.9); border-radius: 30px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 24px; }
-.hero h1 { font-size: clamp(2rem, 5.5vw, 52px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(201, 101, 43, 0.9); border-radius: 30px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+.hero h1 { font-size: clamp(1.8rem, 5vw, 48px); font-weight: 800; line-height: 1.1; margin-bottom: 18px; }
 .hero h1 span { color: #f4b888; }
-.hero p { font-size: clamp(1rem, 2vw, 18px); opacity: 0.92; margin-bottom: 32px; max-width: 640px; }
-.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 520px; margin-bottom: 32px; }
-.hero-stat { background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); padding: 16px 20px; border-radius: 10px; }
-.hero-stat strong { display: block; font-size: 24px; font-weight: 800; color: #f4b888; margin-bottom: 4px; }
-.hero-stat span { font-size: 13px; opacity: 0.9; }
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero p { font-size: clamp(0.95rem, 1.8vw, 17px); opacity: 0.92; margin-bottom: 26px; max-width: 640px; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 500px; margin-bottom: 26px; }
+.hero-stat { background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); padding: 14px 18px; border-radius: 10px; }
+.hero-stat strong { display: block; font-size: 22px; font-weight: 800; color: #f4b888; margin-bottom: 3px; }
+.hero-stat span { font-size: 12px; opacity: 0.9; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* ====== КНОПКИ ====== */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 32px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 8px; transition: all 0.3s; cursor: pointer; border: none; }
-.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 10px 30px rgba(201, 101, 43, 0.35); }
-.btn-primary:hover { background: #b5551f; transform: translateY(-2px); box-shadow: 0 14px 40px rgba(201, 101, 43, 0.5); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 8px; transition: all 0.3s; cursor: pointer; border: none; }
+.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 24px rgba(201, 101, 43, 0.35); }
+.btn-primary:hover { background: #b5551f; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201, 101, 43, 0.5); }
 .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
 .btn-outline:hover { background: #fff; color: var(--brown-dark); border-color: #fff; }
 .btn-outline-dark { background: transparent; color: var(--brown-dark); border: 2px solid var(--brown-light); }
 .btn-outline-dark:hover { background: var(--brown-light); color: #fff; }
 
 /* ====== СЕКЦИИ ====== */
-.section { padding: 80px 0; }
-.section-head { text-align: center; max-width: 720px; margin: 0 auto 50px; }
-.section-label { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 14px; }
-.section-title { font-size: clamp(1.8rem, 4vw, 40px); font-weight: 800; color: var(--brown-dark); line-height: 1.2; margin-bottom: 14px; }
+.section { padding: 50px 0; }
+.section-head { text-align: center; max-width: 720px; margin: 0 auto 36px; }
+.section-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 12px; }
+.section-title { font-size: clamp(1.6rem, 3.5vw, 36px); font-weight: 800; color: var(--brown-dark); line-height: 1.2; margin-bottom: 12px; }
 .section-title span { color: var(--accent); }
-.section-subtitle { font-size: 16px; color: var(--text-muted); }
+.section-subtitle { font-size: 15px; color: var(--text-muted); }
 
 /* ====== ПРЕИМУЩЕСТВА ====== */
-.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.feature-card { background: #fff; padding: 32px 28px; border-radius: 12px; border: 1px solid rgba(139, 69, 19, 0.08); transition: all 0.3s; }
-.feature-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(58, 42, 26, 0.1); border-color: var(--accent); }
-.feature-icon { width: 54px; height: 54px; background: linear-gradient(135deg, var(--accent), #e88a54); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; margin-bottom: 20px; }
-.feature-card h3 { font-size: 18px; font-weight: 700; color: var(--brown-dark); margin-bottom: 10px; }
-.feature-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.feature-card { background: #fff; padding: 28px 24px; border-radius: 12px; border: 1px solid rgba(139, 69, 19, 0.08); transition: all 0.3s; }
+.feature-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(58, 42, 26, 0.1); border-color: var(--accent); }
+.feature-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent), #e88a54); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; margin-bottom: 16px; }
+.feature-card h3 { font-size: 17px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+.feature-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 
 /* ====== КАТАЛОГ ПРОЕКТОВ ====== */
-.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.project-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(58, 42, 26, 0.08); transition: all 0.3s; }
-.project-card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px rgba(58, 42, 26, 0.15); }
-.project-img { position: relative; height: 240px; overflow: hidden; background: #e8dccb; }
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.project-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(58, 42, 26, 0.08); transition: all 0.3s; cursor: pointer; }
+.project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(58, 42, 26, 0.15); }
+.project-img { position: relative; height: 220px; overflow: hidden; background: #e8dccb; }
 .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-.project-card:hover .project-img img { transform: scale(1.05); }
-.project-badges { position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; }
-.project-badge { background: var(--accent); color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.project-card:hover .project-img img { transform: scale(1.08); }
+.project-badges { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; }
+.project-badge { background: var(--accent); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 .project-badge.hit { background: var(--brown-dark); }
-.project-body { padding: 22px; }
-.project-name { font-size: 20px; font-weight: 800; color: var(--brown-dark); margin-bottom: 10px; }
-.project-area { display: flex; gap: 16px; font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
-.project-area span { display: flex; align-items: center; gap: 6px; }
-.project-area i { color: var(--accent); }
-.project-price { font-size: 24px; font-weight: 800; color: var(--accent); margin-bottom: 16px; }
-.project-price small { font-size: 13px; font-weight: 500; color: var(--text-muted); margin-left: 4px; }
-.project-actions { display: flex; gap: 10px; }
-.project-actions .btn { padding: 12px 18px; font-size: 12px; flex: 1; }
+.project-body { padding: 20px; }
+.project-name { font-size: 19px; font-weight: 800; color: var(--brown-dark); margin-bottom: 8px; }
+.project-area { display: flex; gap: 14px; font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.project-area span { display: flex; align-items: center; gap: 5px; }
+.project-area i { color: var(--accent); font-size: 11px; }
+.project-price { font-size: 22px; font-weight: 800; color: var(--accent); margin-bottom: 14px; }
+.project-price small { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 4px; }
+.project-actions { display: flex; gap: 8px; }
+.project-actions .btn { padding: 10px 16px; font-size: 11px; flex: 1; }
 
 /* ====== КАТАЛОГ PDF ====== */
-.catalog-banner { background: linear-gradient(135deg, var(--brown-dark), var(--brown-light)); color: #fff; border-radius: 16px; padding: 40px; display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; }
-.catalog-info h3 { font-size: 26px; font-weight: 800; margin-bottom: 10px; }
-.catalog-info p { opacity: 0.9; font-size: 15px; margin-bottom: 14px; }
-.catalog-meta { display: flex; gap: 20px; font-size: 13px; opacity: 0.85; }
-.catalog-meta span { display: flex; align-items: center; gap: 6px; }
-.catalog-btn { background: #fff; color: var(--brown-dark); padding: 16px 32px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 8px; font-size: 13px; transition: all 0.3s; }
+.catalog-banner { background: linear-gradient(135deg, var(--brown-dark), var(--brown-light)); color: #fff; border-radius: 16px; padding: 36px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; }
+.catalog-info h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+.catalog-info p { opacity: 0.9; font-size: 14px; margin-bottom: 12px; }
+.catalog-meta { display: flex; gap: 18px; font-size: 12px; opacity: 0.85; }
+.catalog-meta span { display: flex; align-items: center; gap: 5px; }
+.catalog-btn { background: #fff; color: var(--brown-dark); padding: 14px 28px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 8px; font-size: 12px; transition: all 0.3s; }
 .catalog-btn:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
 
 /* ====== ЭТАПЫ РАБОТ ====== */
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.step { background: #fff; padding: 28px 24px; border-radius: 12px; position: relative; border: 1px solid rgba(139, 69, 19, 0.08); }
-.step-num { position: absolute; top: -20px; right: 20px; width: 44px; height: 44px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; box-shadow: 0 6px 20px rgba(201, 101, 43, 0.4); }
-.step-icon { width: 52px; height: 52px; background: var(--beige-dark); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 22px; margin-bottom: 18px; }
-.step h3 { font-size: 17px; font-weight: 700; color: var(--brown-dark); margin-bottom: 10px; line-height: 1.3; }
-.step p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.step { background: #fff; padding: 24px 20px; border-radius: 12px; position: relative; border: 1px solid rgba(139, 69, 19, 0.08); }
+.step-num { position: absolute; top: -18px; right: 18px; width: 40px; height: 40px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; box-shadow: 0 5px 16px rgba(201, 101, 43, 0.4); }
+.step-icon { width: 48px; height: 48px; background: var(--beige-dark); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 20px; margin-bottom: 14px; }
+.step h3 { font-size: 16px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; line-height: 1.3; }
+.step p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
 
 /* ====== КВИЗ ====== */
-.quiz { background: linear-gradient(135deg, var(--brown-dark), var(--brown)); color: #fff; padding: 70px 0; }
-.quiz-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-.quiz-content h2 { font-size: clamp(1.6rem, 3.5vw, 34px); font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+.quiz { background: linear-gradient(135deg, var(--brown-dark), var(--brown)); color: #fff; padding: 50px 0; }
+.quiz-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.quiz-content h2 { font-size: clamp(1.4rem, 3vw, 30px); font-weight: 800; margin-bottom: 14px; line-height: 1.2; }
 .quiz-content h2 span { color: #f4b888; }
-.quiz-content p { opacity: 0.9; font-size: 15px; margin-bottom: 26px; }
+.quiz-content p { opacity: 0.9; font-size: 14px; margin-bottom: 22px; }
 .quiz-gifts { list-style: none; }
-.quiz-gifts li { padding: 10px 0; display: flex; align-items: center; gap: 12px; font-size: 15px; }
-.quiz-gifts i { color: #f4b888; font-size: 18px; }
-.quiz-form { background: #fff; color: var(--text); padding: 30px; border-radius: 14px; }
-.quiz-form h3 { font-size: 20px; font-weight: 800; color: var(--brown-dark); margin-bottom: 20px; }
-.quiz-form input { width: 100%; padding: 14px 16px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 12px; transition: border-color 0.2s; }
-.quiz-form input:focus { outline: none; border-color: var(--accent); background: #fff; }
+.quiz-gifts li { padding: 8px 0; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.quiz-gifts i { color: #f4b888; font-size: 16px; }
+.quiz-form { background: #fff; color: var(--text); padding: 26px; border-radius: 14px; }
+.quiz-form h3 { font-size: 18px; font-weight: 800; color: var(--brown-dark); margin-bottom: 16px; }
+.quiz-form input, .quiz-form select, .quiz-form textarea { width: 100%; padding: 12px 14px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 10px; transition: border-color 0.2s; color: var(--text); }
+.quiz-form input:focus, .quiz-form select:focus, .quiz-form textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
+.quiz-form textarea { resize: vertical; min-height: 70px; }
 .quiz-form .btn { width: 100%; }
-.quiz-form small { display: block; text-align: center; margin-top: 12px; font-size: 12px; color: var(--text-muted); }
+.quiz-form small { display: block; text-align: center; margin-top: 10px; font-size: 11px; color: var(--text-muted); }
 
 /* ====== ГАРАНТИИ ====== */
-.guarantees-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.guarantee { background: #fff; padding: 28px 24px; border-radius: 12px; border-left: 4px solid var(--accent); }
-.guarantee h3 { font-size: 17px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
-.guarantee p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+.guarantees-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.guarantee { background: #fff; padding: 24px 20px; border-radius: 12px; border-left: 4px solid var(--accent); }
+.guarantee h3 { font-size: 16px; font-weight: 700; color: var(--brown-dark); margin-bottom: 6px; }
+.guarantee p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 
 /* ====== ПОСТРОЕННЫЕ ДОМА ====== */
-.cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.case-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(58, 42, 26, 0.08); }
-.case-img { height: 220px; overflow: hidden; }
-.case-img img { width: 100%; height: 100%; object-fit: cover; }
-.case-body { padding: 22px; }
-.case-name { font-size: 19px; font-weight: 800; color: var(--brown-dark); margin-bottom: 14px; }
-.case-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed rgba(139, 69, 19, 0.15); }
+.cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.case-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(58, 42, 26, 0.08); transition: all 0.3s; }
+.case-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(58, 42, 26, 0.12); }
+.case-img { height: 200px; overflow: hidden; }
+.case-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.case-card:hover .case-img img { transform: scale(1.05); }
+.case-body { padding: 20px; }
+.case-name { font-size: 18px; font-weight: 800; color: var(--brown-dark); margin-bottom: 12px; }
+.case-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px dashed rgba(139, 69, 19, 0.15); }
 .case-spec { text-align: center; }
-.case-spec strong { display: block; font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 3px; }
-.case-spec span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-.case-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+.case-spec strong { display: block; font-size: 15px; font-weight: 800; color: var(--accent); margin-bottom: 2px; }
+.case-spec span { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.case-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
 
 /* ====== ИПОТЕКА ====== */
-.mortgage { background: linear-gradient(135deg, var(--accent), #e88a54); color: #fff; padding: 60px 0; }
-.mortgage-inner { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
-.mortgage h2 { font-size: clamp(1.6rem, 3.5vw, 32px); font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
-.mortgage p { opacity: 0.95; font-size: 16px; }
+.mortgage { background: linear-gradient(135deg, var(--accent), #e88a54); color: #fff; padding: 45px 0; }
+.mortgage-inner { display: grid; grid-template-columns: 1fr auto; gap: 36px; align-items: center; }
+.mortgage h2 { font-size: clamp(1.4rem, 3vw, 28px); font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+.mortgage p { opacity: 0.95; font-size: 14px; }
 
 /* ====== ОТЗЫВЫ ====== */
-.reviews-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; gap: 30px; flex-wrap: wrap; }
-.reviews-rating { display: flex; align-items: center; gap: 20px; }
-.rating-big { font-size: 64px; font-weight: 800; color: var(--accent); line-height: 1; }
-.rating-stars { color: #f4b888; font-size: 20px; margin-bottom: 6px; }
-.rating-count { font-size: 14px; color: var(--text-muted); }
-.reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.review { background: #fff; padding: 26px; border-radius: 12px; border: 1px solid rgba(139, 69, 19, 0.08); }
-.review-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-.review-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--beige-dark); }
+.reviews-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; gap: 24px; flex-wrap: wrap; }
+.reviews-rating { display: flex; align-items: center; gap: 16px; }
+.rating-big { font-size: 56px; font-weight: 800; color: var(--accent); line-height: 1; }
+.rating-stars { color: #f4b888; font-size: 18px; margin-bottom: 5px; }
+.rating-count { font-size: 13px; color: var(--text-muted); }
+.reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.review { background: #fff; padding: 22px; border-radius: 12px; border: 1px solid rgba(139, 69, 19, 0.08); }
+.review-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.review-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--beige-dark); }
 .review-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.review-author strong { display: block; font-weight: 700; color: var(--brown-dark); font-size: 15px; }
-.review-author span { font-size: 12px; color: var(--text-muted); }
-.review-stars { color: #f4b888; font-size: 13px; margin-bottom: 10px; }
-.review-text { font-size: 14px; color: var(--text); line-height: 1.6; }
+.review-author strong { display: block; font-weight: 700; color: var(--brown-dark); font-size: 14px; }
+.review-author span { font-size: 11px; color: var(--text-muted); }
+.review-stars { color: #f4b888; font-size: 12px; margin-bottom: 8px; }
+.review-text { font-size: 13px; color: var(--text); line-height: 1.6; }
 
 /* ====== CTA ФИНАЛ ====== */
-.cta-final { background: var(--brown-dark); color: #fff; padding: 80px 0; text-align: center; }
-.cta-final h2 { font-size: clamp(1.8rem, 4vw, 42px); font-weight: 800; margin-bottom: 14px; }
+.cta-final { background: var(--brown-dark); color: #fff; padding: 50px 0; text-align: center; }
+.cta-final h2 { font-size: clamp(1.6rem, 3.5vw, 38px); font-weight: 800; margin-bottom: 12px; }
 .cta-final h2 span { color: #f4b888; }
-.cta-final p { font-size: 17px; opacity: 0.9; max-width: 620px; margin: 0 auto 40px; }
-.cta-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 800px; margin: 0 auto 40px; }
-.cta-metric { padding: 24px; background: rgba(255,255,255,0.08); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
-.cta-metric strong { display: block; font-size: 38px; font-weight: 800; color: #f4b888; margin-bottom: 6px; }
-.cta-metric span { font-size: 14px; opacity: 0.85; }
+.cta-final p { font-size: 15px; opacity: 0.9; max-width: 620px; margin: 0 auto 32px; }
+.cta-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 800px; margin: 0 auto 32px; }
+.cta-metric { padding: 20px; background: rgba(255,255,255,0.08); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+.cta-metric strong { display: block; font-size: 34px; font-weight: 800; color: #f4b888; margin-bottom: 5px; }
+.cta-metric span { font-size: 13px; opacity: 0.85; }
 
 /* ====== РУКОВОДИТЕЛЬ ====== */
-.boss-inner { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; align-items: center; }
+.boss-inner { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: center; }
 .boss-photo { position: relative; }
 .boss-photo img { width: 100%; border-radius: 14px; aspect-ratio: 4/5; object-fit: cover; }
 .boss-photo::before { content: ''; position: absolute; inset: 10px; border: 3px solid var(--accent); border-radius: 14px; z-index: -1; transform: translate(-10px, -10px); }
-.boss-info h3 { font-size: 32px; font-weight: 800; color: var(--brown-dark); margin-bottom: 6px; }
-.boss-role { font-size: 14px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 20px; }
-.boss-info p { font-size: 16px; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px; }
-.boss-quote { padding-left: 20px; border-left: 3px solid var(--accent); font-style: italic; color: var(--brown-dark); font-weight: 500; margin-top: 20px; }
+.boss-info h3 { font-size: 28px; font-weight: 800; color: var(--brown-dark); margin-bottom: 5px; }
+.boss-role { font-size: 13px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 16px; }
+.boss-info p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; }
+.boss-quote { padding-left: 18px; border-left: 3px solid var(--accent); font-style: italic; color: var(--brown-dark); font-weight: 500; margin-top: 16px; font-size: 14px; }
 
 /* ====== FAQ ====== */
 .faq-list { max-width: 820px; margin: 0 auto; }
-.faq-item { background: #fff; border-radius: 10px; margin-bottom: 12px; overflow: hidden; border: 1px solid rgba(139, 69, 19, 0.08); }
-.faq-q { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-weight: 600; color: var(--brown-dark); font-size: 16px; cursor: pointer; }
-.faq-q i { color: var(--accent); font-size: 14px; transition: transform 0.3s; }
+.faq-item { background: #fff; border-radius: 10px; margin-bottom: 10px; overflow: hidden; border: 1px solid rgba(139, 69, 19, 0.08); }
+.faq-q { padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; gap: 18px; font-weight: 600; color: var(--brown-dark); font-size: 15px; cursor: pointer; }
+.faq-q i { color: var(--accent); font-size: 13px; transition: transform 0.3s; }
 .faq-item.open .faq-q i { transform: rotate(180deg); }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
 .faq-item.open .faq-a { max-height: 300px; }
-.faq-a p { padding: 0 24px 20px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+.faq-a p { padding: 0 22px 18px; color: var(--text-muted); font-size: 13px; line-height: 1.7; }
 
-/* ====== КОНТАКТЫ / FOOTER ====== */
-footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
-.footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-.footer-col h4 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1px; }
+/* ====== КОНТАКТЫ С КАРТОЙ ====== */
+.contacts-section { background: var(--beige-dark); }
+.contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+.contact-info-box { background: #fff; padding: 28px; border-radius: 14px; box-shadow: 0 8px 24px rgba(58, 42, 26, 0.08); }
+.contact-info-box h3 { font-size: 24px; font-weight: 800; color: var(--brown-dark); margin-bottom: 20px; }
+.contact-list { list-style: none; margin-bottom: 20px; }
+.contact-list li { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(139, 69, 19, 0.08); }
+.contact-list li:last-child { border-bottom: none; }
+.contact-list i { width: 38px; height: 38px; background: linear-gradient(135deg, var(--accent), #e88a54); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.contact-list strong { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 3px; font-weight: 600; }
+.contact-list span { font-size: 14px; color: var(--text); font-weight: 500; }
+.contact-list a { transition: color 0.2s; }
+.contact-list a:hover { color: var(--accent); }
+.contact-map { border-radius: 14px; overflow: hidden; height: 100%; min-height: 400px; box-shadow: 0 8px 24px rgba(58, 42, 26, 0.08); }
+.contact-map iframe { width: 100%; height: 100%; border: 0; }
+
+/* ====== FOOTER ====== */
+footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
+.footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 36px; }
+.footer-col h4 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
 .footer-col ul { list-style: none; }
-.footer-col li { padding: 5px 0; font-size: 14px; }
+.footer-col li { padding: 4px 0; font-size: 13px; }
 .footer-col a { transition: color 0.2s; }
 .footer-col a:hover { color: #f4b888; }
-.footer-logo { font-weight: 800; font-size: 20px; color: #fff; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.footer-logo { font-weight: 800; font-size: 19px; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 .footer-logo i { color: var(--accent); }
-.footer-col p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
-.footer-contact { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-bottom: 10px; }
-.footer-contact i { color: var(--accent); width: 18px; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; opacity: 0.7; }
+.footer-col p { font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
+.footer-contact { display: flex; align-items: center; gap: 9px; font-size: 13px; margin-bottom: 8px; }
+.footer-contact i { color: var(--accent); width: 16px; font-size: 13px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 18px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 12px; opacity: 0.7; }
+
+/* ====== ПЛАВАЮЩАЯ КНОПКА ====== */
+.floating-cta { position: fixed; bottom: 24px; right: 24px; z-index: 99; display: flex; flex-direction: column; gap: 10px; }
+.floating-btn { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: all 0.3s; cursor: pointer; border: none; }
+.floating-btn.phone { background: var(--accent); }
+.floating-btn.whatsapp { background: #25D366; }
+.floating-btn:hover { transform: scale(1.1); }
+.floating-btn.phone:hover { background: #b5551f; }
+.floating-btn.whatsapp:hover { background: #1da851; }
+
+/* ====== МОДАЛКА ====== */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
+.modal.active { display: flex; }
+.modal-content { background: #fff; border-radius: 14px; padding: 32px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn 0.3s ease-out; }
+.modal-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; background: var(--beige); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brown-dark); font-size: 14px; cursor: pointer; transition: all 0.2s; }
+.modal-close:hover { background: var(--accent); color: #fff; }
+.modal-content h3 { font-size: 22px; color: var(--brown-dark); margin-bottom: 8px; }
+.modal-content > p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+@keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ====== УСПЕХ ====== */
+.success-msg { display: none; text-align: center; padding: 30px 20px; }
+.success-msg.active { display: block; }
+.success-msg i { font-size: 56px; color: #2d8659; margin-bottom: 14px; }
+.success-msg h3 { font-size: 22px; color: var(--brown-dark); margin-bottom: 8px; }
+.success-msg p { color: var(--text-muted); font-size: 14px; }
 
 /* ====== АДАПТИВ ====== */
 @media (max-width: 900px) {
@@ -226,18 +272,19 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
     .nav-list.open { display: flex; }
     .nav-list li { border-bottom: 1px solid rgba(139, 69, 19, 0.1); }
     .nav-list li:last-child { border-bottom: none; }
-    .nav-list a { display: block; padding: 14px 20px; }
+    .nav-list a { display: block; padding: 12px 20px; }
     .burger { display: block; }
-    .header-phone span { display: none; }
+    .header-phone span, .header-cta { display: none; }
     
     .features-grid, .projects-grid, .steps, .guarantees-grid, .cases-grid, .reviews-grid { grid-template-columns: 1fr; }
     .steps { grid-template-columns: repeat(2, 1fr); }
-    .quiz-inner, .mortgage-inner, .boss-inner, .catalog-banner { grid-template-columns: 1fr; gap: 30px; }
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+    .quiz-inner, .mortgage-inner, .boss-inner, .catalog-banner, .contacts-grid { grid-template-columns: 1fr; gap: 24px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
     .cta-metrics { grid-template-columns: 1fr; }
     .hero-grid { grid-template-columns: 1fr 1fr; }
-    .reviews-rating { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .section { padding: 50px 0; }
+    .reviews-rating { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .section { padding: 35px 0; }
+    .contact-map { min-height: 300px; }
 }
 
 @media (max-width: 560px) {
@@ -247,7 +294,9 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
     .hero-actions { flex-direction: column; }
     .hero-actions .btn { width: 100%; }
     .project-actions { flex-direction: column; }
-    .catalog-meta { flex-direction: column; gap: 8px; }
+    .catalog-meta { flex-direction: column; gap: 6px; }
+    .floating-cta { bottom: 16px; right: 16px; }
+    .floating-btn { width: 50px; height: 50px; font-size: 18px; }
 }
 </style>
 </head>
@@ -264,13 +313,16 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
                 <li><a href="#cases">Построенные</a></li>
                 <li><a href="#reviews">Отзывы</a></li>
                 <li><a href="#faq">Вопросы</a></li>
-                <li><a href="#contact">Контакты</a></li>
+                <li><a href="#contacts">Контакты</a></li>
             </ul>
         </nav>
         <a href="tel:+74991234567" class="header-phone">
             <i class="fas fa-phone"></i>
             <span>+7 (499) 123-45-67</span>
         </a>
+        <button class="btn btn-primary header-cta" onclick="openModal('callback')">
+            <i class="fas fa-phone-alt"></i> Заказать звонок
+        </button>
         <button class="burger" id="burger" aria-label="Меню"><i class="fas fa-bars"></i></button>
     </div>
 </header>
@@ -347,7 +399,7 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
             <p class="section-subtitle">Более 80 планировочных решений, проверенных временем. Любое можно изменить под ваши задачи</p>
         </div>
         <div class="projects-grid">
-            <article class="project-card">
+            <article class="project-card" onclick="openProjectModal('ДК-01', '99 м²', 'от 1 200 000 ₽', 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&q=80')">
                 <div class="project-img">
                     <div class="project-badges">
                         <span class="project-badge hit">ТОП-10</span>
@@ -364,12 +416,12 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
                     </div>
                     <div class="project-price">от 1 200 000 ₽<small>/под ключ</small></div>
                     <div class="project-actions">
-                        <a href="#quiz" class="btn btn-primary">Заявка</a>
-                        <button class="btn btn-outline-dark">Подробнее</button>
+                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()">Заявка</a>
+                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-01', '99 м²', 'от 1 200 000 ₽', 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&q=80')">Подробнее</button>
                     </div>
                 </div>
             </article>
-            <article class="project-card">
+            <article class="project-card" onclick="openProjectModal('ДК-02', '167 м²', 'от 1 400 000 ₽', 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80')">
                 <div class="project-img">
                     <div class="project-badges">
                         <span class="project-badge hit">ТОП-10</span>
@@ -385,12 +437,12 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
                     </div>
                     <div class="project-price">от 1 400 000 ₽<small>/под ключ</small></div>
                     <div class="project-actions">
-                        <a href="#quiz" class="btn btn-primary">Заявка</a>
-                        <button class="btn btn-outline-dark">Подробнее</button>
+                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()">Заявка</a>
+                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-02', '167 м²', 'от 1 400 000 ₽', 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80')">Подробнее</button>
                     </div>
                 </div>
             </article>
-            <article class="project-card">
+            <article class="project-card" onclick="openProjectModal('ДК-03', '102 м²', 'от 1 500 000 ₽', 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80')">
                 <div class="project-img">
                     <div class="project-badges">
                         <span class="project-badge hit">ТОП-10</span>
@@ -406,8 +458,8 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
                     </div>
                     <div class="project-price">от 1 500 000 ₽<small>/под ключ</small></div>
                     <div class="project-actions">
-                        <a href="#quiz" class="btn btn-primary">Заявка</a>
-                        <button class="btn btn-outline-dark">Подробнее</button>
+                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()">Заявка</a>
+                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-03', '102 м²', 'от 1 500 000 ₽', 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80')">Подробнее</button>
                     </div>
                 </div>
             </article>
@@ -489,6 +541,14 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
                 <h3>Получить расчёт стоимости</h3>
                 <input type="text" placeholder="Ваше имя" required>
                 <input type="tel" placeholder="+7 (___) ___-__-__" required>
+                <select>
+                    <option>Выберите услугу</option>
+                    <option>Строительство дома «под ключ»</option>
+                    <option>Только сруб</option>
+                    <option>Фундамент + сруб</option>
+                    <option>Реконструкция дома</option>
+                </select>
+                <textarea placeholder="Комментарий (необязательно)" rows="2"></textarea>
                 <button type="submit" class="btn btn-primary">Получить расчёт</button>
                 <small>Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</small>
             </form>
@@ -598,7 +658,7 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
                 <h2>Ипотека с господдержкой <span style="color: #fff3d6;">от 5%</span></h2>
                 <p>Наши дома аккредитованы в 12 банках. Оставьте заявку — получите бесплатную консультацию ипотечного брокера.</p>
             </div>
-            <a href="#quiz" class="btn" style="background: #fff; color: var(--brown-dark); padding: 16px 32px; white-space: nowrap;">
+            <a href="#quiz" class="btn" style="background: #fff; color: var(--brown-dark); padding: 14px 28px; white-space: nowrap;">
                 <i class="fas fa-hand-holding-usd"></i> Консультация по ипотеке
             </a>
         </div>
@@ -725,7 +785,7 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
             </div>
             <div class="faq-item">
                 <div class="faq-q">Можно ли построить дом в ипотеку? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-a"><p>Да, наши дома аккредитованы в 12 банках. Доступна ипотека с господдержкой от 5%, сельская ипотека от 3%, семейная ипотека. Наш ипотечный брокер подберёт最优ный вариант и поможет с документами.</p></div>
+                <div class="faq-a"><p>Да, наши дома аккредитованы в 12 банках. Доступна ипотека с господдержкой от 5%, сельская ипотека от 3%, семейная ипотека. Наш ипотечный брокер подберёт оптимальный вариант и поможет с документами.</p></div>
             </div>
             <div class="faq-item">
                 <div class="faq-q">Можно ли использовать свой проект? <i class="fas fa-chevron-down"></i></div>
@@ -739,18 +799,70 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
     </div>
 </section>
 
+<!-- ====== КОНТАКТЫ С КАРТОЙ ====== -->
+<section class="section contacts-section" id="contacts">
+    <div class="container">
+        <div class="section-head">
+            <div class="section-label">Контакты</div>
+            <h2 class="section-title">Приезжайте <span>в наш офис</span></h2>
+            <p class="section-subtitle">Покажем построенные дома, обсудим ваш проект и подпишем договор</p>
+        </div>
+        <div class="contacts-grid">
+            <div class="contact-info-box">
+                <h3>Наш офис в Москве</h3>
+                <ul class="contact-list">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Адрес</strong>
+                            <span>Москва, Фрунзенская наб., 22с4</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Телефон</strong>
+                            <span><a href="tel:+74991234567">+7 (499) 123-45-67</a></span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>E-mail</strong>
+                            <span><a href="mailto:info@brusdom.ru">info@brusdom.ru</a></span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Режим работы</strong>
+                            <span>Пн-Вс: 9:00 — 20:00</span>
+                        </div>
+                    </li>
+                </ul>
+                <button class="btn btn-primary" style="width: 100%;" onclick="openModal('callback')">
+                    <i class="fas fa-phone-alt"></i> Заказать звонок
+                </button>
+            </div>
+            <div class="contact-map">
+                <iframe src="https://yandex.ru/map-widget/v1/?ll=37.569423%2C55.728058&z=16&pt=37.569423,55.728058,pm2rdm" allowfullscreen loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ====== FOOTER ====== -->
-<footer id="contact">
+<footer>
     <div class="container">
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="footer-logo"><i class="fas fa-home"></i> БРУС&ДОМ</div>
                 <p>Строительство домов из клееного бруса «под ключ» в Москве и области с 2010 года. Более 300 построенных домов.</p>
-                <div style="display: flex; gap: 10px; margin-top: 16px;">
-                    <a href="#" style="width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-telegram"></i></a>
-                    <a href="#" style="width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" style="width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-vk"></i></a>
-                    <a href="#" style="width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-youtube"></i></a>
+                <div style="display: flex; gap: 10px; margin-top: 14px;">
+                    <a href="#" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-telegram"></i></a>
+                    <a href="#" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-vk"></i></a>
+                    <a href="#" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -774,8 +886,8 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
                 <h4>Обратная связь</h4>
                 <p>Оставьте номер — перезвоним за 10 минут</p>
                 <form onsubmit="event.preventDefault(); showStatus('Спасибо! Перезвоним в течение 10 минут.'); this.reset();" style="display: flex; gap: 8px;">
-                    <input type="tel" placeholder="+7 (___) ___-__-__" required style="flex: 1; padding: 10px 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff; font-family: inherit; font-size: 14px;">
-                    <button type="submit" class="btn btn-primary" style="padding: 10px 18px; font-size: 12px;"><i class="fas fa-paper-plane"></i></button>
+                    <input type="tel" placeholder="+7 (___) ___-__-__" required style="flex: 1; padding: 10px 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff; font-family: inherit; font-size: 13px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 10px 16px; font-size: 11px;"><i class="fas fa-paper-plane"></i></button>
                 </form>
             </div>
         </div>
@@ -786,6 +898,56 @@ footer { background: #1f1811; color: #d4c5ae; padding: 60px 0 20px; }
     </div>
 </footer>
 
+<!-- ====== ПЛАВАЮЩИЕ КНОПКИ ====== -->
+<div class="floating-cta">
+    <a href="https://wa.me/74991234567" target="_blank" class="floating-btn whatsapp" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <button class="floating-btn phone" onclick="openModal('callback')" aria-label="Заказать звонок">
+        <i class="fas fa-phone-alt"></i>
+    </button>
+</div>
+
+<!-- ====== МОДАЛКА ЗАКАЗАТЬ ЗВОНОК ====== -->
+<div class="modal" id="callbackModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('callbackModal')" aria-label="Закрыть">✕</button>
+        <div id="callbackForm">
+            <h3>Заказать звонок</h3>
+            <p>Оставьте номер — перезвоним в течение 10 минут и ответим на все вопросы</p>
+            <form onsubmit="event.preventDefault(); submitCallbackForm();">
+                <input type="text" placeholder="Ваше имя" required style="width: 100%; padding: 12px 14px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 10px; color: var(--text);">
+                <input type="tel" placeholder="+7 (___) ___-__-__" required style="width: 100%; padding: 12px 14px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 10px; color: var(--text);">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Перезвоните мне</button>
+                <small style="display: block; text-align: center; margin-top: 10px; font-size: 11px; color: var(--text-muted);">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</small>
+            </form>
+        </div>
+        <div class="success-msg" id="callbackSuccess">
+            <i class="fas fa-check-circle"></i>
+            <h3>Спасибо за заявку!</h3>
+            <p>Мы перезвоним вам в течение 10 минут.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ====== МОДАЛКА ПРОЕКТА ====== -->
+<div class="modal" id="projectModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('projectModal')" aria-label="Закрыть">✕</button>
+        <div id="projectDetails">
+            <img id="projectImg" src="" alt="" style="width: 100%; border-radius: 10px; margin-bottom: 16px;">
+            <h3 id="projectName"></h3>
+            <p style="font-size: 18px; color: var(--accent); font-weight: 700; margin-bottom: 8px;" id="projectArea"></p>
+            <p style="font-size: 24px; color: var(--brown-dark); font-weight: 800; margin-bottom: 16px;" id="projectPrice"></p>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                Компактный дом для загородного проживания семьи с 1-2 детьми. В доме гармонично реализована идея «второго света» над кухней-гостиной с панорамными окнами.
+            </p>
+            <a href="#quiz" class="btn btn-primary" style="width: 100%;" onclick="closeModal('projectModal')">Рассчитать стоимость</a>
+        </div>
+    </div>
+</div>
+
+<!-- ====== СТАТУС ====== -->
 <div style="position: fixed; top: 60px; right: 24px; background: var(--brown-dark); color: #fff; padding: 14px 20px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2000; display: none; max-width: 320px;" id="statusBar"></div>
 
 <script>
@@ -821,23 +983,4 @@ function showStatus(msg) {
     bar.textContent = msg;
     bar.style.display = 'block';
     clearTimeout(statusTimer);
-    statusTimer = setTimeout(() => { bar.style.display = 'none'; }, 4000);
-}
-
-// Маска телефона (простая)
-document.querySelectorAll('input[type="tel"]').forEach(input => {
-    input.addEventListener('input', e => {
-        let v = e.target.value.replace(/\D/g, '');
-        if (v.length > 0 && v[0] !== '7') v = '7' + v;
-        v = v.slice(0, 11);
-        let f = '+7';
-        if (v.length > 1) f += ' (' + v.slice(1, 4);
-        if (v.length >= 5) f += ') ' + v.slice(4, 7);
-        if (v.length >= 8) f += '-' + v.slice(7, 9);
-        if (v.length >= 10) f += '-' + v.slice(9, 11);
-        e.target.value = f;
-    });
-});
-</script>
-</body>
-</html>
+    statusTimer = setTimeout(() => { bar.style.display
