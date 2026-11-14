@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru"><head>
+<html lang="ru">
+<head>
 <meta charset="UTF-8">
-<meta name="cms-deploy-id" content="dmwgj5d190v9w4g">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>БРУС&amp;ДОМ — строительство домов из клееного бруса под ключ</title>
+<meta name="cms-deploy-id" content="dmwgj5d190v9w4g">
+<title>БРУС&ДОМ — строительство домов из клееного бруса под ключ</title>
 <meta name="description" content="Строительство домов из клееного бруса под ключ в Москве и области. От 14 дней, гарантия 15 лет. Более 300 построенных домов с 2010 года.">
 <link rel="icon" type="image/png" href="favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,6 +31,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
+/* ====== ЗАГЛУШКИ ФОТО ====== */
+.img-wrapper { position: relative; background: var(--beige-dark); overflow: hidden; }
+.img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+.placeholder-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(58,42,26,0.85), rgba(139,69,19,0.75)); color: #fff; text-align: center; padding: 16px; z-index: 2; }
+.placeholder-label strong { display: inline-block; padding: 8px 16px; background: var(--accent); color: #fff; border-radius: 6px; font-size: 13px; font-weight: 700; margin-bottom: 8px; cursor: pointer; transition: background 0.2s; font-family: 'Courier New', monospace; }
+.placeholder-label strong:hover { background: #b5551f; }
+.placeholder-label span { font-size: 11px; opacity: 0.85; }
+
 /* ====== ШАПКА ====== */
 header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.98); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid rgba(139, 69, 19, 0.1); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; gap: 20px; }
@@ -45,7 +54,7 @@ header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.98); backdr
 
 /* ====== HERO ====== */
 .hero { position: relative; min-height: 80vh; display: flex; align-items: center; color: #fff; overflow: hidden; padding: 60px 0 50px; }
-.hero-bg { position: absolute; inset: 0; background: linear-gradient(rgba(58, 42, 26, 0.72), rgba(58, 42, 26, 0.55)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80') center/cover; z-index: -1; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(rgba(58, 42, 26, 0.72), rgba(58, 42, 26, 0.55)), url('images/hero.jpg') center/cover; z-index: -1; }
 .hero-content { max-width: 780px; }
 .hero-tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(201, 101, 43, 0.9); border-radius: 30px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
 .hero h1 { font-size: clamp(1.8rem, 5vw, 48px); font-weight: 800; line-height: 1.1; margin-bottom: 18px; }
@@ -89,7 +98,7 @@ header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.98); backdr
 .project-img { position: relative; height: 220px; overflow: hidden; background: #e8dccb; }
 .project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
 .project-card:hover .project-img img { transform: scale(1.08); }
-.project-badges { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; }
+.project-badges { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; z-index: 3; }
 .project-badge { background: var(--accent); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 .project-badge.hit { background: var(--brown-dark); }
 .project-body { padding: 20px; }
@@ -146,7 +155,7 @@ header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.98); backdr
 .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .case-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(58, 42, 26, 0.08); transition: all 0.3s; }
 .case-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(58, 42, 26, 0.12); }
-.case-img { height: 200px; overflow: hidden; }
+.case-img { height: 200px; overflow: hidden; position: relative; background: #e8dccb; }
 .case-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
 .case-card:hover .case-img img { transform: scale(1.05); }
 .case-body { padding: 20px; }
@@ -172,8 +181,11 @@ header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.98); backdr
 .reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
 .review { background: #fff; padding: 22px; border-radius: 12px; border: 1px solid rgba(139, 69, 19, 0.08); }
 .review-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.review-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--beige-dark); }
+.review-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--beige-dark); position: relative; }
 .review-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.review-avatar .placeholder-label { border-radius: 50%; padding: 4px; }
+.review-avatar .placeholder-label strong { font-size: 8px; padding: 3px 5px; margin-bottom: 0; }
+.review-avatar .placeholder-label span { display: none; }
 .review-author strong { display: block; font-weight: 700; color: var(--brown-dark); font-size: 14px; }
 .review-author span { font-size: 11px; color: var(--text-muted); }
 .review-stars { color: #f4b888; font-size: 12px; margin-bottom: 8px; }
@@ -192,7 +204,7 @@ header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.98); backdr
 /* ====== РУКОВОДИТЕЛЬ ====== */
 .boss-inner { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: center; }
 .boss-photo { position: relative; }
-.boss-photo img { width: 100%; border-radius: 14px; aspect-ratio: 4/5; object-fit: cover; }
+.boss-photo .img-wrapper { border-radius: 14px; aspect-ratio: 4/5; }
 .boss-photo::before { content: ''; position: absolute; inset: 10px; border: 3px solid var(--accent); border-radius: 14px; z-index: -1; transform: translate(-10px, -10px); }
 .boss-info h3 { font-size: 28px; font-weight: 800; color: var(--brown-dark); margin-bottom: 5px; }
 .boss-role { font-size: 13px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 16px; }
@@ -257,6 +269,7 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 .modal-close:hover { background: var(--accent); color: #fff; }
 .modal-content h3 { font-size: 22px; color: var(--brown-dark); margin-bottom: 8px; }
 .modal-content > p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+.modal-project-img { width: 100%; border-radius: 10px; margin-bottom: 16px; aspect-ratio: 16/10; object-fit: cover; background: var(--beige-dark); }
 @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ====== УСПЕХ ====== */
@@ -305,24 +318,24 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <!-- ====== ШАПКА ====== -->
 <header>
     <div class="container header-inner">
-        <a href="#" class="logo" aria-label="На главную"><i class="fas fa-home"></i><span data-edit="auto_1"> БРУС&amp;ДОМ</span></a>
+        <a href="#" class="logo" aria-label="На главную"><i class="fas fa-home"></i> БРУС&ДОМ</a>
         <nav>
             <ul class="nav-list" id="navList">
-                <li><a href="#projects"><span data-edit="auto_2">Проекты</span></a></li>
-                <li><a href="#steps"><span data-edit="auto_3">Этапы</span></a></li>
-                <li><a href="#cases"><span data-edit="auto_4">Построенные</span></a></li>
-                <li><a href="#reviews"><span data-edit="auto_5">Отзывы</span></a></li>
-                <li><a href="#faq"><span data-edit="auto_6">Вопросы</span></a></li>
-                <li><a href="#contacts"><span data-edit="auto_7">Контакты</span></a></li>
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#steps">Этапы</a></li>
+                <li><a href="#cases">Построенные</a></li>
+                <li><a href="#reviews">Отзывы</a></li>
+                <li><a href="#faq">Вопросы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
             </ul>
         </nav>
         <a href="tel:+74991234567" class="header-phone">
             <i class="fas fa-phone"></i>
-            <span><span data-edit="auto_8">+7 (499) 123-45-67</span></span>
+            <span>+7 (499) 123-45-67</span>
         </a>
         <button class="btn btn-primary header-cta" onclick="openModal('callback')">
-            <i class="fas fa-phone-alt"></i><span data-edit="auto_9"> Заказать звонок
-        </span></button>
+            <i class="fas fa-phone-alt"></i> Заказать звонок
+        </button>
         <button class="burger" id="burger" aria-label="Меню"><i class="fas fa-bars"></i></button>
     </div>
 </header>
@@ -331,18 +344,18 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="hero">
     <div class="hero-bg"></div>
     <div class="container hero-content">
-        <div class="hero-tag"><i class="fas fa-award"></i><span data-edit="auto_10"> Гарантия 15 лет на все работы</span></div>
-        <h1><span data-edit="auto_11">Построим дом из клееного бруса </span><span><span data-edit="auto_12">«под ключ»</span></span><span data-edit="auto_13"> в Москве и области от 14 дней</span></h1>
-        <p><span data-edit="auto_14">Собственное производство, 40 мастеров в штате и более 300 построенных домов с 2010 года. Фиксируем цену в договоре — никаких доплат по ходу стройки.</span></p>
+        <div class="hero-tag"><i class="fas fa-award"></i> Гарантия 15 лет на все работы</div>
+        <h1>Построим дом из клееного бруса <span>«под ключ»</span> в Москве и области от 14 дней</h1>
+        <p>Собственное производство, 40 мастеров в штате и более 300 построенных домов с 2010 года. Фиксируем цену в договоре — никаких доплат по ходу стройки.</p>
         <div class="hero-grid">
-            <div class="hero-stat"><strong><span data-edit="auto_15">300+</span></strong><span><span data-edit="auto_16">построенных домов</span></span></div>
-            <div class="hero-stat"><strong><span data-edit="auto_17">14 дней</span></strong><span><span data-edit="auto_18">минимальный срок</span></span></div>
-            <div class="hero-stat"><strong><span data-edit="auto_19">15 лет</span></strong><span><span data-edit="auto_20">гарантия на сруб</span></span></div>
-            <div class="hero-stat"><strong><span data-edit="auto_21">от 5%</span></strong><span><span data-edit="auto_22">ипотека с господдержкой</span></span></div>
+            <div class="hero-stat"><strong>300+</strong><span>построенных домов</span></div>
+            <div class="hero-stat"><strong>14 дней</strong><span>минимальный срок</span></div>
+            <div class="hero-stat"><strong>15 лет</strong><span>гарантия на сруб</span></div>
+            <div class="hero-stat"><strong>от 5%</strong><span>ипотека с господдержкой</span></div>
         </div>
         <div class="hero-actions">
-            <a href="#quiz" class="btn btn-primary"><i class="fas fa-calculator"></i><span data-edit="auto_23"> Рассчитать стоимость</span></a>
-            <a href="#projects" class="btn btn-outline"><span data-edit="auto_24">Смотреть проекты</span></a>
+            <a href="#quiz" class="btn btn-primary"><i class="fas fa-calculator"></i> Рассчитать стоимость</a>
+            <a href="#projects" class="btn btn-outline">Смотреть проекты</a>
         </div>
     </div>
 </section>
@@ -351,40 +364,40 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="section">
     <div class="container">
         <div class="section-head">
-            <div class="section-label"><span data-edit="auto_25">Почему выбирают нас</span></div>
-            <h2 class="section-title"><span data-edit="auto_26">Продумано </span><span><span data-edit="auto_27">до мелочей</span></span><span data-edit="auto_28"> для вашей безопасности</span></h2>
-            <p class="section-subtitle"><span data-edit="auto_29">Мы учли всё, чтобы ваш дом был тёплым, долговечным и комфортным круглый год</span></p>
+            <div class="section-label">Почему выбирают нас</div>
+            <h2 class="section-title">Продумано <span>до мелочей</span> для вашей безопасности</h2>
+            <p class="section-subtitle">Мы учли всё, чтобы ваш дом был тёплым, долговечным и комфортным круглый год</p>
         </div>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-tree"></i></div>
-                <h3><span data-edit="auto_30">Северный клееный брус</span></h3>
-                <p><span data-edit="auto_31">Работаем только с сухим клееным брусом из архангельской сосны — минимум усадки, максимум тепла.</span></p>
+                <h3>Северный клееный брус</h3>
+                <p>Работаем только с сухим клееным брусом из архангельской сосны — минимум усадки, максимум тепла.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-file-signature"></i></div>
-                <h3><span data-edit="auto_32">Фиксированная смета</span></h3>
-                <p><span data-edit="auto_33">Цена закрепляется в договоре. Никаких «внезапных» доплат — даже если стройматериалы подорожают.</span></p>
+                <h3>Фиксированная смета</h3>
+                <p>Цена закрепляется в договоре. Никаких «внезапных» доплат — даже если стройматериалы подорожают.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-users"></i></div>
-                <h3><span data-edit="auto_34">Своя бригада</span></h3>
-                <p><span data-edit="auto_35">Более 40 мастеров в штате, никаких субподрядчиков. Отвечаем за результат лично.</span></p>
+                <h3>Своя бригада</h3>
+                <p>Более 40 мастеров в штате, никаких субподрядчиков. Отвечаем за результат лично.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3><span data-edit="auto_36">Гарантия 15 лет</span></h3>
-                <p><span data-edit="auto_37">На капитальные работы — 10 лет, на инженерию — 3 года. Устраняем любые недочёты за свой счёт.</span></p>
+                <h3>Гарантия 15 лет</h3>
+                <p>На капитальные работы — 10 лет, на инженерию — 3 года. Устраняем любые недочёты за свой счёт.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-photo-video"></i></div>
-                <h3><span data-edit="auto_38">Еженедельные отчёты</span></h3>
-                <p><span data-edit="auto_39">Каждую пятницу — фото и видео со стройки, чат в WhatsApp с прорабом и онлайн-камера 24/7.</span></p>
+                <h3>Еженедельные отчёты</h3>
+                <p>Каждую пятницу — фото и видео со стройки, чат в WhatsApp с прорабом и онлайн-камера 24/7.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
-                <h3><span data-edit="auto_40">80+ готовых проектов</span></h3>
-                <p><span data-edit="auto_41">Любую планировку можно адаптировать под ваш участок и пожелания. Или разработаем с нуля.</span></p>
+                <h3>80+ готовых проектов</h3>
+                <p>Любую планировку можно адаптировать под ваш участок и пожелания. Или разработаем с нуля.</p>
             </div>
         </div>
     </div>
@@ -394,72 +407,84 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="section" id="projects" style="background: var(--beige-dark);">
     <div class="container">
         <div class="section-head">
-            <div class="section-label"><span data-edit="auto_42">Каталог проектов</span></div>
-            <h2 class="section-title"><span data-edit="auto_43">Готовые проекты </span><span><span data-edit="auto_44">домов из бруса</span></span></h2>
-            <p class="section-subtitle"><span data-edit="auto_45">Более 80 планировочных решений, проверенных временем. Любое можно изменить под ваши задачи</span></p>
+            <div class="section-label">Каталог проектов</div>
+            <h2 class="section-title">Готовые проекты <span>домов из бруса</span></h2>
+            <p class="section-subtitle">Более 80 планировочных решений, проверенных временем. Любое можно изменить под ваши задачи</p>
         </div>
         <div class="projects-grid">
-            <article class="project-card" onclick="openProjectModal('ДК-01', '99 м²', 'от 1 200 000 ₽', 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&amp;q=80')">
-                <div class="project-img">
+            <article class="project-card" onclick="openProjectModal('ДК-01', '99 м²', 'от 1 200 000 ₽', 'images/project-1.jpg')">
+                <div class="project-img img-wrapper">
                     <div class="project-badges">
-                        <span class="project-badge hit"><span data-edit="auto_46">ТОП-10</span></span>
-                        <span class="project-badge"><span data-edit="auto_47">Хит продаж</span></span>
+                        <span class="project-badge hit">ТОП-10</span>
+                        <span class="project-badge">Хит продаж</span>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&amp;q=80" alt="Проект ДК-01">
+                    <div class="placeholder-label">
+                        <strong data-copy="images/project-1.jpg">project-1.jpg</strong>
+                        <span>Фото проекта ДК-01 · 800×600px</span>
+                    </div>
+                    <img src="images/project-1.jpg" alt="Проект ДК-01" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
                 </div>
                 <div class="project-body">
-                    <h3 class="project-name"><span data-edit="auto_48">Проект ДК-01</span></h3>
+                    <h3 class="project-name">Проект ДК-01</h3>
                     <div class="project-area">
-                        <span><i class="fas fa-ruler-combined"></i><span data-edit="auto_49"> 99 м²</span></span>
-                        <span><i class="fas fa-bed"></i><span data-edit="auto_50"> 2 спальни</span></span>
-                        <span><i class="fas fa-layer-group"></i><span data-edit="auto_51"> 1 + мансарда</span></span>
+                        <span><i class="fas fa-ruler-combined"></i> 99 м²</span>
+                        <span><i class="fas fa-bed"></i> 2 спальни</span>
+                        <span><i class="fas fa-layer-group"></i> 1 + мансарда</span>
                     </div>
-                    <div class="project-price"><span data-edit="auto_52">от 1 200 000 ₽</span><small><span data-edit="auto_53">/под ключ</span></small></div>
+                    <div class="project-price">от 1 200 000 ₽<small>/под ключ</small></div>
                     <div class="project-actions">
-                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()"><span data-edit="auto_54">Заявка</span></a>
-                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-01', '99 м²', 'от 1 200 000 ₽', 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&amp;q=80')"><span data-edit="auto_55">Подробнее</span></button>
+                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()">Заявка</a>
+                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-01', '99 м²', 'от 1 200 000 ₽', 'images/project-1.jpg')">Подробнее</button>
                     </div>
                 </div>
             </article>
-            <article class="project-card" onclick="openProjectModal('ДК-02', '167 м²', 'от 1 400 000 ₽', 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&amp;q=80')">
-                <div class="project-img">
+            <article class="project-card" onclick="openProjectModal('ДК-02', '167 м²', 'от 1 400 000 ₽', 'images/project-2.jpg')">
+                <div class="project-img img-wrapper">
                     <div class="project-badges">
-                        <span class="project-badge hit"><span data-edit="auto_56">ТОП-10</span></span>
+                        <span class="project-badge hit">ТОП-10</span>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&amp;q=80" alt="Проект ДК-02">
+                    <div class="placeholder-label">
+                        <strong data-copy="images/project-2.jpg">project-2.jpg</strong>
+                        <span>Фото проекта ДК-02 · 800×600px</span>
+                    </div>
+                    <img src="images/project-2.jpg" alt="Проект ДК-02" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
                 </div>
                 <div class="project-body">
-                    <h3 class="project-name"><span data-edit="auto_57">Проект ДК-02</span></h3>
+                    <h3 class="project-name">Проект ДК-02</h3>
                     <div class="project-area">
-                        <span><i class="fas fa-ruler-combined"></i><span data-edit="auto_58"> 167 м²</span></span>
-                        <span><i class="fas fa-bed"></i><span data-edit="auto_59"> 4 спальни</span></span>
-                        <span><i class="fas fa-layer-group"></i><span data-edit="auto_60"> 1 + мансарда</span></span>
+                        <span><i class="fas fa-ruler-combined"></i> 167 м²</span>
+                        <span><i class="fas fa-bed"></i> 4 спальни</span>
+                        <span><i class="fas fa-layer-group"></i> 1 + мансарда</span>
                     </div>
-                    <div class="project-price"><span data-edit="auto_61">от 1 400 000 ₽</span><small><span data-edit="auto_62">/под ключ</span></small></div>
+                    <div class="project-price">от 1 400 000 ₽<small>/под ключ</small></div>
                     <div class="project-actions">
-                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()"><span data-edit="auto_63">Заявка</span></a>
-                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-02', '167 м²', 'от 1 400 000 ₽', 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&amp;q=80')"><span data-edit="auto_64">Подробнее</span></button>
+                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()">Заявка</a>
+                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-02', '167 м²', 'от 1 400 000 ₽', 'images/project-2.jpg')">Подробнее</button>
                     </div>
                 </div>
             </article>
-            <article class="project-card" onclick="openProjectModal('ДК-03', '102 м²', 'от 1 500 000 ₽', 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&amp;q=80')">
-                <div class="project-img">
+            <article class="project-card" onclick="openProjectModal('ДК-03', '102 м²', 'от 1 500 000 ₽', 'images/project-3.jpg')">
+                <div class="project-img img-wrapper">
                     <div class="project-badges">
-                        <span class="project-badge hit"><span data-edit="auto_65">ТОП-10</span></span>
+                        <span class="project-badge hit">ТОП-10</span>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&amp;q=80" alt="Проект ДК-03">
+                    <div class="placeholder-label">
+                        <strong data-copy="images/project-3.jpg">project-3.jpg</strong>
+                        <span>Фото проекта ДК-03 · 800×600px</span>
+                    </div>
+                    <img src="images/project-3.jpg" alt="Проект ДК-03" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
                 </div>
                 <div class="project-body">
-                    <h3 class="project-name"><span data-edit="auto_66">Проект ДК-03</span></h3>
+                    <h3 class="project-name">Проект ДК-03</h3>
                     <div class="project-area">
-                        <span><i class="fas fa-ruler-combined"></i><span data-edit="auto_67"> 102 м²</span></span>
-                        <span><i class="fas fa-bed"></i><span data-edit="auto_68"> 2 спальни</span></span>
-                        <span><i class="fas fa-layer-group"></i><span data-edit="auto_69"> 1 этаж</span></span>
+                        <span><i class="fas fa-ruler-combined"></i> 102 м²</span>
+                        <span><i class="fas fa-bed"></i> 2 спальни</span>
+                        <span><i class="fas fa-layer-group"></i> 1 этаж</span>
                     </div>
-                    <div class="project-price"><span data-edit="auto_70">от 1 500 000 ₽</span><small><span data-edit="auto_71">/под ключ</span></small></div>
+                    <div class="project-price">от 1 500 000 ₽<small>/под ключ</small></div>
                     <div class="project-actions">
-                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()"><span data-edit="auto_72">Заявка</span></a>
-                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-03', '102 м²', 'от 1 500 000 ₽', 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&amp;q=80')"><span data-edit="auto_73">Подробнее</span></button>
+                        <a href="#quiz" class="btn btn-primary" onclick="event.stopPropagation()">Заявка</a>
+                        <button class="btn btn-outline-dark" onclick="event.stopPropagation(); openProjectModal('ДК-03', '102 м²', 'от 1 500 000 ₽', 'images/project-3.jpg')">Подробнее</button>
                     </div>
                 </div>
             </article>
@@ -472,17 +497,17 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="container">
         <div class="catalog-banner">
             <div class="catalog-info">
-                <h3><span data-edit="auto_74">Скачайте каталог всех 80+ проектов</span></h3>
-                <p><span data-edit="auto_75">Планировки, цены, описания и фото построенных домов — в одном PDF-файле. Отправим в течение 10 минут.</span></p>
+                <h3>Скачайте каталог всех 80+ проектов</h3>
+                <p>Планировки, цены, описания и фото построенных домов — в одном PDF-файле. Отправим в течение 10 минут.</p>
                 <div class="catalog-meta">
-                    <span><i class="fas fa-file-pdf"></i><span data-edit="auto_76"> PDF</span></span>
-                    <span><i class="fas fa-weight-hanging"></i><span data-edit="auto_77"> 2.2 МБ</span></span>
-                    <span><i class="fas fa-clock"></i><span data-edit="auto_78"> Отправим за 10 минут</span></span>
+                    <span><i class="fas fa-file-pdf"></i> PDF</span>
+                    <span><i class="fas fa-weight-hanging"></i> 2.2 МБ</span>
+                    <span><i class="fas fa-clock"></i> Отправим за 10 минут</span>
                 </div>
             </div>
             <button class="catalog-btn" onclick="showStatus('Заявка принята! Каталог отправим в течение 10 минут.')">
-                <i class="fas fa-download"></i><span data-edit="auto_79"> Получить каталог
-            </span></button>
+                <i class="fas fa-download"></i> Получить каталог
+            </button>
         </div>
     </div>
 </section>
@@ -491,34 +516,34 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="section" id="steps" style="background: var(--beige-dark);">
     <div class="container">
         <div class="section-head">
-            <div class="section-label"><span data-edit="auto_80">Этапы работ</span></div>
-            <h2 class="section-title"><span data-edit="auto_81">Берём на себя </span><span><span data-edit="auto_82">все этапы</span></span><span data-edit="auto_83"> строительства</span></h2>
-            <p class="section-subtitle"><span data-edit="auto_84">Несём 100% ответственность — никаких сторонних подрядчиков</span></p>
+            <div class="section-label">Этапы работ</div>
+            <h2 class="section-title">Берём на себя <span>все этапы</span> строительства</h2>
+            <p class="section-subtitle">Несём 100% ответственность — никаких сторонних подрядчиков</p>
         </div>
         <div class="steps">
             <div class="step">
-                <div class="step-num"><span data-edit="auto_85">01</span></div>
+                <div class="step-num">01</div>
                 <div class="step-icon"><i class="fas fa-comments"></i></div>
-                <h3><span data-edit="auto_86">Консультация в офисе</span></h3>
-                <p><span data-edit="auto_87">Выбираете проект или приносите свой, получаете точную смету и подбираете участок, если его нет.</span></p>
+                <h3>Консультация в офисе</h3>
+                <p>Выбираете проект или приносите свой, получаете точную смету и подбираете участок, если его нет.</p>
             </div>
             <div class="step">
-                <div class="step-num"><span data-edit="auto_88">02</span></div>
+                <div class="step-num">02</div>
                 <div class="step-icon"><i class="fas fa-drafting-compass"></i></div>
-                <h3><span data-edit="auto_89">Документация</span></h3>
-                <p><span data-edit="auto_90">Готовим рабочие чертежи, считаем все материалы, заключаем официальный договор с фиксированной ценой.</span></p>
+                <h3>Документация</h3>
+                <p>Готовим рабочие чертежи, считаем все материалы, заключаем официальный договор с фиксированной ценой.</p>
             </div>
             <div class="step">
-                <div class="step-num"><span data-edit="auto_91">03</span></div>
+                <div class="step-num">03</div>
                 <div class="step-icon"><i class="fas fa-hard-hat"></i></div>
-                <h3><span data-edit="auto_92">Строительство</span></h3>
-                <p><span data-edit="auto_93">Работает своя бригада. Еженедельно присылаем фото и видео со стройки, онлайн-камера 24/7.</span></p>
+                <h3>Строительство</h3>
+                <p>Работает своя бригада. Еженедельно присылаем фото и видео со стройки, онлайн-камера 24/7.</p>
             </div>
             <div class="step">
-                <div class="step-num"><span data-edit="auto_94">04</span></div>
+                <div class="step-num">04</div>
                 <div class="step-icon"><i class="fas fa-key"></i></div>
-                <h3><span data-edit="auto_95">Сдача дома</span></h3>
-                <p><span data-edit="auto_96">Наш юрист оформляет все документы, вводит дом в эксплуатацию. Вы получаете ключи и свидетельство.</span></p>
+                <h3>Сдача дома</h3>
+                <p>Наш юрист оформляет все документы, вводит дом в эксплуатацию. Вы получаете ключи и свидетельство.</p>
             </div>
         </div>
     </div>
@@ -529,18 +554,18 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="container">
         <div class="quiz-inner">
             <div class="quiz-content">
-                <h2><span data-edit="auto_97">Ответьте на </span><span><span data-edit="auto_98">7 вопросов</span></span><span data-edit="auto_99"> и узнайте точную стоимость</span></h2>
-                <p><span data-edit="auto_100">После прохождения квиза мы пришлём расчёт стоимости строительства и 3 бонуса на выбор.</span></p>
+                <h2>Ответьте на <span>7 вопросов</span> и узнайте точную стоимость</h2>
+                <p>После прохождения квиза мы пришлём расчёт стоимости строительства и 3 бонуса на выбор.</p>
                 <ul class="quiz-gifts">
-                    <li><i class="fas fa-gift"></i><span data-edit="auto_101"> Бесплатный выезд инженера на участок</span></li>
-                    <li><i class="fas fa-gift"></i><span data-edit="auto_102"> Скидка 5% на материалы при заказе «под ключ»</span></li>
-                    <li><i class="fas fa-gift"></i><span data-edit="auto_103"> Проект бани в подарок при строительстве от 150 м²</span></li>
+                    <li><i class="fas fa-gift"></i> Бесплатный выезд инженера на участок</li>
+                    <li><i class="fas fa-gift"></i> Скидка 5% на материалы при заказе «под ключ»</li>
+                    <li><i class="fas fa-gift"></i> Проект бани в подарок при строительстве от 150 м²</li>
                 </ul>
             </div>
             <form class="quiz-form" onsubmit="event.preventDefault(); showStatus('Спасибо! Свяжемся с вами в течение 10 минут.'); this.reset();">
-                <h3><span data-edit="auto_104">Получить расчёт стоимости</span></h3>
-                <input type="text" placeholder="Ваше имя" required="">
-                <input type="tel" placeholder="+7 (___) ___-__-__" required="">
+                <h3>Получить расчёт стоимости</h3>
+                <input type="text" placeholder="Ваше имя" required>
+                <input type="tel" placeholder="+7 (___) ___-__-__" required>
                 <select>
                     <option>Выберите услугу</option>
                     <option>Строительство дома «под ключ»</option>
@@ -549,8 +574,8 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
                     <option>Реконструкция дома</option>
                 </select>
                 <textarea placeholder="Комментарий (необязательно)" rows="2"></textarea>
-                <button type="submit" class="btn btn-primary"><span data-edit="auto_105">Получить расчёт</span></button>
-                <small><span data-edit="auto_106">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</span></small>
+                <button type="submit" class="btn btn-primary">Получить расчёт</button>
+                <small>Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</small>
             </form>
         </div>
     </div>
@@ -560,33 +585,33 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="section">
     <div class="container">
         <div class="section-head">
-            <div class="section-label"><span data-edit="auto_107">Условия работы</span></div>
-            <h2 class="section-title"><span data-edit="auto_108">Отличные условия </span><span><span data-edit="auto_109">для каждого клиента</span></span></h2>
+            <div class="section-label">Условия работы</div>
+            <h2 class="section-title">Отличные условия <span>для каждого клиента</span></h2>
         </div>
         <div class="guarantees-grid">
             <div class="guarantee">
-                <h3><i class="fas fa-calendar-check" style="color: var(--accent); margin-right: 8px;"></i><span data-edit="auto_110"> Фиксированные сроки</span></h3>
-                <p><span data-edit="auto_111">В договоре прописываем точные сроки и график строительства. За каждый день просрочки — неустойка.</span></p>
+                <h3><i class="fas fa-calendar-check" style="color: var(--accent); margin-right: 8px;"></i> Фиксированные сроки</h3>
+                <p>В договоре прописываем точные сроки и график строительства. За каждый день просрочки — неустойка.</p>
             </div>
             <div class="guarantee">
-                <h3><i class="fas fa-balance-scale" style="color: var(--accent); margin-right: 8px;"></i><span data-edit="auto_112"> Юридическая помощь</span></h3>
-                <p><span data-edit="auto_113">От согласования проекта до ввода в эксплуатацию и оформления права собственности — всё на нас.</span></p>
+                <h3><i class="fas fa-balance-scale" style="color: var(--accent); margin-right: 8px;"></i> Юридическая помощь</h3>
+                <p>От согласования проекта до ввода в эксплуатацию и оформления права собственности — всё на нас.</p>
             </div>
             <div class="guarantee">
-                <h3><i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 8px;"></i><span data-edit="auto_114"> Гарантия до 15 лет</span></h3>
-                <p><span data-edit="auto_115">До 15 лет полной гарантии. Любые недочёты устраняем за свой счёт в оговорённые сроки.</span></p>
+                <h3><i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 8px;"></i> Гарантия до 15 лет</h3>
+                <p>До 15 лет полной гарантии. Любые недочёты устраняем за свой счёт в оговорённые сроки.</p>
             </div>
             <div class="guarantee">
-                <h3><i class="fas fa-key" style="color: var(--accent); margin-right: 8px;"></i><span data-edit="auto_116"> Дом «под ключ»</span></h3>
-                <p><span data-edit="auto_117">От дизайн-проекта до заселения: фундамент, сруб, инженерия, отделка, благоустройство участка.</span></p>
+                <h3><i class="fas fa-key" style="color: var(--accent); margin-right: 8px;"></i> Дом «под ключ»</h3>
+                <p>От дизайн-проекта до заселения: фундамент, сруб, инженерия, отделка, благоустройство участка.</p>
             </div>
             <div class="guarantee">
-                <h3><i class="fas fa-user-tie" style="color: var(--accent); margin-right: 8px;"></i><span data-edit="auto_118"> Опыт более 14 лет</span></h3>
-                <p><span data-edit="auto_119">С 2010 года строим дома из бруса. Все мастера аттестованы, проходят обучение раз в год.</span></p>
+                <h3><i class="fas fa-user-tie" style="color: var(--accent); margin-right: 8px;"></i> Опыт более 14 лет</h3>
+                <p>С 2010 года строим дома из бруса. Все мастера аттестованы, проходят обучение раз в год.</p>
             </div>
             <div class="guarantee">
-                <h3><i class="fas fa-ruble-sign" style="color: var(--accent); margin-right: 8px;"></i><span data-edit="auto_120"> Фиксированная цена</span></h3>
-                <p><span data-edit="auto_121">Смета закрепляется в договоре. Цена не изменится даже если материалы подорожают в процессе.</span></p>
+                <h3><i class="fas fa-ruble-sign" style="color: var(--accent); margin-right: 8px;"></i> Фиксированная цена</h3>
+                <p>Смета закрепляется в договоре. Цена не изменится даже если материалы подорожают в процессе.</p>
             </div>
         </div>
     </div>
@@ -596,54 +621,66 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="section" id="cases" style="background: var(--beige-dark);">
     <div class="container">
         <div class="section-head">
-            <div class="section-label"><span data-edit="auto_122">Портфолио</span></div>
-            <h2 class="section-title"><span data-edit="auto_123">Более 300 построенных домов </span><span><span data-edit="auto_124">с 2010 года</span></span></h2>
-            <p class="section-subtitle"><span data-edit="auto_125">Каждый проект — это история семьи, которая доверила нам свой дом</span></p>
+            <div class="section-label">Портфолио</div>
+            <h2 class="section-title">Более 300 построенных домов <span>с 2010 года</span></h2>
+            <p class="section-subtitle">Каждый проект — это история семьи, которая доверила нам свой дом</p>
         </div>
         <div class="cases-grid">
             <article class="case-card">
-                <div class="case-img">
-                    <img src="https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=800&amp;q=80" alt="Дом Эверест">
+                <div class="case-img img-wrapper">
+                    <div class="placeholder-label">
+                        <strong data-copy="images/case-1.jpg">case-1.jpg</strong>
+                        <span>Дом «Эверест» · 800×600px</span>
+                    </div>
+                    <img src="images/case-1.jpg" alt="Дом Эверест" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
                 </div>
                 <div class="case-body">
-                    <h3 class="case-name"><span data-edit="auto_126">Дом «Эверест» 120 м²</span></h3>
+                    <h3 class="case-name">Дом «Эверест» 120 м²</h3>
                     <div class="case-specs">
-                        <div class="case-spec"><strong><span data-edit="auto_127">120 м²</span></strong><span><span data-edit="auto_128">Площадь</span></span></div>
-                        <div class="case-spec"><strong><span data-edit="auto_129">40 дней</span></strong><span><span data-edit="auto_130">Срок</span></span></div>
-                        <div class="case-spec"><strong><span data-edit="auto_131">3 комн.</span></strong><span><span data-edit="auto_132">Планировка</span></span></div>
+                        <div class="case-spec"><strong>120 м²</strong><span>Площадь</span></div>
+                        <div class="case-spec"><strong>40 дней</strong><span>Срок</span></div>
+                        <div class="case-spec"><strong>3 комн.</strong><span>Планировка</span></div>
                     </div>
-                    <p class="case-desc"><span data-edit="auto_133">Построили под ключ: от дизайн-проекта до комплексной уборки. Провели все коммуникации (свет, вода, септик), сделали чистовую отделку.</span></p>
-                    <a href="#quiz" class="btn btn-primary" style="width: 100%;"><span data-edit="auto_134">Рассчитать мой дом</span></a>
+                    <p class="case-desc">Построили под ключ: от дизайн-проекта до комплексной уборки. Провели все коммуникации (свет, вода, септик), сделали чистовую отделку.</p>
+                    <a href="#quiz" class="btn btn-primary" style="width: 100%;">Рассчитать мой дом</a>
                 </div>
             </article>
             <article class="case-card">
-                <div class="case-img">
-                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&amp;q=80" alt="Дом Тайга">
+                <div class="case-img img-wrapper">
+                    <div class="placeholder-label">
+                        <strong data-copy="images/case-2.jpg">case-2.jpg</strong>
+                        <span>Дом «Тайга» · 800×600px</span>
+                    </div>
+                    <img src="images/case-2.jpg" alt="Дом Тайга" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
                 </div>
                 <div class="case-body">
-                    <h3 class="case-name"><span data-edit="auto_135">Дом «Тайга» 115 м²</span></h3>
+                    <h3 class="case-name">Дом «Тайга» 115 м²</h3>
                     <div class="case-specs">
-                        <div class="case-spec"><strong><span data-edit="auto_136">115 м²</span></strong><span><span data-edit="auto_137">Площадь</span></span></div>
-                        <div class="case-spec"><strong><span data-edit="auto_138">40 дней</span></strong><span><span data-edit="auto_139">Срок</span></span></div>
-                        <div class="case-spec"><strong><span data-edit="auto_140">5 комн.</span></strong><span><span data-edit="auto_141">Планировка</span></span></div>
+                        <div class="case-spec"><strong>115 м²</strong><span>Площадь</span></div>
+                        <div class="case-spec"><strong>40 дней</strong><span>Срок</span></div>
+                        <div class="case-spec"><strong>5 комн.</strong><span>Планировка</span></div>
                     </div>
-                    <p class="case-desc"><span data-edit="auto_142">Семейный дом с двумя санузлами, гардеробной и террасой. Фундамент — утеплённая плита, кровля — металлическая черепица.</span></p>
-                    <a href="#quiz" class="btn btn-primary" style="width: 100%;"><span data-edit="auto_143">Рассчитать мой дом</span></a>
+                    <p class="case-desc">Семейный дом с двумя санузлами, гардеробной и террасой. Фундамент — утеплённая плита, кровля — металлическая черепица.</p>
+                    <a href="#quiz" class="btn btn-primary" style="width: 100%;">Рассчитать мой дом</a>
                 </div>
             </article>
             <article class="case-card">
-                <div class="case-img">
-                    <img src="https://images.unsplash.com/photo-1598228723793-52759bba239c?w=800&amp;q=80" alt="Дом Буран">
+                <div class="case-img img-wrapper">
+                    <div class="placeholder-label">
+                        <strong data-copy="images/case-3.jpg">case-3.jpg</strong>
+                        <span>Дом «Буран» · 800×600px</span>
+                    </div>
+                    <img src="images/case-3.jpg" alt="Дом Буран" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
                 </div>
                 <div class="case-body">
-                    <h3 class="case-name"><span data-edit="auto_144">Дом «Буран» 120 м²</span></h3>
+                    <h3 class="case-name">Дом «Буран» 120 м²</h3>
                     <div class="case-specs">
-                        <div class="case-spec"><strong><span data-edit="auto_145">120 м²</span></strong><span><span data-edit="auto_146">Площадь</span></span></div>
-                        <div class="case-spec"><strong><span data-edit="auto_147">40 дней</span></strong><span><span data-edit="auto_148">Срок</span></span></div>
-                        <div class="case-spec"><strong><span data-edit="auto_149">4 комн.</span></strong><span><span data-edit="auto_150">Планировка</span></span></div>
+                        <div class="case-spec"><strong>120 м²</strong><span>Площадь</span></div>
+                        <div class="case-spec"><strong>40 дней</strong><span>Срок</span></div>
+                        <div class="case-spec"><strong>4 комн.</strong><span>Планировка</span></div>
                     </div>
-                    <p class="case-desc"><span data-edit="auto_151">Дом с финской сауной и вторым светом в гостиной. Панорамные окна, мастер-спальня с гардеробной, отдельная котельная.</span></p>
-                    <a href="#quiz" class="btn btn-primary" style="width: 100%;"><span data-edit="auto_152">Рассчитать мой дом</span></a>
+                    <p class="case-desc">Дом с финской сауной и вторым светом в гостиной. Панорамные окна, мастер-спальня с гардеробной, отдельная котельная.</p>
+                    <a href="#quiz" class="btn btn-primary" style="width: 100%;">Рассчитать мой дом</a>
                 </div>
             </article>
         </div>
@@ -655,12 +692,12 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="container">
         <div class="mortgage-inner">
             <div>
-                <h2><span data-edit="auto_153">Ипотека с господдержкой </span><span style="color: #fff3d6;"><span data-edit="auto_154">от 5%</span></span></h2>
-                <p><span data-edit="auto_155">Наши дома аккредитованы в 12 банках. Оставьте заявку — получите бесплатную консультацию ипотечного брокера.</span></p>
+                <h2>Ипотека с господдержкой <span style="color: #fff3d6;">от 5%</span></h2>
+                <p>Наши дома аккредитованы в 12 банках. Оставьте заявку — получите бесплатную консультацию ипотечного брокера.</p>
             </div>
             <a href="#quiz" class="btn" style="background: #fff; color: var(--brown-dark); padding: 14px 28px; white-space: nowrap;">
-                <i class="fas fa-hand-holding-usd"></i><span data-edit="auto_156"> Консультация по ипотеке
-            </span></a>
+                <i class="fas fa-hand-holding-usd"></i> Консультация по ипотеке
+            </a>
         </div>
     </div>
 </section>
@@ -670,61 +707,73 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="container">
         <div class="reviews-head">
             <div>
-                <div class="section-label"><span data-edit="auto_157">Что говорят клиенты</span></div>
-                <h2 class="section-title"><span data-edit="auto_158">Отзывы тех, </span><span><span data-edit="auto_159">кто уже живёт в наших домах</span></span></h2>
+                <div class="section-label">Что говорят клиенты</div>
+                <h2 class="section-title">Отзывы тех, <span>кто уже живёт в наших домах</span></h2>
             </div>
             <div class="reviews-rating">
-                <div class="rating-big"><span data-edit="auto_160">4.8</span></div>
+                <div class="rating-big">4.8</div>
                 <div>
                     <div class="rating-stars">★★★★★</div>
-                    <div class="rating-count"><span data-edit="auto_161">на основе 147 отзывов</span></div>
+                    <div class="rating-count">на основе 147 отзывов</div>
                 </div>
             </div>
         </div>
         <div class="reviews-grid">
             <div class="review">
                 <div class="review-head">
-                    <div class="review-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&amp;q=80" alt="Сергей"></div>
+                    <div class="review-avatar img-wrapper">
+                        <div class="placeholder-label"><strong data-copy="images/review-1.jpg">review-1.jpg</strong></div>
+                        <img src="images/review-1.jpg" alt="Сергей" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
+                    </div>
                     <div class="review-author">
-                        <strong><span data-edit="auto_162">Сергей Павлюк</span></strong>
-                        <span><span data-edit="auto_163">16 июня 2024 · Проект «Эверест»</span></span>
+                        <strong>Сергей Павлюк</strong>
+                        <span>16 июня 2024 · Проект «Эверест»</span>
                     </div>
                 </div>
                 <div class="review-stars">★★★★★</div>
-                <p class="review-text"><span data-edit="auto_164">Когда встал вопрос о строительстве загородного дома, выбирал подрядчика вдумчиво. Эту компанию нашёл по рекомендации. Строили по проекту «Эверест». Ребята знают своё дело, не обманывают, работу выполнили качественно и в срок. Стоимость для такого качества очень конкурентная. Строил год назад — советую!</span></p>
+                <p class="review-text">Когда встал вопрос о строительстве загородного дома, выбирал подрядчика вдумчиво. Эту компанию нашёл по рекомендации. Строили по проекту «Эверест». Ребята знают своё дело, не обманывают, работу выполнили качественно и в срок. Стоимость для такого качества очень конкурентная. Строил год назад — советую!</p>
             </div>
             <div class="review">
                 <div class="review-head">
-                    <div class="review-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&amp;q=80" alt="Даниил"></div>
+                    <div class="review-avatar img-wrapper">
+                        <div class="placeholder-label"><strong data-copy="images/review-2.jpg">review-2.jpg</strong></div>
+                        <img src="images/review-2.jpg" alt="Даниил" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
+                    </div>
                     <div class="review-author">
-                        <strong><span data-edit="auto_165">Даниил Курпатов</span></strong>
-                        <span><span data-edit="auto_166">20 августа 2024 · Небольшой дом</span></span>
+                        <strong>Даниил Курпатов</strong>
+                        <span>20 августа 2024 · Небольшой дом</span>
                     </div>
                 </div>
                 <div class="review-stars">★★★★★</div>
-                <p class="review-text"><span data-edit="auto_167">Обратились за строительством небольшого дома из бруса. В процессе остались очень довольны взаимодействием с командой и бригадой. Отдельное спасибо менеджеру Ксении и прорабу Евгению — всё продумали и проконтролировали. Никаких нареканий, работали быстро и аккуратно!</span></p>
+                <p class="review-text">Обратились за строительством небольшого дома из бруса. В процессе остались очень довольны взаимодействием с командой и бригадой. Отдельное спасибо менеджеру Ксении и прорабу Евгению — всё продумали и проконтролировали. Никаких нареканий, работали быстро и аккуратно!</p>
             </div>
             <div class="review">
                 <div class="review-head">
-                    <div class="review-avatar"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&amp;q=80" alt="Артём"></div>
+                    <div class="review-avatar img-wrapper">
+                        <div class="placeholder-label"><strong data-copy="images/review-3.jpg">review-3.jpg</strong></div>
+                        <img src="images/review-3.jpg" alt="Артём" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
+                    </div>
                     <div class="review-author">
-                        <strong><span data-edit="auto_168">Артём Вольский</span></strong>
-                        <span><span data-edit="auto_169">11 июня 2024 · Проект «Эверест»</span></span>
+                        <strong>Артём Вольский</strong>
+                        <span>11 июня 2024 · Проект «Эверест»</span>
                     </div>
                 </div>
                 <div class="review-stars">★★★★★</div>
-                <p class="review-text"><span data-edit="auto_170">Сегодня завершилось строительство дома «Эверест». Мы очень довольны своим выбором. Компания надёжная, процесс хорошо организован от фундамента до крыши. Спасибо Олегу за организацию и бригаде Сергея за воплощение мечты. Рекомендуем!</span></p>
+                <p class="review-text">Сегодня завершилось строительство дома «Эверест». Мы очень довольны своим выбором. Компания надёжная, процесс хорошо организован от фундамента до крыши. Спасибо Олегу за организацию и бригаде Сергея за воплощение мечты. Рекомендуем!</p>
             </div>
             <div class="review">
                 <div class="review-head">
-                    <div class="review-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&amp;q=80" alt="Светлана"></div>
+                    <div class="review-avatar img-wrapper">
+                        <div class="placeholder-label"><strong data-copy="images/review-4.jpg">review-4.jpg</strong></div>
+                        <img src="images/review-4.jpg" alt="Светлана" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
+                    </div>
                     <div class="review-author">
-                        <strong><span data-edit="auto_171">Светлана Кашина</span></strong>
-                        <span><span data-edit="auto_172">1 августа 2024 · Семейный дом</span></span>
+                        <strong>Светлана Кашина</strong>
+                        <span>1 августа 2024 · Семейный дом</span>
                     </div>
                 </div>
                 <div class="review-stars">★★★★★</div>
-                <p class="review-text"><span data-edit="auto_173">Давно мечтали с мужем и детьми о собственном доме — хотелось чаще бывать на природе, где свежий воздух. Над домом работала целая команда профессионалов. Переехали около месяца назад — мы в полном восторге. Дом очень тёплый и уютный.</span></p>
+                <p class="review-text">Давно мечтали с мужем и детьми о собственном доме — хотелось чаще бывать на природе, где свежий воздух. Над домом работала целая команда профессионалов. Переехали около месяца назад — мы в полном восторге. Дом очень тёплый и уютный.</p>
             </div>
         </div>
     </div>
@@ -733,14 +782,14 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <!-- ====== CTA ФИНАЛ ====== -->
 <section class="cta-final">
     <div class="container">
-        <h2><span data-edit="auto_174">Построим ваш дом </span><span><span data-edit="auto_175">так, как строили бы для себя</span></span></h2>
-        <p><span data-edit="auto_176">Берём на себя все этапы — от эскиза до ключей. Не дёргаем по пустякам, результат точно совпадёт с вашими ожиданиями.</span></p>
+        <h2>Построим ваш дом <span>так, как строили бы для себя</span></h2>
+        <p>Берём на себя все этапы — от эскиза до ключей. Не дёргаем по пустякам, результат точно совпадёт с вашими ожиданиями.</p>
         <div class="cta-metrics">
-            <div class="cta-metric"><strong><span data-edit="auto_177">300+</span></strong><span><span data-edit="auto_178">домов построено</span></span></div>
-            <div class="cta-metric"><strong><span data-edit="auto_179">40+</span></strong><span><span data-edit="auto_180">мастеров в команде</span></span></div>
-            <div class="cta-metric"><strong><span data-edit="auto_181">14 лет</span></strong><span><span data-edit="auto_182">на рынке строительства</span></span></div>
+            <div class="cta-metric"><strong>300+</strong><span>домов построено</span></div>
+            <div class="cta-metric"><strong>40+</strong><span>мастеров в команде</span></div>
+            <div class="cta-metric"><strong>14 лет</strong><span>на рынке строительства</span></div>
         </div>
-        <a href="#quiz" class="btn btn-primary"><i class="fas fa-phone"></i><span data-edit="auto_183"> Получить консультацию руководителя</span></a>
+        <a href="#quiz" class="btn btn-primary"><i class="fas fa-phone"></i> Получить консультацию руководителя</a>
     </div>
 </section>
 
@@ -749,15 +798,21 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="container">
         <div class="boss-inner">
             <div class="boss-photo">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&amp;q=80" alt="Руководитель">
+                <div class="img-wrapper">
+                    <div class="placeholder-label">
+                        <strong data-copy="images/boss.jpg">boss.jpg</strong>
+                        <span>Фото руководителя · 600×750px</span>
+                    </div>
+                    <img src="images/boss.jpg" alt="Руководитель" onload="this.parentElement.querySelector('.placeholder-label').style.display='none'" onerror="this.style.display='none'">
+                </div>
             </div>
             <div class="boss-info">
-                <div class="section-label"><span data-edit="auto_184">Руководитель компании</span></div>
-                <h3><span data-edit="auto_185">Олег Долматовский</span></h3>
-                <div class="boss-role"><span data-edit="auto_186">Основатель · 14 лет в строительстве</span></div>
-                <p><span data-edit="auto_187">Лично веду переговоры по крупным проектам и контролирую качество на всех объектах. Каждую неделю выезжаю на стройки — знаю каждый дом в лицо.</span></p>
-                <p><span data-edit="auto_188">Если у вас возникнут вопросы или сложности — пишите напрямую, отвечаю в течение часа в рабочее время.</span></p>
-                <p class="boss-quote"><span data-edit="auto_189">«Мы строим не квадратные метры, а дома, в которых будут расти дети и собираться семья. Именно поэтому относимся к каждому проекту как к своему.»</span></p>
+                <div class="section-label">Руководитель компании</div>
+                <h3>Олег Долматовский</h3>
+                <div class="boss-role">Основатель · 14 лет в строительстве</div>
+                <p>Лично веду переговоры по крупным проектам и контролирую качество на всех объектах. Каждую неделю выезжаю на стройки — знаю каждый дом в лицо.</p>
+                <p>Если у вас возникнут вопросы или сложности — пишите напрямую, отвечаю в течение часа в рабочее время.</p>
+                <p class="boss-quote">«Мы строим не квадратные метры, а дома, в которых будут расти дети и собираться семья. Именно поэтому относимся к каждому проекту как к своему.»</p>
             </div>
         </div>
     </div>
@@ -767,33 +822,33 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="section" id="faq" style="background: var(--beige-dark);">
     <div class="container">
         <div class="section-head">
-            <div class="section-label"><span data-edit="auto_190">Частые вопросы</span></div>
-            <h2 class="section-title"><span data-edit="auto_191">Отвечаем на </span><span><span data-edit="auto_192">ваши вопросы</span></span></h2>
+            <div class="section-label">Частые вопросы</div>
+            <h2 class="section-title">Отвечаем на <span>ваши вопросы</span></h2>
         </div>
         <div class="faq-list">
             <div class="faq-item">
-                <div class="faq-q"><span data-edit="auto_193">Сколько по времени занимает строительство дома? </span><i class="fas fa-chevron-down"></i></div>
-                <div class="faq-a"><p><span data-edit="auto_194">Срок зависит от сезона, сложности проекта и площади. Коробка дома 100–150 м² — от 14 до 40 дней. Полный цикл «под ключ» с отделкой — от 2 до 4 месяцев. Точные сроки фиксируем в договоре.</span></p></div>
+                <div class="faq-q">Сколько по времени занимает строительство дома? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a"><p>Срок зависит от сезона, сложности проекта и площади. Коробка дома 100–150 м² — от 14 до 40 дней. Полный цикл «под ключ» с отделкой — от 2 до 4 месяцев. Точные сроки фиксируем в договоре.</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q"><span data-edit="auto_195">На что распространяется гарантия? </span><i class="fas fa-chevron-down"></i></div>
-                <div class="faq-a"><p><span data-edit="auto_196">На капитальные строительные работы (сруб, фундамент, кровля) — 10 лет. На инженерные работы (электрика, отопление, водоснабжение) — 3 года. На отделочные работы — 1 год. Всё прописано в договоре.</span></p></div>
+                <div class="faq-q">На что распространяется гарантия? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a"><p>На капитальные строительные работы (сруб, фундамент, кровля) — 10 лет. На инженерные работы (электрика, отопление, водоснабжение) — 3 года. На отделочные работы — 1 год. Всё прописано в договоре.</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q"><span data-edit="auto_197">Что значит строительство «под ключ» в вашей компании? </span><i class="fas fa-chevron-down"></i></div>
-                <div class="faq-a"><p><span data-edit="auto_198">Это значит, что вы согласовываете с нами концепцию и требования, а всё остальное — от проектирования до запуска коммуникаций — делаем мы. Вы получаете готовый к заселению дом со всеми документами.</span></p></div>
+                <div class="faq-q">Что значит строительство «под ключ» в вашей компании? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a"><p>Это значит, что вы согласовываете с нами концепцию и требования, а всё остальное — от проектирования до запуска коммуникаций — делаем мы. Вы получаете готовый к заселению дом со всеми документами.</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q"><span data-edit="auto_199">Можно ли построить дом в ипотеку? </span><i class="fas fa-chevron-down"></i></div>
-                <div class="faq-a"><p><span data-edit="auto_200">Да, наши дома аккредитованы в 12 банках. Доступна ипотека с господдержкой от 5%, сельская ипотека от 3%, семейная ипотека. Наш ипотечный брокер подберёт оптимальный вариант и поможет с документами.</span></p></div>
+                <div class="faq-q">Можно ли построить дом в ипотеку? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a"><p>Да, наши дома аккредитованы в 12 банках. Доступна ипотека с господдержкой от 5%, сельская ипотека от 3%, семейная ипотека. Наш ипотечный брокер подберёт оптимальный вариант и поможет с документами.</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q"><span data-edit="auto_201">Можно ли использовать свой проект? </span><i class="fas fa-chevron-down"></i></div>
-                <div class="faq-a"><p><span data-edit="auto_202">Конечно. Приносите любой проект — от эскиза на салфетке до полного комплекта чертежей. Наши инженеры адаптируют его под клееный брус, пересчитают смету и предложат оптимизации.</span></p></div>
+                <div class="faq-q">Можно ли использовать свой проект? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a"><p>Конечно. Приносите любой проект — от эскиза на салфетке до полного комплекта чертежей. Наши инженеры адаптируют его под клееный брус, пересчитают смету и предложат оптимизации.</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q"><span data-edit="auto_203">Что если у меня нет участка? </span><i class="fas fa-chevron-down"></i></div>
-                <div class="faq-a"><p><span data-edit="auto_204">Поможем подобрать участок в Подмосковье. У нас партнёрские отношения с 5 агентствами земли — покажем проверенные варианты с правильными документами и подведёнными коммуникациями.</span></p></div>
+                <div class="faq-q">Что если у меня нет участка? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a"><p>Поможем подобрать участок в Подмосковье. У нас партнёрские отношения с 5 агентствами земли — покажем проверенные варианты с правильными документами и подведёнными коммуникациями.</p></div>
             </div>
         </div>
     </div>
@@ -803,49 +858,49 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <section class="section contacts-section" id="contacts">
     <div class="container">
         <div class="section-head">
-            <div class="section-label"><span data-edit="auto_205">Контакты</span></div>
-            <h2 class="section-title"><span data-edit="auto_206">Приезжайте </span><span><span data-edit="auto_207">в наш офис</span></span></h2>
-            <p class="section-subtitle"><span data-edit="auto_208">Покажем построенные дома, обсудим ваш проект и подпишем договор</span></p>
+            <div class="section-label">Контакты</div>
+            <h2 class="section-title">Приезжайте <span>в наш офис</span></h2>
+            <p class="section-subtitle">Покажем построенные дома, обсудим ваш проект и подпишем договор</p>
         </div>
         <div class="contacts-grid">
             <div class="contact-info-box">
-                <h3><span data-edit="auto_209">Наш офис в Москве</span></h3>
+                <h3>Наш офис в Москве</h3>
                 <ul class="contact-list">
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <strong><span data-edit="auto_210">Адрес</span></strong>
-                            <span><span data-edit="auto_211">Москва, Фрунзенская наб., 22с4</span></span>
+                            <strong>Адрес</strong>
+                            <span>Москва, Фрунзенская наб., 22с4</span>
                         </div>
                     </li>
                     <li>
                         <i class="fas fa-phone"></i>
                         <div>
-                            <strong><span data-edit="auto_212">Телефон</span></strong>
-                            <span><a href="tel:+74991234567"><span data-edit="auto_213">+7 (499) 123-45-67</span></a></span>
+                            <strong>Телефон</strong>
+                            <span><a href="tel:+74991234567">+7 (499) 123-45-67</a></span>
                         </div>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
                         <div>
-                            <strong><span data-edit="auto_214">E-mail</span></strong>
-                            <span><a href="mailto:info@brusdom.ru"><span data-edit="auto_215">info@brusdom.ru</span></a></span>
+                            <strong>E-mail</strong>
+                            <span><a href="mailto:info@brusdom.ru">info@brusdom.ru</a></span>
                         </div>
                     </li>
                     <li>
                         <i class="fas fa-clock"></i>
                         <div>
-                            <strong><span data-edit="auto_216">Режим работы</span></strong>
-                            <span><span data-edit="auto_217">Пн-Вс: 9:00 — 20:00</span></span>
+                            <strong>Режим работы</strong>
+                            <span>Пн-Вс: 9:00 — 20:00</span>
                         </div>
                     </li>
                 </ul>
                 <button class="btn btn-primary" style="width: 100%;" onclick="openModal('callback')">
-                    <i class="fas fa-phone-alt"></i><span data-edit="auto_218"> Заказать звонок
-                </span></button>
+                    <i class="fas fa-phone-alt"></i> Заказать звонок
+                </button>
             </div>
             <div class="contact-map">
-                <iframe src="https://yandex.ru/map-widget/v1/?ll=37.569423%2C55.728058&amp;z=16&amp;pt=37.569423,55.728058,pm2rdm" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://yandex.ru/map-widget/v1/?ll=37.569423%2C55.728058&z=16&pt=37.569423,55.728058,pm2rdm" allowfullscreen loading="lazy"></iframe>
             </div>
         </div>
     </div>
@@ -856,8 +911,8 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="container">
         <div class="footer-grid">
             <div class="footer-col">
-                <div class="footer-logo"><i class="fas fa-home"></i><span data-edit="auto_219"> БРУС&amp;ДОМ</span></div>
-                <p><span data-edit="auto_220">Строительство домов из клееного бруса «под ключ» в Москве и области с 2010 года. Более 300 построенных домов.</span></p>
+                <div class="footer-logo"><i class="fas fa-home"></i> БРУС&ДОМ</div>
+                <p>Строительство домов из клееного бруса «под ключ» в Москве и области с 2010 года. Более 300 построенных домов.</p>
                 <div style="display: flex; gap: 10px; margin-top: 14px;">
                     <a href="#" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-telegram"></i></a>
                     <a href="#" style="width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-whatsapp"></i></a>
@@ -866,34 +921,34 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
                 </div>
             </div>
             <div class="footer-col">
-                <h4><span data-edit="auto_221">Навигация</span></h4>
+                <h4>Навигация</h4>
                 <ul>
-                    <li><a href="#projects"><span data-edit="auto_222">Проекты домов</span></a></li>
-                    <li><a href="#steps"><span data-edit="auto_223">Этапы работ</span></a></li>
-                    <li><a href="#cases"><span data-edit="auto_224">Построенные дома</span></a></li>
-                    <li><a href="#reviews"><span data-edit="auto_225">Отзывы</span></a></li>
-                    <li><a href="#faq"><span data-edit="auto_226">Вопросы</span></a></li>
+                    <li><a href="#projects">Проекты домов</a></li>
+                    <li><a href="#steps">Этапы работ</a></li>
+                    <li><a href="#cases">Построенные дома</a></li>
+                    <li><a href="#reviews">Отзывы</a></li>
+                    <li><a href="#faq">Вопросы</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4><span data-edit="auto_227">Контакты</span></h4>
-                <div class="footer-contact"><i class="fas fa-phone"></i><span data-edit="auto_228"> +7 (499) 123-45-67</span></div>
-                <div class="footer-contact"><i class="fas fa-envelope"></i><span data-edit="auto_229"> info@brusdom.ru</span></div>
-                <div class="footer-contact"><i class="fas fa-clock"></i><span data-edit="auto_230"> Пн-Вс: 9:00 — 20:00</span></div>
-                <div class="footer-contact"><i class="fas fa-map-marker-alt"></i><span data-edit="auto_231"> Москва, Фрунзенская наб., 22с4</span></div>
+                <h4>Контакты</h4>
+                <div class="footer-contact"><i class="fas fa-phone"></i> +7 (499) 123-45-67</div>
+                <div class="footer-contact"><i class="fas fa-envelope"></i> info@brusdom.ru</div>
+                <div class="footer-contact"><i class="fas fa-clock"></i> Пн-Вс: 9:00 — 20:00</div>
+                <div class="footer-contact"><i class="fas fa-map-marker-alt"></i> Москва, Фрунзенская наб., 22с4</div>
             </div>
             <div class="footer-col">
-                <h4><span data-edit="auto_232">Обратная связь</span></h4>
-                <p><span data-edit="auto_233">Оставьте номер — перезвоним за 10 минут</span></p>
+                <h4>Обратная связь</h4>
+                <p>Оставьте номер — перезвоним за 10 минут</p>
                 <form onsubmit="event.preventDefault(); showStatus('Спасибо! Перезвоним в течение 10 минут.'); this.reset();" style="display: flex; gap: 8px;">
-                    <input type="tel" placeholder="+7 (___) ___-__-__" required="" style="flex: 1; padding: 10px 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff; font-family: inherit; font-size: 13px;">
+                    <input type="tel" placeholder="+7 (___) ___-__-__" required style="flex: 1; padding: 10px 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff; font-family: inherit; font-size: 13px;">
                     <button type="submit" class="btn btn-primary" style="padding: 10px 16px; font-size: 11px;"><i class="fas fa-paper-plane"></i></button>
                 </form>
             </div>
         </div>
         <div class="footer-bottom">
-            <div><span data-edit="auto_234">© 2026 БРУС&amp;ДОМ. Все права защищены.</span></div>
-            <div><a href="#" style="text-decoration: underline;"><span data-edit="auto_235">Политика конфиденциальности</span></a></div>
+            <div>© 2026 БРУС&ДОМ. Все права защищены.</div>
+            <div><a href="#" style="text-decoration: underline;">Политика конфиденциальности</a></div>
         </div>
     </div>
 </footer>
@@ -913,19 +968,19 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('callbackModal')" aria-label="Закрыть">✕</button>
         <div id="callbackForm">
-            <h3><span data-edit="auto_236">Заказать звонок</span></h3>
-            <p><span data-edit="auto_237">Оставьте номер — перезвоним в течение 10 минут и ответим на все вопросы</span></p>
+            <h3>Заказать звонок</h3>
+            <p>Оставьте номер — перезвоним в течение 10 минут и ответим на все вопросы</p>
             <form onsubmit="event.preventDefault(); submitCallbackForm();">
-                <input type="text" placeholder="Ваше имя" required="" style="width: 100%; padding: 12px 14px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 10px; color: var(--text);">
-                <input type="tel" placeholder="+7 (___) ___-__-__" required="" style="width: 100%; padding: 12px 14px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 10px; color: var(--text);">
-                <button type="submit" class="btn btn-primary" style="width: 100%;"><span data-edit="auto_238">Перезвоните мне</span></button>
-                <small style="display: block; text-align: center; margin-top: 10px; font-size: 11px; color: var(--text-muted);"><span data-edit="auto_239">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</span></small>
+                <input type="text" placeholder="Ваше имя" required style="width: 100%; padding: 12px 14px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 10px; color: var(--text);">
+                <input type="tel" placeholder="+7 (___) ___-__-__" required style="width: 100%; padding: 12px 14px; background: var(--beige); border: 2px solid transparent; border-radius: 8px; font-size: 14px; font-family: inherit; margin-bottom: 10px; color: var(--text);">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Перезвоните мне</button>
+                <small style="display: block; text-align: center; margin-top: 10px; font-size: 11px; color: var(--text-muted);">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</small>
             </form>
         </div>
         <div class="success-msg" id="callbackSuccess">
             <i class="fas fa-check-circle"></i>
-            <h3><span data-edit="auto_240">Спасибо за заявку!</span></h3>
-            <p><span data-edit="auto_241">Мы перезвоним вам в течение 10 минут.</span></p>
+            <h3>Спасибо за заявку!</h3>
+            <p>Мы перезвоним вам в течение 10 минут.</p>
         </div>
     </div>
 </div>
@@ -935,14 +990,14 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('projectModal')" aria-label="Закрыть">✕</button>
         <div id="projectDetails">
-            <img id="projectImg" src="" alt="" style="width: 100%; border-radius: 10px; margin-bottom: 16px;">
+            <img id="projectImg" class="modal-project-img" src="" alt="">
             <h3 id="projectName"></h3>
             <p style="font-size: 18px; color: var(--accent); font-weight: 700; margin-bottom: 8px;" id="projectArea"></p>
             <p style="font-size: 24px; color: var(--brown-dark); font-weight: 800; margin-bottom: 16px;" id="projectPrice"></p>
-            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;"><span data-edit="auto_242">
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
                 Компактный дом для загородного проживания семьи с 1-2 детьми. В доме гармонично реализована идея «второго света» над кухней-гостиной с панорамными окнами.
-            </span></p>
-            <a href="#quiz" class="btn btn-primary" style="width: 100%;" onclick="closeModal('projectModal')"><span data-edit="auto_243">Рассчитать стоимость</span></a>
+            </p>
+            <a href="#quiz" class="btn btn-primary" style="width: 100%;" onclick="closeModal('projectModal')">Рассчитать стоимость</a>
         </div>
     </div>
 </div>
@@ -951,6 +1006,20 @@ footer { background: #1f1811; color: #d4c5ae; padding: 50px 0 20px; }
 <div style="position: fixed; top: 60px; right: 24px; background: var(--brown-dark); color: #fff; padding: 14px 20px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2000; display: none; max-width: 320px;" id="statusBar"></div>
 
 <script>
+// Копирование имени файла
+document.addEventListener('click', e => {
+    const copyEl = e.target.closest('[data-copy]');
+    if (copyEl) {
+        e.stopPropagation();
+        e.preventDefault();
+        const fullPath = copyEl.getAttribute('data-copy');
+        const fileName = fullPath.split('/').pop();
+        navigator.clipboard.writeText(fileName).then(() => {
+            showStatus('✓ Скопировано: ' + fileName);
+        });
+    }
+});
+
 // Бургер
 const burger = document.getElementById('burger');
 const navList = document.getElementById('navList');
@@ -959,7 +1028,6 @@ burger.addEventListener('click', () => {
     burger.querySelector('i').className = navList.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
 });
 
-// Закрытие меню при клике по ссылке
 document.querySelectorAll('.nav-list a').forEach(a => {
     a.addEventListener('click', () => {
         navList.classList.remove('open');
@@ -983,5 +1051,75 @@ function showStatus(msg) {
     bar.textContent = msg;
     bar.style.display = 'block';
     clearTimeout(statusTimer);
-    statusTimer = setTimeout(() => { bar.style.display
-</script></body></html>
+    statusTimer = setTimeout(() => { bar.style.display = 'none'; }, 4000);
+}
+
+// Маска телефона
+document.querySelectorAll('input[type="tel"]').forEach(input => {
+    input.addEventListener('input', e => {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 0 && v[0] !== '7') v = '7' + v;
+        v = v.slice(0, 11);
+        let f = '+7';
+        if (v.length > 1) f += ' (' + v.slice(1, 4);
+        if (v.length >= 5) f += ') ' + v.slice(4, 7);
+        if (v.length >= 8) f += '-' + v.slice(7, 9);
+        if (v.length >= 10) f += '-' + v.slice(9, 11);
+        e.target.value = f;
+    });
+});
+
+// Модалки
+function openModal(type) {
+    if (type === 'callback') {
+        document.getElementById('callbackModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+    const form = document.getElementById(id.replace('Modal', 'Form'));
+    const success = document.getElementById(id.replace('Modal', 'Success'));
+    if (form) form.style.display = 'block';
+    if (success) success.classList.remove('active');
+}
+
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', e => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(modal.id);
+        }
+    });
+});
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(modal => closeModal(modal.id));
+    }
+});
+
+function submitCallbackForm() {
+    const form = document.getElementById('callbackForm');
+    const success = document.getElementById('callbackSuccess');
+    form.style.display = 'none';
+    success.classList.add('active');
+    showStatus('✓ Заявка отправлена! Перезвоним в течение 10 минут.');
+    setTimeout(() => {
+        closeModal('callbackModal');
+        form.querySelector('form').reset();
+    }, 3000);
+}
+
+function openProjectModal(name, area, price, imgSrc) {
+    document.getElementById('projectName').textContent = 'Проект ' + name;
+    document.getElementById('projectArea').textContent = area;
+    document.getElementById('projectPrice').textContent = price + ' /под ключ';
+    document.getElementById('projectImg').src = imgSrc;
+    document.getElementById('projectModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+</script>
+</body>
+</html>
